@@ -1,8 +1,5 @@
 
 public interface Player {
-<<<<<<< HEAD
-	public void putCoin(Board b);
-=======
 
 	/**
 	 * 
@@ -10,5 +7,4 @@ public interface Player {
 	 * 
 	 */
 	
->>>>>>> origin/master
 }

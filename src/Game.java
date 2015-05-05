@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class Game {
+	// MAX commit 
 
 	/**
 	 * Method to bootstrap the main frame
