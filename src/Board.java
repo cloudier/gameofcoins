@@ -95,6 +95,6 @@ public class Board extends JPanel implements ActionListener {
 		generateBoard();
 		// now repaint the board on the screen
 		repaint();
-	}  
+	}
 
 }

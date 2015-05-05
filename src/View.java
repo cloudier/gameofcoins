@@ -1,30 +1,15 @@
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+
 
 public class View {
 	
-	private JFrame mainFrame;
 	private Board sodukuPanel;
 	private JButton newGameButton;
-
-	/**
-	 * Method to bootstrap the main frame
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		final View mw = new View();
-		
-		// display the main window in a different thread.
-		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	mw.display();
-            }
-        });
-	}
 	
-	/**
-	 * Constructor for the main window.
-	 */
 	public View() {
 		mainFrame = new JFrame("Soduku GUI Demo");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,15 +29,17 @@ public class View {
 //		    }
 //		});
 	}
+	
+	private JFrame mainFrame;
+	
 
 	/**
 	 * Method to display the main window
 	 */
-	private void display() {
+	public void display() {
 		mainFrame.getContentPane().add(sodukuPanel,BorderLayout.CENTER);
 		mainFrame.getContentPane().add(newGameButton,BorderLayout.SOUTH);
 		mainFrame.pack();
         mainFrame.setVisible(true);
 	}
-
 }
