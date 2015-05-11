@@ -1,8 +1,6 @@
 import javax.swing.*;
 
 public class Game {
-	// MAX commit 
-
 	/**
 	 * Method to bootstrap the main frame
 	 * @param args
@@ -24,6 +22,4 @@ public class Game {
 	public Game() {
 		
 	}
-
-
 }
