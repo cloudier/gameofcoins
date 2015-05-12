@@ -25,6 +25,8 @@ public class Board extends JPanel implements ActionListener {
 	private int currentPlayer;
 	private int numPlayers;
 
+	private boolean gameOver;
+	
 	//initialize default board
 	public Board() {
 		initBoard(7,6);
@@ -50,6 +52,8 @@ public class Board extends JPanel implements ActionListener {
 	private void initBoard(int column, int row){
 		this.boardColumn = column;
 		this.boardRow = row;
+		
+		gameOver = false;
 		
 		SCREEN_HEIGHT = CELL_HEIGHT * this.boardRow + 10;
 		SCREEN_WIDTH = CELL_WIDTH * this.boardColumn + 10;
@@ -102,6 +106,30 @@ public class Board extends JPanel implements ActionListener {
 				}
 			}
         }
+        
+        if(gameOver)
+        {
+        	g2.setColor(Color.blue);
+        	Font myFont = new Font("Serif", Font.ITALIC | Font.BOLD, 24);
+        	g2.setFont(myFont);
+        	
+        	g2.drawString("GAME OVER PAL", 100, 100);
+        	
+        	
+        	myFont = new Font("Serif", Font.ITALIC | Font.BOLD, 16);
+        	g2.setFont(myFont);
+        	
+        	if(isVictorious(1))
+        	{
+        		g2.drawString("Yellow Wins, BL m8 Red Coin", 50, 300);
+        	}
+        	else
+        	{
+        		g2.drawString("Red Wins, Yellow got rekt", 50, 300);
+        	}
+        	
+        }
+        
     }
     
     //get the center x-coordinate of the cell
@@ -125,26 +153,29 @@ public class Board extends JPanel implements ActionListener {
 	//put coin into the board
 	public void putCoin(int column)
 	{
-		for(int row = 0; row < this.boardRow; row++)
-		{
-			if(board[row][column] == 0)
+		if(gameOver) return;
+		System.out.println(gameOver);
+			for(int row = 0; row < this.boardRow; row++)
 			{
-				board[row][column] = currentPlayer;
-				System.out.println("Put coin in " + String.valueOf(row) + "," + String.valueOf(column) + " by " + this.currentPlayer);
-				if (this.isVictorious(this.currentPlayer)) {
-					System.out.println(this.currentPlayer + " won!!!!");
-					resetGame();
+				if(board[row][column] == 0)
+				{
+					board[row][column] = currentPlayer;
+					//System.out.println("Put coin in " + String.valueOf(row) + "," + String.valueOf(column) + " by " + this.currentPlayer);
+					if (this.isVictorious(this.currentPlayer)) {
+						System.out.println(this.currentPlayer + " won!!!!");
+						gameOver = true;
+						//resetGame();
+					}
+					
+					if (currentPlayer == numPlayers) {
+						currentPlayer = 1;
+					} else {
+						currentPlayer++;
+					}
+	
+					return;
 				}
-				
-				if (currentPlayer == numPlayers) {
-					currentPlayer = 1;
-				} else {
-					currentPlayer++;
-				}
-
-				return;
 			}
-		}
 		
 		//System.out.println("Couldn't do it m8");
 	}

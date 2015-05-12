@@ -30,7 +30,7 @@ public class View {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			    int x=e.getX();
-			    int y=e.getY();
+			    //int y=e.getY();
 			    //System.out.println(x+","+y);//these co-ords are relative to the component
 				
 			    sodukuPanel.putCoin(x/Board.CELL_WIDTH);
