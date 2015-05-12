@@ -9,7 +9,7 @@ public class View {
 
 	private JFrame mainFrame;
 	private GamePanel gamePanel;
-	public final static int INTERVAL = 100;
+	public final static int INTERVAL = 1000/60; // 60 times per second
 	public Timer timer;
 	
 	public View() {
