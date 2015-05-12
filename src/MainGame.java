@@ -1,6 +1,6 @@
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
-public class Game {
+public class MainGame {
 	/**
 	 * Method to bootstrap the main frame
 	 * @param args
@@ -19,7 +19,7 @@ public class Game {
 	/**
 	 * Constructor for the main window.
 	 */
-	public Game() {
+	public MainGame() {
 		
 	}
 }

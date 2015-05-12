@@ -1,75 +1,46 @@
 import java.awt.BorderLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Ellipse2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-
-
+import javax.swing.Timer;
 
 public class View {
-	
+
 	private JFrame mainFrame;
-	private Board sodukuPanel;
-	private JButton newGameButton;
+	private GamePanel gamePanel;
+	public final static int INTERVAL = 100;
+	public Timer timer;
 	
 	public View() {
+		gamePanel = new GamePanel();
 		mainFrame = new JFrame("Connect4 Demo");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// create the soduku panel
-		sodukuPanel = new Board();
-		
-		// Create a new button and add the action listener.
-		newGameButton = new JButton("New Game");
-		newGameButton.addActionListener(sodukuPanel);
-		
-		sodukuPanel.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			    int x=e.getX();
-			    //int y=e.getY();
-			    //System.out.println(x+","+y);//these co-ords are relative to the component
+		timer = new Timer(INTERVAL, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				gamePanel.repaint();
 				
-			    sodukuPanel.putCoin(x/Board.CELL_WIDTH);
-			    sodukuPanel.repaint();
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
+				System.out.println("Tick tock");
 				
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				
+				// some condition
+				if (true) {
+					timer.stop();
+				}
 			}
 		});
+		
+		timer.start();
+		
 	}
-
+	
 	/**
 	 * Method to display the main window
 	 */
 	public void display() {
-		mainFrame.getContentPane().add(sodukuPanel,BorderLayout.CENTER);
-		mainFrame.getContentPane().add(newGameButton,BorderLayout.SOUTH);
+		mainFrame.getContentPane().add(gamePanel,BorderLayout.CENTER);
 		mainFrame.pack();
         mainFrame.setVisible(true);
 	}
+	
 }
