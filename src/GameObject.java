@@ -9,6 +9,8 @@
  * @author ivormetcalf
  */
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.util.*;
 
 public abstract class GameObject {
@@ -26,16 +28,12 @@ public abstract class GameObject {
 		}
 	}
 	
-	public void Draw()
+	public void Draw(Graphics2D g2d)
 	{
 		if (visible) {
-			OnRender();
+			OnRender(g2d);
 		}
 	}
-	
-	abstract public void OnRender();
-	abstract public void OnUpdate();
-	abstract public void OnResize();
 	
 	public GameObject GetParent() { return parent; }
 	public LinkedList<GameObject> GetChildren() { return children; }
@@ -46,13 +44,16 @@ public abstract class GameObject {
 	public void setVisible(boolean visible) { this.visible = visible; }
 	
 	
+	abstract protected void OnUpdate();
+	abstract protected void OnRender(Graphics2D g2d);
+	abstract protected void OnResize(Dimension panelSize);
 	
-	private Vec2 position;
+	protected Vec2 position;
 	
-	private boolean active; //If true, the object executes OnUpdate every frame
-	private boolean visible; //If true, the object executes OnRender every frame
+	protected boolean active; //If true, the object executes OnUpdate every frame
+	protected boolean visible; //If true, the object executes OnRender every frame
 	
-	private GameObject parent;
-	private LinkedList<GameObject> children;
+	protected GameObject parent;
+	protected LinkedList<GameObject> children;
 
 }

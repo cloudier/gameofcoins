@@ -31,7 +31,6 @@ public class Puck extends GameObject {
 	
 	@Override
 	public void OnRender(Graphics2D g2d) {
-		// TODO Auto-generated method stub
 		g2d.drawOval((int)position.x, (int)position.y, 50, 50);
 	}
 

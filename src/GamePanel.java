@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 	
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g);       
         
         Graphics2D g2d = (Graphics2D) g;        
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
