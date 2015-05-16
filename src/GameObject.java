@@ -43,15 +43,15 @@ public abstract class GameObject {
 	public boolean isVisible() { return visible; }
 	public void setVisible(boolean visible) { this.visible = visible; }
 	
-	
+	//These are the main functions that need to be implemented
 	abstract protected void OnUpdate();
 	abstract protected void OnRender(Graphics2D g2d);
 	abstract protected void OnResize(Dimension panelSize);
 	
 	protected Vec2 position;
 	
-	protected boolean active; //If true, the object executes OnUpdate every frame
-	protected boolean visible; //If true, the object executes OnRender every frame
+	protected boolean active = true; //If true, the object executes OnUpdate every frame
+	protected boolean visible = true; //If true, the object executes OnRender every frame
 	
 	protected GameObject parent;
 	protected LinkedList<GameObject> children;
