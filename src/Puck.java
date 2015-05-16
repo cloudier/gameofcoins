@@ -5,12 +5,13 @@ import java.awt.Graphics2D;
 public class Puck extends GameObject {
 
 	public Puck() {
-		position = new Vec2(0.5f, 0.5f);
+		float px = (float) Math.random() * 400;
+		float py = (float) Math.random() * 400;
+		float vx = (float) Math.random() * 5;
+		float vy = (float) Math.random() * 5;
 		
-		velocity = new Vec2(1.4f, 0.7f);
-		
-		visible = true;
-		active = true;
+		position = new Vec2(px, py);
+		velocity = new Vec2(vx, vy);
 	}
 
 	@Override

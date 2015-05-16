@@ -21,14 +21,16 @@ public class GameWindow {
 			boolean skipNextDraw = false;
 			public void actionPerformed(ActionEvent evt) {
 				
-				long previousTime = System.currentTimeMillis();
+				long startTime = System.nanoTime()/1000;
 				
 				GameTick();
 				
 				if(!skipNextDraw) { GameRender(); }
 				
+				long totalTime = (System.nanoTime()/1000 - startTime);
+				
 				//Skip next render pass if lagging
-				if(System.currentTimeMillis() - previousTime > TICK_RATE) 
+				if(totalTime/1000 > TICK_RATE) 
 				{
 					System.out.println("Lagging!");
 					skipNextDraw = true;
@@ -61,8 +63,13 @@ public class GameWindow {
 		
 		gamePanel.SetGameObjectList(gameObjectList);
 		
-		Puck p = new Puck();
-		gameObjectList.add(p);
+		for(int i = 0; i < 40; i++)
+		{
+			Puck p = new Puck();
+			gameObjectList.add(p);
+		}
+		
+
 		
 	}
 	
@@ -76,7 +83,7 @@ public class GameWindow {
 	
 	private void GameRender()
 	{
-		gamePanel.repaint();
+		gamePanel.paintImmediately(gamePanel.getBounds());;
 	}
 	
 	
