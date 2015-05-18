@@ -1,46 +1,68 @@
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 
 public class Puck extends GameObject {
 
-	public Puck() {
-		float px = (float) Math.random() * 400;
-		float py = (float) Math.random() * 400;
-		float vx = (float) Math.random() * 5;
-		float vy = (float) Math.random() * 5;
+	public Puck() 
+	{
+		float px = (float) Math.random();
+		float py = (float) Math.random();
+		float vx = (float) Math.random()/200;
+		float vy = (float) Math.random()/200;
+		
+		circleRadius = 0.03f;
 		
 		position = new Vec2(px, py);
 		velocity = new Vec2(vx, vy);
+		
+		Moon moonChild = new Moon();
+		AddChild(moonChild);
+		
 	}
 
 	@Override
-	public void OnUpdate() {
-		
+	protected void OnUpdate() {
+
 		position = position.plus(velocity);
 		
-		if(position.x < 0 || position.x > 400)
+		if(position.x < circleRadius)
 		{
+			position = new Vec2(circleRadius, position.y);
+			velocity = new Vec2(-velocity.x, velocity.y);
+		}
+		else if(position.x > 1-circleRadius)
+		{
+			position = new Vec2(1-circleRadius, position.y);
 			velocity = new Vec2(-velocity.x, velocity.y);
 		}
 		
-		if(position.y < 0 || position.y > 400)
+		if(position.y < circleRadius)
 		{
+			position = new Vec2(position.x, circleRadius);
+			velocity = new Vec2(velocity.x, -velocity.y);
+		}
+		else if(position.y > 1-circleRadius)
+		{
+			position = new Vec2(position.x, 1-circleRadius);
 			velocity = new Vec2(velocity.x, -velocity.y);
 		}
 	}
 	
 	@Override
-	public void OnRender(Graphics2D g2d) {
-		g2d.drawOval((int)position.x, (int)position.y, 50, 50);
-	}
-
-	@Override
-	public void OnResize(Dimension panelSize) {
-		// TODO Auto-generated method stub
+	protected void OnRender(Graphics2D g2d) {
+		
+		Vec2 worldPos = GetWorldPosition();
+		
+		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
+		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
+		
+		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
+		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
+		
+		g2d.drawOval(pixelX-pixelWidth/2, pixelY-pixelHeight/2, pixelWidth, pixelHeight);
 		
 	}
-	
-	protected Vec2 velocity;
 
+	protected float circleRadius;
+	protected Vec2 velocity;
 }

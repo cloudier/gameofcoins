@@ -35,11 +35,19 @@ public final class Vec2 {
 		return new Vec2(this.x / divisor, this.y / divisor);
 	}
 	
-	public Vec2 rotatedBy(float degrees) {
+	public Vec2 rotatedByRad(float radians) {
 		double newX, newY;
-		newX = Math.cos((double)degrees) - Math.sin((double)degrees);
-		newY = Math.sin((double)degrees) + Math.cos((double)degrees);
+		newX = Math.cos((double)radians) * this.x - Math.sin((double)radians) * this.y;
+		newY = Math.sin((double)radians) * this.x + Math.cos((double)radians) * this.y;
 		return new Vec2((float)newX, (float)newY);
+	}
+	
+	public Vec2 rotatedByDeg(float degrees) {
+		return rotatedByRad(degrees * (float)Math.PI / 180f);
+	}
+	
+	public String toString() { 
+		return new String("(" + x + "," + y + ")");
 	}
 	
 	final public float x, y;
