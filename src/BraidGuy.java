@@ -16,32 +16,72 @@ public class BraidGuy extends GameObject {
 
 	public BraidGuy() {
 		
-//		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//	    GraphicsDevice device = env.getDefaultScreenDevice();
-//	    GraphicsConfiguration config = device.getDefaultConfiguration();
-//	    spriteSheet = config.createCompatibleImage(1024, 1024, Transparency.TRANSLUCENT);
-		
 		try {
 			spriteSheet = ImageIO.read(new File("braidsheet.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		defaultWidth = spriteSheet.getWidth()/7;
+		defaultHeight = spriteSheet.getHeight()/4;
+		
+		currentSpriteIndex = 0;
 	}
 
 	@Override
 	protected void OnUpdate() {
-		
 		
 	}
 
 	@Override
 	protected void OnRender(Graphics2D g2d) {
 		
-		g2d.drawImage(spriteSheet, null, 0, 0);
-		//g2d.drawImage
+		Dimension preferredSize = JPANEL.getPreferredSize();
+		
+		int panelWidth = JPANEL.getWidth();
+		int panelHeight = JPANEL.getHeight();
+		
+		Vec2 worldPos = GetWorldPosition();
+		BufferedImage currentSprite = getCurrentSprite();
+		
+		int pixelX, pixelY, pixelWidth, pixelHeight;
+		
+		pixelX = (int)(worldPos.x * panelWidth);
+		pixelY = (int)(worldPos.y * panelHeight);
+		
+		pixelWidth = (int) (defaultWidth * panelWidth/preferredSize.getWidth());
+		pixelHeight = (int) (defaultHeight * panelHeight/preferredSize.getHeight());
+		
+		g2d.drawImage(currentSprite, pixelX, pixelY, pixelWidth, pixelHeight, null);
+		
+		//currentSpriteIndex = (currentSpriteIndex+1)%27;
+		
+		if (skip) {
+			skip = false;
+		} else {
+			currentSpriteIndex = (currentSpriteIndex+1)%27;
+			skip = true;
+		}
+		
 	}
 	
-	BufferedImage spriteSheet;
+	protected BufferedImage getCurrentSprite() {
+		
+		int width = (int) defaultWidth;
+		int height = (int) defaultHeight;
+		
+		int row = currentSpriteIndex/7;
+		int col = currentSpriteIndex%7;
+		
+		return spriteSheet.getSubimage(col*width, row * height, (int)defaultWidth, (int)defaultHeight);
+	}
+	
+	boolean skip = false;
+	
+	private int currentSpriteIndex;
+	
+	private final float defaultWidth;
+	private final float defaultHeight;
+	private BufferedImage spriteSheet;
 
 }

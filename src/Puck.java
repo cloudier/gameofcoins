@@ -59,7 +59,7 @@ public class Puck extends GameObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		g2d.drawOval(pixelX-pixelWidth/2, pixelY-pixelHeight/2, pixelWidth, pixelHeight);
+		g2d.drawRect(pixelX-pixelWidth/2, pixelY-pixelHeight/2, pixelWidth, pixelHeight);
 		
 	}
 

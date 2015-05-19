@@ -23,6 +23,7 @@ public abstract class GameObject {
 	
 	public GameObject() {
 		// Maybe add to the static list of game objects
+		
 	}
 	
 	public void Tick()
@@ -114,10 +115,23 @@ public abstract class GameObject {
 		return retVal;
 	}
 	
+	/**
+	 * @return Position of mouse scaled to game coordinates
+	 */
+	public Vec2 GetScaledMousePosition()
+	{
+		if(JPANEL.getMousePosition() != null) {
+			float mx = (float)JPANEL.getMousePosition().x / JPANEL.getWidth();
+			float my = (float)JPANEL.getMousePosition().y / JPANEL.getHeight();
+			return new Vec2(mx, my);
+		} else {
+			return null;
+		}
+	}
+	
 	public Vec2 position = new Vec2();
 	public boolean active = true; //If true, the object executes OnUpdate every frame
 	public boolean visible = true; //If true, the object executes OnRender every frame
-	
 	
 	//These are the main functions that need to be implemented
 	abstract protected void OnUpdate();

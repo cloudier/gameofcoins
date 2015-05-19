@@ -63,7 +63,6 @@ public class MainGame {
         
 		mainFrame.createBufferStrategy(2); //Double Buffering
 		strategy = mainFrame.getBufferStrategy();
-		
         
 	}
 	
@@ -75,15 +74,23 @@ public class MainGame {
 		
 		//Initialize game objects
 		gameObjectList = new LinkedList<GameObject>();
-				
-		for(int i = 0; i < 10; i++)
+		
+		for(int i = 0; i < 50; i++)
 		{
 			Puck p = new Puck();
 			gameObjectList.add(p);
 		}
 		
-		//BraidGuy bg = new BraidGuy();
-		//gameObjectList.add(bg);
+		//60 draws without lag
+		for(int x = 0; x < 2; x++)
+		{
+			for(int y = 0; y < 2; y++)
+			{
+				BraidGuy bg = new BraidGuy();
+				bg.position = new Vec2(x*0.1f, y*0.1f);
+				gameObjectList.add(bg);
+			}
+		}
 		
 	}
 	
