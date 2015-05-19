@@ -186,6 +186,7 @@ public class Board extends JPanel implements ActionListener {
 		
 		//checks vertical
 		for (int c = 0; c < this.boardColumn; c++) {
+			sum = 0;
 			for (int r = 0; r < this.boardRow; r++) {
 				if (board[r][c] == currentPlayer) {
 					sum++;
@@ -198,8 +199,8 @@ public class Board extends JPanel implements ActionListener {
 		}
 		
 		//checks horizontal
-		sum = 0;
 		for (int r = 0; r < this.boardRow; r++) {
+			sum = 0;
 			for (int c = 0; c < this.boardColumn; c++) {
 				if (board[r][c] == currentPlayer) {
 					sum++;
@@ -212,8 +213,8 @@ public class Board extends JPanel implements ActionListener {
 		}
 		
 		//checks diagonal left
-		sum = 0;
 		for (int c = -this.boardRow; c < this.boardColumn; c++) {
+			sum = 0;
 			for (int r = 0; r < this.boardRow; r++) {
 				
 				if(getCoin(r, c+r) == currentPlayer)
@@ -229,8 +230,8 @@ public class Board extends JPanel implements ActionListener {
 		}
 		
 		//checks diagonal right
-		sum = 0;
 		for (int c = 0; c < this.boardColumn + this.boardRow; c++) {
+			sum = 0;
 			for (int r = 0; r < this.boardRow; r++) {
 				
 				if(getCoin(r, c-r) == currentPlayer)
