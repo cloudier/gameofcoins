@@ -42,6 +42,10 @@ public final class Vec2 {
 		return new Vec2((float)newX, (float)newY);
 	}
 	
+	public float magnitude() {
+		return (float)Math.sqrt(x*x + y*y);
+	}
+	
 	public Vec2 rotatedByDeg(float degrees) {
 		return rotatedByRad(degrees * (float)Math.PI / 180f);
 	}

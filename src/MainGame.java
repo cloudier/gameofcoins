@@ -19,6 +19,24 @@ public class MainGame {
 		mainFrame = new JFrame("Game of Coins");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		gamePanel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) { MouseUp(); }
+			
+			@Override
+			public void mousePressed(MouseEvent e) { MouseDown(); }
+			
+			@Override
+			public void mouseExited(MouseEvent e) { }
+			
+			@Override
+			public void mouseEntered(MouseEvent e) { }
+			
+			@Override
+			public void mouseClicked(MouseEvent e) { }
+		});
+		
 		timer = new Timer( TICK_RATE, new ActionListener() {
 			boolean skipNextDraw = false;
 			public void actionPerformed(ActionEvent evt) {
@@ -75,6 +93,9 @@ public class MainGame {
 		//Initialize game objects
 		gameObjectList = new LinkedList<GameObject>();
 		
+		CircleButton crc = new CircleButton();
+		gameObjectList.add(crc);
+		
 		for(int i = 0; i < 50; i++)
 		{
 			Puck p = new Puck();
@@ -82,15 +103,18 @@ public class MainGame {
 		}
 		
 		//60 draws without lag
-		for(int x = 0; x < 2; x++)
+		for(int y = 0; y < 2; y++)
 		{
-			for(int y = 0; y < 2; y++)
+			for(int x = 0; x < 2; x++)
 			{
 				BraidGuy bg = new BraidGuy();
 				bg.position = new Vec2(x*0.1f, y*0.1f);
 				gameObjectList.add(bg);
 			}
 		}
+		
+		//Face fa = new Face();
+		//gameObjectList.add(fa);
 		
 	}
 	
@@ -135,6 +159,42 @@ public class MainGame {
 		g2d.dispose();
 		
 		strategy.show();
+	}
+	
+	private void MouseDown()
+	{
+		UIObject selected = GetSelectedUIObject();
+		if(selected != null) {
+			selected.OnMouseDown();
+		}
+		
+	}
+	
+	private void MouseUp() 
+	{
+		UIObject selected = GetSelectedUIObject();
+		if(selected != null) {
+			selected.OnMouseUp();
+		}
+	}
+	
+	private UIObject GetSelectedUIObject() {
+		UIObject selected = null;
+		Point mousePos = gamePanel.getMousePosition();
+		
+		if(mousePos != null)
+		{
+			for(GameObject obj : gameObjectList) {
+				if(obj instanceof UIObject)	{
+					UIObject uiObj = (UIObject) obj;
+					
+					if(uiObj.MouseSelected()) {
+						selected = uiObj;
+					}
+				}
+			}
+		}
+		return selected;
 	}
 	
 	private LinkedList<GameObject> gameObjectList; //List of all game objects
