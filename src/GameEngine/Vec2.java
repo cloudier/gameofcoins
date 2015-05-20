@@ -1,3 +1,5 @@
+package GameEngine;
+
 /**
  * 2D Floating Point Vector. <br />
  * This is an immutable object which means that: <br />
@@ -44,6 +46,11 @@ public final class Vec2 {
 	
 	public float magnitude() {
 		return (float)Math.sqrt(x*x + y*y);
+	}
+	
+	public Vec2 normalised() {
+		float mag = this.magnitude();
+		return new Vec2(this.x/mag, this.y/mag);
 	}
 	
 	public Vec2 rotatedByDeg(float degrees) {

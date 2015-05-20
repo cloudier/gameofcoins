@@ -1,4 +1,9 @@
+package Demos;
+
 import java.awt.Graphics2D;
+
+import GameEngine.GameObject;
+import GameEngine.Vec2;
 
 
 public class Puck extends GameObject {

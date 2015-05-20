@@ -1,3 +1,7 @@
+package GameEngine;
+
+import GameObjects.*;
+
 /**
  * Manages the state of the game.
  * @author ivormetcalf
@@ -15,34 +19,51 @@ public class GameManager {
 	 */
 	private UIObject mainMenu;
 	private UIObject modeMenu;
-	private int[][] board;
-	private MainGame mg;
+	private int[][] boardModel;
+	
+	private MainGame mainGame;
+	private Board board;
 	
 	public GameManager(MainGame mg) {
+		mainGame = mg;
+	}
+	
+	public void NewGame()
+	{
+		board = new Board();
+		mainGame.AddGameObject(board);
 		
-		this.mg = mg;
 		this.state = "start";
 		this.mainMenu = new MainMenu(); // active and visible
 		this.modeMenu = new ModeMenu(); // active and visible
 		
-		mg.AddGameObject(mainMenu);
+		mainGame.AddGameObject(mainMenu);
 				
 //		mg.AddGameObject(ModeMenu);
 //		ModeMenu.visible = false;
 	}
 	
 	public void activateNextState() {
-		System.out.println("activate");
+		// test
+		if (this.state.equals("start")) {
+			
+		}
+		
 		// if start, activate mode
 		if (this.state.equals("start")) {
 			modeMenu.active = true;
 			modeMenu.visible = true;
 			this.state = "mode";
-			System.out.println("stuff");
 		}
 		// if mode, activate players
 		if (this.state.equals("mode")) {
 			
 		}
+	}
+	
+	// put victory condition and putcoin methods here
+	
+	public int[][] getBoard() {
+		return boardModel;
 	}
 }

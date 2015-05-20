@@ -1,5 +1,10 @@
+package Demos;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
+
+import GameEngine.UIObject;
+import GameEngine.Vec2;
 
 public class CircleButton extends UIObject {
 

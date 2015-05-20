@@ -1,9 +1,14 @@
+package Demos;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import GameEngine.GameObject;
+import GameEngine.Vec2;
 
 /**
  * The BraidGuy GameObject is intended to test image
@@ -17,7 +22,7 @@ public class BraidGuy extends GameObject {
 	public BraidGuy() {
 		
 		try {
-			spriteSheet = ImageIO.read(new File("braidsheet.png"));
+			spriteSheet = ImageIO.read(new File("assets/braidsheet.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -76,7 +81,7 @@ public class BraidGuy extends GameObject {
 		return spriteSheet.getSubimage(col*width, row * height, (int)defaultWidth, (int)defaultHeight);
 	}
 	
-	boolean skip = false;
+	private boolean skip = false;
 	
 	private int currentSpriteIndex;
 	

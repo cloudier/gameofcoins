@@ -1,18 +1,19 @@
+package GameObjects;
 import java.awt.Graphics2D;
 
+import GameEngine.UIObject;
 
-public class MainMenu extends UIObject {
-	private UIObject MainMenuNewGame;
-	private UIObject MainMenuExit;
 
-	public MainMenu() {
-		super();
+public class ModeMenu extends UIObject{
+
+	public ModeMenu() {
 		// TODO Auto-generated constructor stub
-		UIObject MainMenuNewGame = new MainMenuNewGame();
-		this.AddChild(MainMenuNewGame);
-		//UIObject MainMenuExit = new MainMenuExit(); // exit button
+		// select mode: normal/blitz
+		// select victory condition: 4 <= n <= 20
+		// select width of board
+		// select height of board
 	}
-	
+
 	@Override
 	public boolean MouseSelected() {
 		// TODO Auto-generated method stub
@@ -22,25 +23,25 @@ public class MainMenu extends UIObject {
 	@Override
 	public void OnMouseDown() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void OnMouseUp() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	protected void OnUpdate() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	protected void OnRender(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		// render some text
+		
 	}
 
 }
