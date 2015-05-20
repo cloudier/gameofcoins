@@ -61,6 +61,7 @@ public class MainGame {
 		});
 		
 		//Initialize Game objects
+		gameObjectList = new LinkedList<GameObject>();
 		StartGame();
 		
 		timer.start();
@@ -85,36 +86,43 @@ public class MainGame {
 	}
 	
 	
+	public void AddGameObject(GameObject g) { gameObjectList.add(g); }
+	public void RemoveGameObject(GameObject g) { gameObjectList.remove(g); }
+	
 	private void StartGame()
 	{
+		gameManager = new GameManager(this);
+		
 		GameObject.JPANEL = gamePanel;
 		GameObject.TICK_RATE = TICK_RATE;
+		GameObject.GAME_MANAGER = this.gameManager;
 		
 		//Initialize game objects
-		gameObjectList = new LinkedList<GameObject>();
 		
-		CircleButton crc = new CircleButton();
-		gameObjectList.add(crc);
-		
-		for(int i = 0; i < 50; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			Puck p = new Puck();
 			gameObjectList.add(p);
 		}
 		
-		//60 draws without lag
-		for(int y = 0; y < 2; y++)
-		{
-			for(int x = 0; x < 2; x++)
-			{
-				BraidGuy bg = new BraidGuy();
-				bg.position = new Vec2(x*0.1f, y*0.1f);
-				gameObjectList.add(bg);
-			}
-		}
+		
+		
+//		//60 draws without lag
+//		for(int y = 0; y < 2; y++)
+//		{
+//			for(int x = 0; x < 2; x++)
+//			{
+//				BraidGuy bg = new BraidGuy();
+//				bg.position = new Vec2(x*0.1f, y*0.1f);
+//				gameObjectList.add(bg);
+//			}
+//		}
 		
 		//Face fa = new Face();
 		//gameObjectList.add(fa);
+		
+//		CircleButton crc = new CircleButton();
+//		AddGameObject(crc);
 		
 	}
 	
@@ -184,16 +192,26 @@ public class MainGame {
 		
 		if(mousePos != null)
 		{
+			LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
+			
 			for(GameObject obj : gameObjectList) {
-				if(obj instanceof UIObject)	{
+				allGameObjects.add(obj);
+				allGameObjects.addAll(obj.GetChildrenRecursively());
+			}
+			
+			for(GameObject obj : allGameObjects)
+			{
+				if(obj.IsVisible() && obj instanceof UIObject)
+				{
 					UIObject uiObj = (UIObject) obj;
-					
 					if(uiObj.MouseSelected()) {
 						selected = uiObj;
 					}
 				}
 			}
+			
 		}
+		
 		return selected;
 	}
 	
@@ -203,5 +221,7 @@ public class MainGame {
 	private BufferStrategy strategy; //BufferStrategy for managing redraw
 	
 	private JFrame mainFrame;
-	private JPanel gamePanel;	
+	private JPanel gamePanel;
+	
+	private GameManager gameManager;
 }

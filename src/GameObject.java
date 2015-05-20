@@ -1,5 +1,6 @@
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.*;
 
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public abstract class GameObject {
 	
 	public static JPanel JPANEL;
 	public static int TICK_RATE;
+	public static GameManager GAME_MANAGER;
 	
 	public GameObject() {
 		// Maybe add to the static list of game objects
@@ -120,13 +122,43 @@ public abstract class GameObject {
 	 */
 	public Vec2 GetScaledMousePosition()
 	{
-		if(JPANEL.getMousePosition() != null) {
-			float mx = (float)JPANEL.getMousePosition().x / JPANEL.getWidth();
-			float my = (float)JPANEL.getMousePosition().y / JPANEL.getHeight();
+		Point mousePos = JPANEL.getMousePosition();
+		if(mousePos != null) {
+			float mx = (float) mousePos.x / JPANEL.getWidth();
+			float my = (float) mousePos.y / JPANEL.getHeight();
 			return new Vec2(mx, my);
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * @return List of all children of children of children
+	 */
+	public LinkedList<GameObject> GetChildrenRecursively()
+	{
+		LinkedList<GameObject> allGameObject = new LinkedList<GameObject>();
+		for(GameObject obj : children) {
+			allGameObject.add(obj);
+			allGameObject.addAll(obj.GetChildrenRecursively());
+		}
+		return allGameObject;
+	}
+	
+	/**
+	 * @return true if item is actually visible (all parents are visible)
+	 */
+	public boolean IsVisible()
+	{
+		boolean retVal = visible;
+		GameObject currentParent = parent;
+		
+		while(retVal && currentParent != null) {
+			retVal = currentParent.visible;
+			currentParent = currentParent.GetParent();
+		}
+		
+		return retVal;
 	}
 	
 	public Vec2 position = new Vec2();
