@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 /**
  * 2D Floating Point Vector. <br />

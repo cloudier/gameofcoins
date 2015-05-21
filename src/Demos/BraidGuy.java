@@ -1,4 +1,7 @@
-package Demos;
+package demos;
+
+import gameEngine.GameObject;
+import gameEngine.Vec2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -6,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import GameEngine.GameObject;
-import GameEngine.Vec2;
 
 /**
  * The BraidGuy GameObject is intended to test image

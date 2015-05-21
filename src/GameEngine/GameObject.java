@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -21,6 +21,21 @@ public abstract class GameObject {
 	public static JPanel JPANEL;
 	public static int TICK_RATE;
 	public static GameManager GAME_MANAGER;
+
+	public Vec2 position = new Vec2();
+	public boolean active = true; // If true, the object executes OnUpdate every
+									// frame
+	public boolean visible = true; // If true, the object executes OnRender
+									// every frame
+
+	// These are the main functions that need to be implemented
+	abstract protected void OnUpdate();
+
+	abstract protected void OnRender(Graphics2D g2d);
+
+	// The position of the game object is relative to the parent game object
+	protected GameObject parent = null;
+	protected LinkedList<GameObject> children = new LinkedList<GameObject>();
 
 	public GameObject() {
 		// Maybe add to the static list of game objects
@@ -95,8 +110,7 @@ public abstract class GameObject {
 		if (child.GetParent() == null) {
 			child.SetParent(this);
 		} else {
-			System.out
-					.println("The specified object is already the child of another.");
+			System.out.println("The specified object is already the child of another.");
 		}
 	}
 
@@ -170,19 +184,35 @@ public abstract class GameObject {
 		return retVal;
 	}
 
-	public Vec2 position = new Vec2();
-	public boolean active = true; // If true, the object executes OnUpdate every
-									// frame
-	public boolean visible = true; // If true, the object executes OnRender
-									// every frame
+	/**
+	 * Sets the active field of a GameObject and all its children.
+	 */
+	public void setActive(boolean b) {
+		this.active = b;
+		for (GameObject c : children) {
+			c.active = b;
+		}
+	}
 
-	// These are the main functions that need to be implemented
-	abstract protected void OnUpdate();
+	/**
+	 * Sets the visible field of a GameObject and all its children.
+	 */
+	public void setVisible(boolean b) {
+		this.visible = b;
+		for (GameObject c : children) {
+			c.visible = b;
+		}
+	}
 
-	abstract protected void OnRender(Graphics2D g2d);
-
-	// The position of the game object is relative to the parent game object
-	protected GameObject parent = null;
-	protected LinkedList<GameObject> children = new LinkedList<GameObject>();
-
+	/**
+	 * Sets active and visible field of a GameObject and all its children.
+	 */
+	public void setActiveVisible(boolean b) {
+		this.active = b;
+		this.visible = b;
+		for (GameObject c : children) {
+			c.active = b;
+			c.visible = b;
+		}
+	}
 }

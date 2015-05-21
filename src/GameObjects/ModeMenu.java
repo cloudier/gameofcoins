@@ -1,41 +1,55 @@
-package GameObjects;
-import java.awt.Graphics2D;
+package gameObjects;
+import gameEngine.UIObject;
+import gameEngine.Vec2;
 
-import GameEngine.UIObject;
+import java.awt.Graphics2D;
 
 
 public class ModeMenu extends UIObject{
+	
+	private String mode;
 
 	public ModeMenu() {
+		position = new Vec2(0.5f, 0.2f);
+
 		// TODO Auto-generated constructor stub
 		// select mode: normal/blitz
-		// select victory condition: 4 <= n <= 20
-		// select width of board
-		// select height of board
+		this.mode = "Normal";
+		UIObject modeMenuNormal = new ModeMenuNormal();
+		UIObject modeMenuBlitz = new ModeMenuBlitz();
+		
+		this.AddChild(modeMenuNormal);
+		this.AddChild(modeMenuBlitz);
+		// select victory condition: 4 <= n <= 10
+		
+		// select width of board: 4 <= n <= 20
+		
+		// select height of board: 4 <= n <= 20
+	}
+	
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 
 	@Override
 	public boolean MouseSelected() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void OnMouseDown() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void OnMouseUp() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void OnUpdate() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

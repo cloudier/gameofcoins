@@ -1,14 +1,12 @@
-package GameObjects;
+package gameObjects;
+import gameEngine.UIObject;
+import gameEngine.Vec2;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import GameEngine.UIObject;
-import GameEngine.Vec2;
-
 
 public class MainMenu extends UIObject {
-	private UIObject MainMenuNewGame;
-	private UIObject MainMenuExit;
 	private float width;
 	private float height;
 	
@@ -18,33 +16,26 @@ public class MainMenu extends UIObject {
 		position = new Vec2(0.5f, 0.2f);
 		this.width = 0.04f;
 		this.height = 0.05f;
-		UIObject MainMenuNewGame = new MainMenuNewGame();
-		this.AddChild(MainMenuNewGame);
+		UIObject mainMenuNewGame = new MainMenuNewGame();
+		this.AddChild(mainMenuNewGame);
 		//UIObject MainMenuExit = new MainMenuExit(); // exit button
 	}
 	
 	@Override
 	public boolean MouseSelected() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void OnMouseDown() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void OnMouseUp() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void OnUpdate() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -54,6 +45,7 @@ public class MainMenu extends UIObject {
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
 
 		g2d.setColor(Color.BLACK);
+		// replace this with an image
 		g2d.drawString("Connect 4", pixelX - width*JPANEL.getWidth(), pixelY);
 	}
 

@@ -1,4 +1,7 @@
-package GameObjects;
+package gameObjects;
+
+import gameEngine.UIObject;
+import gameEngine.Vec2;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
-import GameEngine.UIObject;
-import GameEngine.Vec2;
 
 
 public class Board extends UIObject{
@@ -29,7 +29,9 @@ public class Board extends UIObject{
 	}
 
 	@Override
-	public boolean MouseSelected() { return false; }
+	public boolean MouseSelected() {
+		return false;
+	}
 
 	@Override
 	public void OnMouseDown() { }
@@ -54,8 +56,10 @@ public class Board extends UIObject{
 		int pixelWidth = (int) (width * JPANEL.getWidth());
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
+		// draw board background
 		g2d.drawImage(boardImg, pixelX, pixelY, pixelWidth, pixelHeight, null);
 		
+		// draw coins
 	}
 
 	private float width, height;

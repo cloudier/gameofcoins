@@ -1,4 +1,4 @@
-import GameEngine.*;
+import gameEngine.*;
 
 import javax.swing.SwingUtilities;
 

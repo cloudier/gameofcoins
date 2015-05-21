@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 public abstract class UIObject extends GameObject {
 

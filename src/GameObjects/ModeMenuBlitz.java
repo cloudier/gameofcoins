@@ -1,8 +1,5 @@
 package gameObjects;
 
-import gameEngine.UIObject;
-import gameEngine.Vec2;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,26 +7,38 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class MainMenuNewGame extends UIObject {
+import gameEngine.*;
 
+public class ModeMenuBlitz extends UIObject{
+	
+	private ModeMenu parent;
+	
 	private BufferedImage normalImage;
 	private BufferedImage hoverImage;
-
+	private BufferedImage selectedImage;
+	
 	private float width;
 	private float height;
-
-	public MainMenuNewGame() {
+	
+	public ModeMenuBlitz() {
 		width = .2f;
 		height = .1f;
-		position = new Vec2(0f, 0.5f);
+		position = new Vec2(width/2, 0.3f);
 
 		try {
-			normalImage = ImageIO.read(new File("assets/new game.png"));
-			hoverImage = ImageIO.read(new File("assets/new game on hover.png"));
+			normalImage = ImageIO.read(new File("assets/ModeMenu/BlitzUnselected.png"));
+			hoverImage = ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
+			selectedImage =  ImageIO.read(new File("assets/ModeMenu/NormalSelected.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		GameObject gameObjParent = GetParent();
+		if (gameObjParent instanceof ModeMenu) {
+			parent = (ModeMenu) gameObjParent;
+		} else {
+			System.err.println("Parent is not instance of ModeMenu");
+		}
 	}
 
 	@Override
@@ -51,18 +60,15 @@ public class MainMenuNewGame extends UIObject {
 
 	@Override
 	public void OnMouseDown() {
+		parent.setMode("Blitz");
 	}
 
 	@Override
 	public void OnMouseUp() {
-		System.out.println("Clicked");
-		GAME_MANAGER.activateMode();
 	}
 
 	@Override
-	protected void OnUpdate() {
-		// TODO Auto-generated method stub
-
+	protected void OnUpdate() {		
 	}
 
 	@Override
@@ -78,13 +84,16 @@ public class MainMenuNewGame extends UIObject {
 		BufferedImage currentSprite = GetCurrentSprite();
 
 		g2d.drawImage(currentSprite, pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight, null);
+		
 	}
 
-	BufferedImage GetCurrentSprite() {
-		if (MouseSelected())
+	BufferedImage GetCurrentSprite() {			
+		if (parent.getMode().equals("Blitz")) {
+			return selectedImage;
+		} else if (MouseSelected()) {
 			return hoverImage;
-		else
+		} else {
 			return normalImage;
+		}
 	}
-
 }

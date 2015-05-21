@@ -1,9 +1,9 @@
-package Demos;
+package demos;
+
+import gameEngine.GameObject;
+import gameEngine.Vec2;
 
 import java.awt.Graphics2D;
-
-import GameEngine.GameObject;
-import GameEngine.Vec2;
 
 
 /**

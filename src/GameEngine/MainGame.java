@@ -1,4 +1,6 @@
-package GameEngine;
+package gameEngine;
+
+import gameObjects.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.JFrame;
 
-import Demos.*;
-import GameObjects.*;
+import demos.*;
 
 import java.util.*;
 
@@ -108,13 +109,10 @@ public class MainGame {
 
 	private void StartGame() {
 
-		gameManager = new GameManager(this);
-		
 		GameObject.JPANEL = gamePanel;
 		GameObject.TICK_RATE = TICK_RATE;
+		gameManager = new GameManager(this);
 		GameObject.GAME_MANAGER = this.gameManager;
-		
-		gameManager.NewGame();
 
 		// Initialize game objects
 		
