@@ -25,6 +25,7 @@ public class Board extends UIObject{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
