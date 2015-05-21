@@ -23,15 +23,15 @@ public class Moon extends GameObject {
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 		//Rotate the position around
 		position = position.rotatedByDeg(angularVelocity/TICK_RATE);
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
+	protected void onRender(Graphics2D g2d) {
 		
-		Vec2 worldPos = GetWorldPosition();
+		Vec2 worldPos = getWorldPosition();
 		
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());

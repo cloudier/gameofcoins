@@ -14,15 +14,15 @@ public class CircleButton extends UIObject {
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
+	protected void onRender(Graphics2D g2d) {
 		
-		Vec2 worldPos = GetWorldPosition();
+		Vec2 worldPos = getWorldPosition();
 		
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
@@ -30,7 +30,7 @@ public class CircleButton extends UIObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		if(MouseSelected())
+		if(mouseSelected())
 		{
 			g2d.setColor(Color.BLUE);
 		}
@@ -44,14 +44,14 @@ public class CircleButton extends UIObject {
 	}
 	
 	@Override
-	public void OnMouseDown() { }
+	public void onMouseDown() { }
 
 	@Override
-	public void OnMouseUp() { }
+	public void onMouseUp() { }
 	
 	@Override
-	public boolean MouseSelected() {
-		Vec2 mousePos = GetScaledMousePosition();
+	public boolean mouseSelected() {
+		Vec2 mousePos = getScaledMousePosition();
 		if(mousePos == null) return false;
 		
 		Vec2 displacement = position.minus(mousePos);

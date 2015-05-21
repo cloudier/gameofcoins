@@ -21,10 +21,10 @@ public class GameManager {
 	private MainGame mainGame;
 
 	private String state;
-	private UIObject mainMenu;
-	private UIObject modeMenu;
-	private UIObject playersMenu;
-	private UIObject board;
+	private MainMenu mainMenu;
+	private ModeMenu modeMenu;
+	private PlayersMenu playersMenu;
+	private Board board;
 
 	private BoardModel boardModel;
 	
@@ -37,15 +37,13 @@ public class GameManager {
 		this.board = new Board();
 		
 		mainGame.AddGameObject(mainMenu);
+		mainMenu.setActiveVisible(false);
 		mainGame.AddGameObject(modeMenu);
-		modeMenu.visible = false;
-		modeMenu.active = false;
+		modeMenu.setActiveVisible(false);
 		mainGame.AddGameObject(playersMenu);
-		playersMenu.visible = false;
-		playersMenu.active = false;
+		playersMenu.setActiveVisible(false);
 		mainGame.AddGameObject(board);
-		board.visible = false;
-		board.active = false;
+		board.setActiveVisible(true);
 	}
 
 	/**
@@ -64,7 +62,8 @@ public class GameManager {
 	
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
 		boardModel = new BoardModel(boardRows, boardColumns, victoryCondition);
-
+		board.makeColumns(boardColumns);
+		
 		if (state.equals("mode")) {
 			modeMenu.setActiveVisible(false);
 			playersMenu.setActiveVisible(true);

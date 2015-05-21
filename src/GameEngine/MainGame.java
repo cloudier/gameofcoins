@@ -142,7 +142,7 @@ public class MainGame {
 
 	private void GameTick() {
 		for (GameObject obj : gameObjectList) {
-			obj.Tick();
+			obj.tick();
 		}
 	}
 
@@ -174,7 +174,7 @@ public class MainGame {
 
 		// Draw each game object
 		for (GameObject obj : gameObjectList) {
-			obj.Draw(g2d);
+			obj.draw(g2d);
 		}
 
 		g2d.dispose();
@@ -185,7 +185,7 @@ public class MainGame {
 	private void MouseDown() {
 		UIObject selected = GetSelectedUIObject();
 		if (selected != null) {
-			selected.OnMouseDown();
+			selected.onMouseDown();
 		}
 
 	}
@@ -193,7 +193,7 @@ public class MainGame {
 	private void MouseUp() {
 		UIObject selected = GetSelectedUIObject();
 		if (selected != null) {
-			selected.OnMouseUp();
+			selected.onMouseUp();
 		}
 	}
 
@@ -206,13 +206,13 @@ public class MainGame {
 
 			for (GameObject obj : gameObjectList) {
 				allGameObjects.add(obj);
-				allGameObjects.addAll(obj.GetChildrenRecursively());
+				allGameObjects.addAll(obj.getChildrenRecursively());
 			}
 
 			for (GameObject obj : allGameObjects) {
-				if (obj.IsVisible() && obj instanceof UIObject) {
+				if (obj.isVisible() && obj instanceof UIObject) {
 					UIObject uiObj = (UIObject) obj;
-					if (uiObj.MouseSelected()) {
+					if (uiObj.mouseSelected()) {
 						selected = uiObj;
 					}
 				}

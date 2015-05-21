@@ -11,8 +11,6 @@ import gameEngine.*;
 
 public class ModeMenuBlitz extends UIObject{
 	
-	private ModeMenu parent;
-	
 	private BufferedImage normalImage;
 	private BufferedImage hoverImage;
 	private BufferedImage selectedImage;
@@ -21,33 +19,27 @@ public class ModeMenuBlitz extends UIObject{
 	private float height;
 	
 	public ModeMenuBlitz() {
+		super();
 		width = .2f;
 		height = .1f;
-		position = new Vec2(width/2, 0.3f);
+		position = new Vec2(width/2, 0.1f);
 
 		try {
 			normalImage = ImageIO.read(new File("assets/ModeMenu/BlitzUnselected.png"));
 			hoverImage = ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
-			selectedImage =  ImageIO.read(new File("assets/ModeMenu/NormalSelected.png"));
+			selectedImage =  ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		GameObject gameObjParent = GetParent();
-		if (gameObjParent instanceof ModeMenu) {
-			parent = (ModeMenu) gameObjParent;
-		} else {
-			System.err.println("Parent is not instance of ModeMenu");
-		}
 	}
-
+	
 	@Override
-	public boolean MouseSelected() {
-		Vec2 mousePos = GetScaledMousePosition();
+	public boolean mouseSelected() {
+		Vec2 mousePos = getScaledMousePosition();
 		if (mousePos == null)
 			return false;
 
-		Vec2 worldPosition = GetWorldPosition();
+		Vec2 worldPosition = getWorldPosition();
 
 		if ((mousePos.x >= worldPosition.x - width/2 &&
 				mousePos.y >= worldPosition.y - height/2) &&
@@ -59,21 +51,27 @@ public class ModeMenuBlitz extends UIObject{
 	}
 
 	@Override
-	public void OnMouseDown() {
-		parent.setMode("Blitz");
+	public void onMouseDown() {
+		GameObject gameObjParent = this.getParent();
+		if (gameObjParent instanceof ModeMenu) {
+			ModeMenu parent = (ModeMenu) gameObjParent;
+			parent.setMode("Blitz");
+		} else {
+			System.err.println("Parent is not instance of ModeMenu");
+		}
 	}
 
 	@Override
-	public void OnMouseUp() {
+	public void onMouseUp() {
 	}
 
 	@Override
-	protected void OnUpdate() {		
+	protected void onUpdate() {		
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
-		Vec2 worldPos = GetWorldPosition();
+	protected void onRender(Graphics2D g2d) {
+		Vec2 worldPos = getWorldPosition();
 
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
@@ -81,19 +79,26 @@ public class ModeMenuBlitz extends UIObject{
 		int pixelWidth = (int) (width * JPANEL.getWidth());
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
-		BufferedImage currentSprite = GetCurrentSprite();
+		BufferedImage currentSprite = getCurrentSprite();
 
 		g2d.drawImage(currentSprite, pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight, null);
 		
 	}
 
-	BufferedImage GetCurrentSprite() {			
-		if (parent.getMode().equals("Blitz")) {
-			return selectedImage;
-		} else if (MouseSelected()) {
-			return hoverImage;
+	BufferedImage getCurrentSprite() {		
+		GameObject gameObjParent = this.getParent();
+		if (gameObjParent instanceof ModeMenu) {
+			ModeMenu parent = (ModeMenu) gameObjParent;
+			if (parent.getMode().equals("Blitz")) {
+				return selectedImage;
+			} else if (mouseSelected()) {
+				return hoverImage;
+			} else {
+				return normalImage;
+			}
 		} else {
-			return normalImage;
+			System.err.println("Parent is not instance of ModeMenu");
+			return null;
 		}
 	}
 }

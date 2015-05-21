@@ -29,9 +29,8 @@ public abstract class GameObject {
 									// every frame
 
 	// These are the main functions that need to be implemented
-	abstract protected void OnUpdate();
-
-	abstract protected void OnRender(Graphics2D g2d);
+	abstract protected void onUpdate();
+	abstract protected void onRender(Graphics2D g2d);
 
 	// The position of the game object is relative to the parent game object
 	protected GameObject parent = null;
@@ -39,41 +38,40 @@ public abstract class GameObject {
 
 	public GameObject() {
 		// Maybe add to the static list of game objects
-
 	}
-
-	public void Tick() {
+	
+	public void tick() {
 		if (active) {
-			OnUpdate();
+			onUpdate();
 
 			// Recursively tick all children
 			for (GameObject g : children) {
-				g.Tick();
+				g.tick();
 			}
 		}
 	}
 
-	public void Draw(Graphics2D g2d) {
+	public void draw(Graphics2D g2d) {
 		if (visible) {
-			OnRender(g2d);
+			onRender(g2d);
 
 			// Recursively draw all children
 			for (GameObject g : children) {
-				g.Draw(g2d);
+				g.draw(g2d);
 			}
 		}
 	}
 
-	public GameObject GetParent() {
+	public GameObject getParent() {
 		return parent;
 	}
 
 	/**
 	 * Unlinks the GameObject from its parent
 	 */
-	public void UnParent() {
+	public void unParent() {
 		if (parent != null) {
-			parent.GetChildren().remove(this);
+			parent.getChildren().remove(this);
 		} else {
 			System.out
 					.println("Can't unparent when object doesn't have a parent!");
@@ -88,15 +86,15 @@ public abstract class GameObject {
 	 * @param Parent
 	 *            - the GameObject to set as the parent
 	 */
-	public void SetParent(GameObject Parent) {
+	public void setParent(GameObject Parent) {
 		// Unparent from current parent first
 		if (parent != null)
-			UnParent();
+			unParent();
 		parent = Parent;
-		Parent.GetChildren().add(this);
+		Parent.getChildren().add(this);
 	}
 
-	public LinkedList<GameObject> GetChildren() {
+	public LinkedList<GameObject> getChildren() {
 		return children;
 	}
 
@@ -106,9 +104,9 @@ public abstract class GameObject {
 	 * @param child
 	 *            - the GameObject to be attached as a child
 	 */
-	public void AddChild(GameObject child) {
-		if (child.GetParent() == null) {
-			child.SetParent(this);
+	public void addChild(GameObject child) {
+		if (child.getParent() == null) {
+			child.setParent(this);
 		} else {
 			System.out.println("The specified object is already the child of another.");
 		}
@@ -120,9 +118,9 @@ public abstract class GameObject {
 	 * @param child
 	 *            - the GameObject to be unlinked from this GameObject
 	 */
-	public void RemoveChild(GameObject child) {
+	public void removeChild(GameObject child) {
 		if (children.contains(child)) {
-			child.UnParent();
+			child.unParent();
 		} else {
 			System.out.println("Object was not a child!");
 		}
@@ -131,13 +129,13 @@ public abstract class GameObject {
 	/**
 	 * @return the position of the GameObject with respect to the panel
 	 */
-	public Vec2 GetWorldPosition() {
+	public Vec2 getWorldPosition() {
 		Vec2 retVal = position;
 		GameObject currentParent = parent;
 
 		while (currentParent != null) {
 			retVal = retVal.plus(currentParent.position);
-			currentParent = currentParent.GetParent();
+			currentParent = currentParent.getParent();
 		}
 
 		return retVal;
@@ -146,7 +144,7 @@ public abstract class GameObject {
 	/**
 	 * @return Position of mouse scaled to game coordinates
 	 */
-	public Vec2 GetScaledMousePosition() {
+	public Vec2 getScaledMousePosition() {
 		Point mousePos = JPANEL.getMousePosition();
 		if (mousePos != null) {
 			float mx = (float) mousePos.x / JPANEL.getWidth();
@@ -160,11 +158,11 @@ public abstract class GameObject {
 	/**
 	 * @return List of all children of children of children
 	 */
-	public LinkedList<GameObject> GetChildrenRecursively() {
+	public LinkedList<GameObject> getChildrenRecursively() {
 		LinkedList<GameObject> allGameObject = new LinkedList<GameObject>();
 		for (GameObject obj : children) {
 			allGameObject.add(obj);
-			allGameObject.addAll(obj.GetChildrenRecursively());
+			allGameObject.addAll(obj.getChildrenRecursively());
 		}
 		return allGameObject;
 	}
@@ -172,13 +170,13 @@ public abstract class GameObject {
 	/**
 	 * @return true if item is actually visible (all parents are visible)
 	 */
-	public boolean IsVisible() {
+	public boolean isVisible() {
 		boolean retVal = visible;
 		GameObject currentParent = parent;
 
 		while (retVal && currentParent != null) {
 			retVal = currentParent.visible;
-			currentParent = currentParent.GetParent();
+			currentParent = currentParent.getParent();
 		}
 
 		return retVal;

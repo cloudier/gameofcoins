@@ -11,36 +11,34 @@ public class MainMenu extends UIObject {
 	private float height;
 	
 	public MainMenu() {
-		super();
-		
 		position = new Vec2(0.5f, 0.2f);
 		this.width = 0.04f;
 		this.height = 0.05f;
 		UIObject mainMenuNewGame = new MainMenuNewGame();
-		this.AddChild(mainMenuNewGame);
+		this.addChild(mainMenuNewGame);
 		//UIObject MainMenuExit = new MainMenuExit(); // exit button
 	}
 	
 	@Override
-	public boolean MouseSelected() {
+	public boolean mouseSelected() {
 		return false;
 	}
 
 	@Override
-	public void OnMouseDown() {
+	public void onMouseDown() {
 	}
 
 	@Override
-	public void OnMouseUp() {
+	public void onMouseUp() {
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
-		Vec2 worldPos = GetWorldPosition();
+	protected void onRender(Graphics2D g2d) {
+		Vec2 worldPos = getWorldPosition();
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
 

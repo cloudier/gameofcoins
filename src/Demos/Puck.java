@@ -21,12 +21,12 @@ public class Puck extends GameObject {
 		velocity = new Vec2(vx, vy);
 		
 		Moon moonChild = new Moon();
-		AddChild(moonChild);
+		addChild(moonChild);
 		
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 
 		position = position.plus(velocity);
 		
@@ -54,9 +54,9 @@ public class Puck extends GameObject {
 	}
 	
 	@Override
-	protected void OnRender(Graphics2D g2d) {
+	protected void onRender(Graphics2D g2d) {
 		
-		Vec2 worldPos = GetWorldPosition();
+		Vec2 worldPos = getWorldPosition();
 		
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());

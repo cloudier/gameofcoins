@@ -33,12 +33,12 @@ public class MainMenuNewGame extends UIObject {
 	}
 
 	@Override
-	public boolean MouseSelected() {
-		Vec2 mousePos = GetScaledMousePosition();
+	public boolean mouseSelected() {
+		Vec2 mousePos = getScaledMousePosition();
 		if (mousePos == null)
 			return false;
 
-		Vec2 worldPosition = GetWorldPosition();
+		Vec2 worldPosition = getWorldPosition();
 
 		if ((mousePos.x >= worldPosition.x - width/2 &&
 				mousePos.y >= worldPosition.y - height/2) &&
@@ -50,24 +50,24 @@ public class MainMenuNewGame extends UIObject {
 	}
 
 	@Override
-	public void OnMouseDown() {
+	public void onMouseDown() {
 	}
 
 	@Override
-	public void OnMouseUp() {
+	public void onMouseUp() {
 		System.out.println("Clicked");
 		GAME_MANAGER.activateMode();
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
-		Vec2 worldPos = GetWorldPosition();
+	protected void onRender(Graphics2D g2d) {
+		Vec2 worldPos = getWorldPosition();
 
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
@@ -75,13 +75,13 @@ public class MainMenuNewGame extends UIObject {
 		int pixelWidth = (int) (width * JPANEL.getWidth());
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
-		BufferedImage currentSprite = GetCurrentSprite();
+		BufferedImage currentSprite = getCurrentSprite();
 
 		g2d.drawImage(currentSprite, pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight, null);
 	}
 
-	BufferedImage GetCurrentSprite() {
-		if (MouseSelected())
+	BufferedImage getCurrentSprite() {
+		if (mouseSelected())
 			return hoverImage;
 		else
 			return normalImage;

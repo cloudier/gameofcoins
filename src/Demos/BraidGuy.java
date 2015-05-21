@@ -34,19 +34,19 @@ public class BraidGuy extends GameObject {
 	}
 
 	@Override
-	protected void OnUpdate() {
+	protected void onUpdate() {
 		
 	}
 
 	@Override
-	protected void OnRender(Graphics2D g2d) {
+	protected void onRender(Graphics2D g2d) {
 		
 		Dimension preferredSize = JPANEL.getPreferredSize();
 		
 		int panelWidth = JPANEL.getWidth();
 		int panelHeight = JPANEL.getHeight();
 		
-		Vec2 worldPos = GetWorldPosition();
+		Vec2 worldPos = getWorldPosition();
 		BufferedImage currentSprite = getCurrentSprite();
 		
 		int pixelX, pixelY, pixelWidth, pixelHeight;

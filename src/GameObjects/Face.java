@@ -25,8 +25,8 @@ public class Face extends GameObject {
 	public Vec2 mouthSize;
 	
 	@Override
-	protected void OnUpdate() {
-		Vec2 mouse = GetScaledMousePosition();
+	protected void onUpdate() {
+		Vec2 mouse = getScaledMousePosition();
 		if ( mouse != null ) {
 		System.out.println(mouse.x+" "+mouse.y); 
 		System.out.println(mouse.normalised().toString());
@@ -123,7 +123,7 @@ public class Face extends GameObject {
 	}
 	
 	@Override
-	protected void OnRender(Graphics2D g2d) {
+	protected void onRender(Graphics2D g2d) {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		int posX = 0;
 		int posY = 0;
