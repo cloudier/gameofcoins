@@ -18,13 +18,40 @@ public class Board extends UIObject{
 	private BufferedImage boardImg;
 	
 	public final int columns = 7;
+	public final int rows = 6;
+	
+	public Coin[][] coins; 
 	
 	public Board() {
+		
 		position = new Vec2(.1f, .1f);
 		
 		width = 1f * 0.8f;
 		height = .857f * 0.8f;
 		
+		
+		coins = new Coin[rows][columns];
+		
+		Vec2 cellSize = new Vec2(width/columns, height/rows);
+		Vec2 coinOffset = cellSize.scale(0.5f);
+		
+		for(int r = 0; r < rows; r++)
+		{
+			for(int c = 0; c < columns; c++)
+			{
+				Vec2 coinPos = new Vec2(cellSize.x*c, cellSize.y*r);
+				coinPos = coinPos.plus(coinOffset);
+				
+				coins[r][c] = new Coin();
+				coins[r][c].position = coinPos;
+				
+				System.out.println(cellSize);
+				
+				this.addChild(coins[r][c]);
+			}
+		}
+		
+
 		
 		try {
 			boardImg = ImageIO.read(new File("assets/board.png"));
@@ -50,7 +77,7 @@ public class Board extends UIObject{
 		if (mousePos == null) return;
 		
 		int column = (int) ((mousePos.x-position.x)/(width/columns));
-		
+		GAME_MANAGER.addCoin(column);
 		
 	}
 
@@ -76,5 +103,7 @@ public class Board extends UIObject{
 
 		// draw board background
 		g2d.drawImage(boardImg, pixelX, pixelY, pixelWidth, pixelHeight, null);
+		
+		
 	}
 }

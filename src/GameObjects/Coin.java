@@ -18,10 +18,10 @@ public class Coin extends UIObject {
 	
 	public Coin() {
 		circleRadius = .03f;
-		position = new Vec2(0f, 0.5f);
+		position = new Vec2();
 		
 		try {
-			image = ImageIO.read(new File("assets/blackCoin.png"));
+			image = ImageIO.read(new File("assets/red.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,8 +69,8 @@ public class Coin extends UIObject {
 			g2d.setColor(Color.BLACK);
 		}
 
-		g2d.drawOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
-				pixelWidth, pixelHeight);
+		g2d.drawImage(image, pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
+				pixelWidth, pixelHeight, null);
 
 	}
 

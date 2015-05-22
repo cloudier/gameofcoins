@@ -70,7 +70,9 @@ public class GameManager {
 			this.state = "players";
 		}
 	}
-	
+	public void addCoin (int column) {
+		boardModel.putCoin(column);
+	}
 	public void activateBoard(int numPlayers) {
 		boardModel.setNumPlayers(numPlayers);
 
