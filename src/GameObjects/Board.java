@@ -17,6 +17,8 @@ public class Board extends UIObject{
 	
 	private BufferedImage boardImg;
 	
+	public final int columns = 7;
+	
 	public Board() {
 		position = new Vec2(.1f, .1f);
 		
@@ -37,11 +39,20 @@ public class Board extends UIObject{
 	
 	@Override
 	public boolean mouseSelected() {
-		return false;
+		
+		return true;
 	}
 
 	@Override
-	public void onMouseDown() { }
+	public void onMouseDown() {
+		//Put coin in column
+		Vec2 mousePos = getScaledMousePosition();
+		if (mousePos == null) return;
+		
+		int column = (int) ((mousePos.x-position.x)/(width/columns));
+		
+		
+	}
 
 	@Override
 	public void onMouseUp() { }
