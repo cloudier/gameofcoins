@@ -16,7 +16,6 @@ public class Board extends UIObject{
 	private float width, height;
 	
 	private BufferedImage boardImg;
-	private ArrayList<BoardColumn> boardColumns;
 	
 	public Board() {
 		position = new Vec2(.1f, .1f);
@@ -24,7 +23,6 @@ public class Board extends UIObject{
 		width = 1f * 0.8f;
 		height = .857f * 0.8f;
 		
-		boardColumns = new ArrayList<BoardColumn>();
 		
 		try {
 			boardImg = ImageIO.read(new File("assets/board.png"));
@@ -34,9 +32,7 @@ public class Board extends UIObject{
 	}
 
 	public void makeColumns(int columns) {
-		for (int i = 0; i < columns; i++) {
-			boardColumns.add(new BoardColumn());
-		}
+		
 	}
 	
 	@Override
