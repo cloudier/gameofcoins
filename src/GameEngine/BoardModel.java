@@ -142,6 +142,6 @@ public class BoardModel {
 		return boardModel[r][c];
 	}
 
-	// get coins in given column
+	// get coins in given column and their colour
 	
 }
