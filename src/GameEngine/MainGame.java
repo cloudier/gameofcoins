@@ -1,7 +1,5 @@
 package gameEngine;
 
-import gameObjects.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
@@ -9,8 +7,6 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.JFrame;
-
-import demos.*;
 
 import java.util.*;
 

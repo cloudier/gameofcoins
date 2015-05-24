@@ -1,36 +1,33 @@
 package gameObjects;
 
-import gameEngine.UIObject;
-import gameEngine.Vec2;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
-//
-//import javax.imageio.ImageIO;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MainMenuNewGame extends UIObject {
+import gameEngine.GameObject;
+import gameEngine.UIObject;
+import gameEngine.Vec2;
 
-//	private BufferedImage normalImage;
-//	private BufferedImage hoverImage;
+public class ModeMenuVictoryNumber extends UIObject{
 
+	private int number;
 	private float width;
 	private float height;
+	private String stringOfNumber;
+	
 	private Font font;
-
-	public MainMenuNewGame() {
-		width = .2f;
+	
+	public ModeMenuVictoryNumber (int number) {
+		this.number = number;
+		this.stringOfNumber = Integer.toString(number);
+		width = .1f;
 		height = .1f;
-		position = new Vec2(0f, 0.5f);
-
+		
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {
@@ -40,15 +37,7 @@ public class MainMenuNewGame extends UIObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		try {
-//			normalImage = ImageIO.read(new File("assets/new game.png"));
-//			hoverImage = ImageIO.read(new File("assets/new game on hover.png"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
 	}
-
 	@Override
 	public boolean mouseSelected() {
 		Vec2 mousePos = getScaledMousePosition();
@@ -68,16 +57,23 @@ public class MainMenuNewGame extends UIObject {
 
 	@Override
 	public void onMouseDown() {
+		GameObject gameObjParent = this.getParent().getParent();
+		if (gameObjParent instanceof ModeMenu) {
+			ModeMenu parent = (ModeMenu) gameObjParent;
+			parent.setVictoryCondition(number);
+		} else {
+			System.err.println("Parent of parent is not instance of ModeMenu");
+		}
 	}
 
 	@Override
 	public void onMouseUp() {
-		System.out.println("Clicked");
-		GAME_MANAGER.activateMode();
+		
 	}
 
 	@Override
 	protected void onUpdate() {
+		
 	}
 
 	@Override
@@ -91,35 +87,26 @@ public class MainMenuNewGame extends UIObject {
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
 //		BufferedImage currentSprite = getCurrentSprite();
-
-//		g2d.drawImage(currentSprite, pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight, null);
 		
-		if (mouseSelected()) {
+		if (((ModeMenu) this.getParent().getParent()).getVictoryCondition() == number || mouseSelected()) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/13));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("new game")) / 2);
+	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
-			g2d.drawString("new game", pixelX - x, pixelY + y);			
-		} else {
+			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
+		} else if (((ModeMenu) this.getParent().getParent()).getVictoryCondition() != number) {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/13));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("new game")) / 2);
+	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
-			g2d.drawString("new game", pixelX - x, pixelY + y);
+			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
 		}
 	}
-
-//	BufferedImage getCurrentSprite() {
-//		if (mouseSelected())
-//			return hoverImage;
-//		else
-//			return normalImage;
-//	}
 
 }

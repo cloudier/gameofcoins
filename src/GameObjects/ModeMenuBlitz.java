@@ -1,36 +1,55 @@
 package gameObjects;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
+//
+//import javax.imageio.ImageIO;
 
-import javax.imageio.ImageIO;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import gameEngine.*;
 
 public class ModeMenuBlitz extends UIObject{
 	
-	private BufferedImage normalImage;
-	private BufferedImage hoverImage;
-	private BufferedImage selectedImage;
+//	private BufferedImage normalImage;
+//	private BufferedImage hoverImage;
+//	private BufferedImage selectedImage;
 	
 	private float width;
 	private float height;
+	private Font font;
 	
 	public ModeMenuBlitz() {
 		super();
 		width = .2f;
 		height = .1f;
-		position = new Vec2(width/2, 0.1f);
-
+		position = new Vec2(width/2, 0.15f);
+		
 		try {
-			normalImage = ImageIO.read(new File("assets/ModeMenu/BlitzUnselected.png"));
-			hoverImage = ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
-			selectedImage =  ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
+			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (FontFormatException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+//		try {
+//			normalImage = ImageIO.read(new File("assets/ModeMenu/BlitzUnselected.png"));
+//			hoverImage = ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
+//			selectedImage =  ImageIO.read(new File("assets/ModeMenu/BlitzSelected.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@Override
@@ -79,26 +98,43 @@ public class ModeMenuBlitz extends UIObject{
 		int pixelWidth = (int) (width * JPANEL.getWidth());
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
-		BufferedImage currentSprite = getCurrentSprite();
+//		BufferedImage currentSprite = getCurrentSprite();
 
-		g2d.drawImage(currentSprite, pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight, null);
-		
-	}
-
-	BufferedImage getCurrentSprite() {		
-		GameObject gameObjParent = this.getParent();
-		if (gameObjParent instanceof ModeMenu) {
-			ModeMenu parent = (ModeMenu) gameObjParent;
-			if (parent.getMode().equals("Blitz")) {
-				return selectedImage;
-			} else if (mouseSelected()) {
-				return hoverImage;
-			} else {
-				return normalImage;
-			}
-		} else {
-			System.err.println("Parent is not instance of ModeMenu");
-			return null;
+		if (((ModeMenu) this.getParent()).getMode().equals("Blitz") || mouseSelected()) {
+			g2d.setColor(Color.RED);
+			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
+			g2d.setColor(Color.BLACK);
+			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/15));
+			FontMetrics fm = g2d.getFontMetrics();
+	        int x = ((fm.stringWidth("Blitz")) / 2);
+	        int y = fm.getHeight()/4;
+			g2d.drawString("Blitz", pixelX - x, pixelY + y);				
+		} else if (!((ModeMenu) this.getParent()).getMode().equals("Blitz")) {
+			g2d.setColor(Color.BLUE);
+			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/15));
+			FontMetrics fm = g2d.getFontMetrics();
+	        int x = ((fm.stringWidth("Blitz")) / 2);
+	        int y = fm.getHeight()/4;
+			g2d.drawString("Blitz", pixelX - x, pixelY + y);
 		}
 	}
+
+//	BufferedImage getCurrentSprite() {		
+//		GameObject gameObjParent = this.getParent();
+//		if (gameObjParent instanceof ModeMenu) {
+//			ModeMenu parent = (ModeMenu) gameObjParent;
+//			if (parent.getMode().equals("Blitz")) {
+//				return selectedImage;
+//			} else if (mouseSelected()) {
+//				return hoverImage;
+//			} else {
+//				return normalImage;
+//			}
+//		} else {
+//			System.err.println("Parent is not instance of ModeMenu");
+//			return null;
+//		}
+//	}
 }

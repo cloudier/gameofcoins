@@ -15,8 +15,6 @@ public class CircleButton extends UIObject {
 
 	@Override
 	protected void onUpdate() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

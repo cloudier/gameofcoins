@@ -8,7 +8,6 @@ import gameEngine.Vec2;
 
 public class AnimatedCoin extends UIObject {
 	private Vec2 endPosition;
-	private int column;
 	private Color color;
 	private float circleRadius;
 	private boolean coinNotAdded;
@@ -19,7 +18,6 @@ public class AnimatedCoin extends UIObject {
 		super();
 		this.position = new Vec2();
 		this.endPosition = endPosition;
-		this.column = column;
 		this.circleRadius = .06f;
 		this.color = Color.BLACK;
 		this.coinNotAdded = true;
@@ -32,31 +30,23 @@ public class AnimatedCoin extends UIObject {
 	
 	@Override
 	public boolean mouseSelected() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void onMouseDown() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseUp() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void onUpdate() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
-		// TODO Auto-generated method stub
 		if (this.position.y < endPosition.y - ANIMATION_STEP) {
 			this.position = position.plus(new Vec2(0f, ANIMATION_STEP));
 			
@@ -71,9 +61,14 @@ public class AnimatedCoin extends UIObject {
 			g2d.setColor(this.color);
 			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
 					pixelWidth, pixelHeight);
-		} else if (coinNotAdded){
+			((Board) this.getParent()).setAnimated(true);
+		}
+		if ((this.position.y >= endPosition.y - ANIMATION_STEP * 2) && coinNotAdded){
 			coin.setColor(this.color);
 			coinNotAdded = false;
+		}
+		if (!coinNotAdded) {
+			((Board) this.getParent()).setAnimated(false);
 		}
 	}
 

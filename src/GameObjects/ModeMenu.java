@@ -3,7 +3,13 @@ import gameEngine.UIObject;
 import gameEngine.Vec2;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class ModeMenu extends UIObject{
@@ -14,9 +20,11 @@ public class ModeMenu extends UIObject{
 	private int victoryCondition;
 	private int boardWidth;
 	private int boardHeight;
+	
+	private Font font;
 
 	public ModeMenu() {
-		position = new Vec2(0.5f, 0.2f);
+		this.position = new Vec2(0.5f, 0.15f);
 		this.width = 0.04f;
 		this.height = 0.05f;
 
@@ -29,18 +37,32 @@ public class ModeMenu extends UIObject{
 		
 		addChild(modeMenuNormal);
 		addChild(modeMenuBlitz);
+		
+		this.victoryCondition = 4;
 		// select victory condition: 4 <= n <= 10
 		UIObject modeMenuVictory = new ModeMenuVictory();
+		addChild(modeMenuVictory);
 		
+		this.boardWidth = 7;
+		this.boardHeight = 6;
 		// select width of board: 4 <= n <= 20
 		// select height of board: 4 <= n <= 20
 		UIObject modeMenuBoard = new ModeMenuBoard();
+		addChild(modeMenuBoard);
 
 		// confirm settings and go to next window button		
 		UIObject modeMenuNext = new ModeMenuNext();
-		modeMenuNext.position = new Vec2(0f, 0.5f);
 		addChild(modeMenuNext);
 
+		try {
+			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getMode() {
@@ -120,8 +142,25 @@ public class ModeMenu extends UIObject{
 
 		g2d.setColor(Color.BLACK);
 		// replace this with an image
-		g2d.drawString("Game Settings", pixelX - width*JPANEL.getWidth(), pixelY);
-		g2d.drawString("Choose Mode", pixelX - width*JPANEL.getWidth(), pixelY + height*JPANEL.getHeight());
+
+		Font textFont = this.font.deriveFont(worldPos.x * JPANEL.getWidth()/5);
+		g2d.setFont(textFont);
+		FontMetrics fm = g2d.getFontMetrics();
+        int x = ((fm.stringWidth("Game Settings")) / 2);
+        int y = fm.getHeight()/4;
+		g2d.drawString("Game Settings", pixelX - x, pixelY);
+		
+		textFont = this.font.deriveFont(worldPos.x * JPANEL.getWidth()/15);
+		g2d.setFont(textFont);
+		fm = g2d.getFontMetrics();
+        x = ((fm.stringWidth("Choose Mode")) / 2);
+        y = fm.getHeight();
+		g2d.drawString("Choose Mode", pixelX - x, pixelY + y*2);
+        x = ((fm.stringWidth("Choose Victory Condition")) / 2);
+		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*6);
+        x = ((fm.stringWidth("Choose Board Width")) / 2);
+		g2d.drawString("Choose Board Width", pixelX - x, pixelY + y*10);
+
 	}
 
 }

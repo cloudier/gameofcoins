@@ -84,6 +84,10 @@ public class GameManager {
 		return boardModel.getBoard();
 	}
 	
+	public int getSlot(int row, int column) {
+		return boardModel.getCoin(row, column);
+	}
+	
 	public int getCurrentPlayer() {
 		return boardModel.getCurrentPlayer();
 	}

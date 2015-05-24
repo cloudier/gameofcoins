@@ -4,19 +4,14 @@ import gameEngine.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import java.util.*;
 
 public class Board extends UIObject {
 
-	private float width, height;
+	private float width;
+	private float height;
 	private Vec2 cellSize;
 	private Vec2 coinOffset;
+	private boolean animated;
 
 	// private BufferedImage boardImg;
 
@@ -40,6 +35,8 @@ public class Board extends UIObject {
 
 		cellSize = new Vec2(width / columns, height / rows);
 		coinOffset = cellSize.scale(0.5f);
+		
+		animated = false;
 
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
@@ -48,6 +45,7 @@ public class Board extends UIObject {
 
 				coins[r][c] = new Coin();
 				coins[r][c].position = coinPos;
+				coins[r][c].setColor(Color.WHITE);
 
 				this.addChild(coins[r][c]);
 			}
@@ -83,7 +81,7 @@ public class Board extends UIObject {
 					cellSize.y * (rows - 1 - GAME_MANAGER.getTopRow(column)));
 			endPosition = endPosition.plus(coinOffset);
 			AnimatedCoin animatedCoin = new AnimatedCoin(endPosition,
-					column, coins[GAME_MANAGER.getTopRow(column)][column]);
+					column, coins[rows - 1 - GAME_MANAGER.getTopRow(column)][column]);
 			animatedCoin.position = new Vec2(cellSize.x * column, cellSize.y * 0);
 			animatedCoin.position = animatedCoin.position.plus(coinOffset);
 			if (GAME_MANAGER.getCurrentPlayer() == 0) {
@@ -95,8 +93,17 @@ public class Board extends UIObject {
 			}
 			coins[rows - 1 - GAME_MANAGER.getTopRow(column)][column].setColor(Color.WHITE);
 			this.addChild(animatedCoin);
+			this.animated = true;
 			GAME_MANAGER.addCoin(column);
 		}
+	}
+
+	public boolean isAnimated() {
+		return animated;
+	}
+
+	public void setAnimated(boolean animated) {
+		this.animated = animated;
 	}
 
 	@Override
@@ -105,8 +112,6 @@ public class Board extends UIObject {
 
 	@Override
 	protected void onUpdate() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -124,23 +129,37 @@ public class Board extends UIObject {
 		// g2d.drawImage(boardImg, pixelX, pixelY, pixelWidth, pixelHeight, null);
 		g2d.setColor(Color.BLUE);
 		g2d.fillRect(pixelX, pixelY, pixelWidth, pixelHeight);
+		
+		if (mouseSelected()) {
+			Vec2 mousePos = getScaledMousePosition();
+			if (mousePos == null)
+				return;
 
-		int[][] modelCoins = GAME_MANAGER.getCoins();
-		Color coinColor;
-		// change this
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				if (modelCoins[r][c] == 0) {
-					coinColor = Color.WHITE;			
-				} else if (modelCoins[r][c] == 1) {
-					coinColor = Color.RED;										
-				} else if (modelCoins[r][c] == 2) {
-					coinColor = Color.YELLOW;										
-				} else {
-					coinColor = Color.WHITE;
+			for (int i = 0; i < columns; i++) {
+				if (GAME_MANAGER.getSlot(rows - 1, i) == 0) {
+					coins[0][i].setColor(Color.WHITE);				
 				}
-				coins[rows - r - 1][c].setColor(coinColor);
+			}
+			
+			
+			int column = (int) ((mousePos.x - position.x) / (width / columns));
+			if (column != 7 && 
+					coins[0][column] != null && 
+					coins[0][column].getColor().equals(Color.WHITE) &&
+					!animated) { // top row of column is empty
+				// set coin color to the color of the current player
+				if (GAME_MANAGER.getCurrentPlayer() == 0) {
+					coins[0][column].setColor(Color.WHITE);
+				} else if (GAME_MANAGER.getCurrentPlayer() == 1) {
+					coins[0][column].setColor(Color.RED);
+				} if (GAME_MANAGER.getCurrentPlayer() == 2) {
+					coins[0][column].setColor(Color.YELLOW);
+				}
 			}
 		}
+	}
+	
+	public void setCoinColor(int row, int column, Color color) {
+		coins[rows - row - 1][column].setColor(color);
 	}
 }
