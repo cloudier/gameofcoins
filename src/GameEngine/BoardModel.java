@@ -1,40 +1,65 @@
 package gameEngine;
 
 public class BoardModel {
-	
-	private static final int DEFAULT_ROWS = 6;
-	private static final int DEFAULT_COLUMNS = 7;
-	private static final int DEFAULT_NUM_PLAYERS = 2;
-	private static final int DEFAULT_STARTING_PLAYER = 1;
-	private static final int DEFAULT_VICTORY_CONDITION = 4;
 
 	private int[][] boardModel;
-	private int boardRow;
-	private int boardColumn;
+	private int rows;
+	private int columns;
 	private int victoryCondition;
 	private int numPlayers;
 	private int currentPlayer;
 	private boolean gameOver;
+	private String mode;
 
-	public BoardModel(int boardRow, int boardColumn, int victoryCondition,
-			int numPlayers, int currentPlayer) {
-		this.boardModel = new int[boardRow][boardColumn];
-		this.boardRow = boardRow;
-		this.boardColumn = boardColumn;
-		this.victoryCondition = victoryCondition;
-		this.numPlayers = numPlayers;
-		this.currentPlayer = currentPlayer;
+	public BoardModel() {
 		this.gameOver = false;
 	}
-	
-	public BoardModel(int boardRow, int boardColumn, int victoryCondition) {
-		this(boardRow, boardColumn, victoryCondition, DEFAULT_NUM_PLAYERS, DEFAULT_STARTING_PLAYER);
-	}
-	
-	public BoardModel() {
-		this(DEFAULT_ROWS, DEFAULT_COLUMNS, DEFAULT_VICTORY_CONDITION, DEFAULT_NUM_PLAYERS, DEFAULT_STARTING_PLAYER);
+	// make initialisation function
+	public void initialiseMode(int rows, int columns, int victoryCondition, String mode) {
+		this.rows = rows;
+		this.columns = columns;
+		this.boardModel = new int[rows][columns];
+		this.victoryCondition = victoryCondition;
+		this.mode = mode;		
 	}
 
+	public void initialisePlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
+		this.currentPlayer = 1;		
+	}
+	
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public int getVictoryCondition() {
+		return victoryCondition;
+	}
+
+	public void setVictoryCondition(int victoryCondition) {
+		this.victoryCondition = victoryCondition;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+	
+	public int getColumns() {
+		return columns;
+	}
+
+	public void setColumns(int columns) {
+		this.columns = columns;
+	}
+	
 	public void setNumPlayers(int numPlayers) {
 		this.numPlayers = numPlayers;
 	}
@@ -52,7 +77,7 @@ public class BoardModel {
 	public int getTopRow(int column) {
 		if (gameOver)
 			return -1;
-		for (int row = 0; row < this.boardRow; row++) {
+		for (int row = 0; row < this.rows; row++) {
 			if (boardModel[row][column] == 0) {
 				return row;
 			}
@@ -65,7 +90,7 @@ public class BoardModel {
 	public boolean putCoin(int column) {
 		if (gameOver)
 			return false;
-		for (int row = 0; row < this.boardRow; row++) {
+		for (int row = 0; row < this.rows; row++) {
 			if (boardModel[row][column] == 0) {
 				boardModel[row][column] = currentPlayer;
 				if (this.isVictorious(this.currentPlayer)) {
@@ -91,8 +116,8 @@ public class BoardModel {
 		int sum = 0;
 
 		// checks vertical
-		for (int c = 0; c < this.boardColumn; c++) {
-			for (int r = 0; r < this.boardRow; r++) {
+		for (int c = 0; c < this.columns; c++) {
+			for (int r = 0; r < this.rows; r++) {
 				if (boardModel[r][c] == currentPlayer) {
 					sum++;
 					if (sum == victoryCondition)
@@ -105,8 +130,8 @@ public class BoardModel {
 
 		// checks horizontal
 		sum = 0;
-		for (int r = 0; r < this.boardRow; r++) {
-			for (int c = 0; c < this.boardColumn; c++) {
+		for (int r = 0; r < this.rows; r++) {
+			for (int c = 0; c < this.columns; c++) {
 				if (boardModel[r][c] == currentPlayer) {
 					sum++;
 					if (sum == victoryCondition)
@@ -119,8 +144,8 @@ public class BoardModel {
 
 		// checks diagonal left
 		sum = 0;
-		for (int c = -this.boardRow; c < this.boardColumn; c++) {
-			for (int r = 0; r < this.boardRow; r++) {
+		for (int c = -this.rows; c < this.columns; c++) {
+			for (int r = 0; r < this.rows; r++) {
 
 				if (getCoin(r, c + r) == currentPlayer) {
 					sum++;
@@ -134,8 +159,8 @@ public class BoardModel {
 
 		// checks diagonal right
 		sum = 0;
-		for (int c = 0; c < this.boardColumn + this.boardRow; c++) {
-			for (int r = 0; r < this.boardRow; r++) {
+		for (int c = 0; c < this.columns + this.rows; c++) {
+			for (int r = 0; r < this.rows; r++) {
 
 				if (getCoin(r, c - r) == currentPlayer) {
 					sum++;
@@ -152,13 +177,9 @@ public class BoardModel {
 
 	// gets the coin in a given row and column
 	public int getCoin(int r, int c) {
-		if (r < 0 || c < 0 || r >= this.boardRow || c >= this.boardColumn)
+		if (r < 0 || c < 0 || r >= this.rows || c >= this.columns)
 			return 0;
 
 		return boardModel[r][c];
-	}
-
-	public int[][] getBoard() {
-		return boardModel;
 	}
 }

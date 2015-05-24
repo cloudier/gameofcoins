@@ -23,6 +23,14 @@ public class AnimatedCoin extends UIObject {
 		this.coinNotAdded = true;
 		this.coin = coin;
 	}
+	
+	public float getCircleRadius() {
+		return circleRadius;
+	}
+
+	public void setCircleRadius(float circleRadius) {
+		this.circleRadius = circleRadius;
+	}
 
 	public void setColor(Color color) {
 		this.color = color;

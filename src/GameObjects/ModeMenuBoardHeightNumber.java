@@ -9,20 +9,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import gameEngine.GameObject;
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
-public class PlayersMenuNext extends UIObject {
+public class ModeMenuBoardHeightNumber extends UIObject{
 
+	private int number;
 	private float width;
 	private float height;
-	private Font font;
-	// confirm settings and go to next window button
+	private String stringOfNumber;
 	
-	public PlayersMenuNext() {
-		this.position = new Vec2(0f, 0.75f);
-		this.width = 0.3f;
-		this.height = 0.1f;
+	private Font font;
+	
+	public ModeMenuBoardHeightNumber (int number) {
+		this.number = number;
+		this.stringOfNumber = Integer.toString(number);
+		width = .1f;
+		height = .1f;
+		
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {
@@ -33,7 +38,6 @@ public class PlayersMenuNext extends UIObject {
 			e.printStackTrace();
 		}
 	}
-	
 	@Override
 	public boolean mouseSelected() {
 		Vec2 mousePos = getScaledMousePosition();
@@ -53,17 +57,25 @@ public class PlayersMenuNext extends UIObject {
 
 	@Override
 	public void onMouseDown() {
-		((PlayersMenu) this.getParent()).activateBoard();
+		GameObject gameObjParent = this.getParent().getParent();
+		if (gameObjParent instanceof ModeMenu) {
+			ModeMenu parent = (ModeMenu) gameObjParent;
+			parent.setBoardHeight(number);
+		} else {
+			System.err.println("Parent of parent is not instance of ModeMenu");
+		}
 	}
 
 	@Override
 	public void onMouseUp() {
+		
 	}
 
 	@Override
 	protected void onUpdate() {
+		
 	}
-	
+
 	@Override
 	protected void onRender(Graphics2D g2d) {
 		Vec2 worldPos = getWorldPosition();
@@ -74,26 +86,27 @@ public class PlayersMenuNext extends UIObject {
 		int pixelWidth = (int) (width * JPANEL.getWidth());
 		int pixelHeight = (int) (height * JPANEL.getHeight());
 
-		if (mouseSelected()) {
+//		BufferedImage currentSprite = getCurrentSprite();
+		
+		if (((ModeMenu) this.getParent().getParent()).getBoardHeight() == number || mouseSelected()) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/10));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("confirm")) / 2);
+	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
-			g2d.drawString("confirm", pixelX - x, pixelY + y);			
-		} else {
+			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
+		} else if (((ModeMenu) this.getParent().getParent()).getBoardHeight() != number) {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/10));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("confirm")) / 2);
+	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
-			g2d.drawString("confirm", pixelX - x, pixelY + y);
+			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
 		}
-
 	}
 
 }

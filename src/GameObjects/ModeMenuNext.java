@@ -22,7 +22,7 @@ public class ModeMenuNext extends UIObject {
 	public ModeMenuNext() {
 		this.width = 0.3f;
 		this.height = 0.1f;
-		this.position = new Vec2(0f, 0.6f);
+		this.position = new Vec2(0f, 0.75f);
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {

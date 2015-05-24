@@ -10,9 +10,9 @@ public class Coin extends UIObject {
 	//private BufferedImage image;
 	private Color color;
 	private float circleRadius;
-	
+
 	public Coin() {
-		circleRadius = .06f;
+		//circleRadius = .06f;
 		position = new Vec2();
 		color = Color.WHITE;
 		/*try {
@@ -20,6 +20,14 @@ public class Coin extends UIObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}*/
+	}
+	
+	public float getCircleRadius() {
+		return circleRadius;
+	}
+
+	public void setCircleRadius(float circleRadius) {
+		this.circleRadius = circleRadius;
 	}
 	
 	public Color getColor() {

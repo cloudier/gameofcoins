@@ -47,8 +47,10 @@ public class ModeMenu extends UIObject{
 		this.boardHeight = 6;
 		// select width of board: 4 <= n <= 20
 		// select height of board: 4 <= n <= 20
-		UIObject modeMenuBoard = new ModeMenuBoard();
-		addChild(modeMenuBoard);
+		UIObject modeMenuBoardWidth = new ModeMenuBoardWidth();
+		addChild(modeMenuBoardWidth);
+		UIObject modeMenuBoardHeight = new ModeMenuBoardHeight();
+		addChild(modeMenuBoardHeight);
 
 		// confirm settings and go to next window button		
 		UIObject modeMenuNext = new ModeMenuNext();
@@ -150,7 +152,7 @@ public class ModeMenu extends UIObject{
         int y = fm.getHeight()/4;
 		g2d.drawString("Game Settings", pixelX - x, pixelY);
 		
-		textFont = this.font.deriveFont(worldPos.x * JPANEL.getWidth()/15);
+		textFont = this.font.deriveFont((float) JPANEL.getWidth()/33);
 		g2d.setFont(textFont);
 		fm = g2d.getFontMetrics();
         x = ((fm.stringWidth("Choose Mode")) / 2);
@@ -160,6 +162,8 @@ public class ModeMenu extends UIObject{
 		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*6);
         x = ((fm.stringWidth("Choose Board Width")) / 2);
 		g2d.drawString("Choose Board Width", pixelX - x, pixelY + y*10);
+        x = ((fm.stringWidth("Choose Board Height")) / 2);
+		g2d.drawString("Choose Board Height", pixelX - x, pixelY + y*14);
 
 	}
 

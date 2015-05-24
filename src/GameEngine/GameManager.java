@@ -18,6 +18,14 @@ public class GameManager {
 	 * if human choose coin colour/type.
 	 * board - game is running.
 	 */
+	
+	protected static final int DEFAULT_ROWS = 6;
+	protected static final int DEFAULT_COLUMNS = 7;
+	protected static final int DEFAULT_NUM_PLAYERS = 2;
+	protected static final int DEFAULT_STARTING_PLAYER = 1;
+	protected static final int DEFAULT_VICTORY_CONDITION = 4;
+	protected static final String DEFAULT_MODE = "Normal";
+	
 	private MainGame mainGame;
 
 	private String state;
@@ -35,7 +43,7 @@ public class GameManager {
 		this.modeMenu = new ModeMenu();
 		this.playersMenu = new PlayersMenu();
 		this.boardModel = new BoardModel();
-		this.board = new Board();
+		this.board = new Board(boardModel);
 		
 		mainGame.AddGameObject(mainMenu);
 		mainMenu.setActiveVisible(true);
@@ -43,8 +51,6 @@ public class GameManager {
 		modeMenu.setActiveVisible(false);
 		mainGame.AddGameObject(playersMenu);
 		playersMenu.setActiveVisible(false);
-		mainGame.AddGameObject(board);
-		board.setActiveVisible(false);
 	}
 
 	/**
@@ -62,8 +68,10 @@ public class GameManager {
 	}
 	
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
-		boardModel = new BoardModel(boardRows, boardColumns, victoryCondition);
-		board.makeColumns(boardColumns);
+		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
+		board.initialiseColumnsRows();
+		mainGame.AddGameObject(board);
+		board.setActiveVisible(false);
 		
 		if (state.equals("mode")) {
 			modeMenu.setActiveVisible(false);
@@ -71,29 +79,9 @@ public class GameManager {
 			this.state = "players";
 		}
 	}
-	
-	public int getTopRow(int column) {
-		return boardModel.getTopRow(column);
-	}
-	
-	public boolean addCoin (int column) {
-		return boardModel.putCoin(column);
-	}
-	
-	public int[][] getCoins() {
-		return boardModel.getBoard();
-	}
-	
-	public int getSlot(int row, int column) {
-		return boardModel.getCoin(row, column);
-	}
-	
-	public int getCurrentPlayer() {
-		return boardModel.getCurrentPlayer();
-	}
-	
+
 	public void activateBoard(int numPlayers) {
-		boardModel.setNumPlayers(numPlayers);
+		boardModel.initialisePlayers(numPlayers);
 
 		// make players
 		
