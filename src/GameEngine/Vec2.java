@@ -12,8 +12,7 @@ package gameEngine;
 public final class Vec2 {
 
 	public Vec2() {
-		this.x = 0;
-		this.y = 0;
+		this(0, 0);
 	}
 	
 	public Vec2(float x, float y) {

@@ -34,16 +34,17 @@ public class GameManager {
 		this.mainMenu = new MainMenu(); // active and visible
 		this.modeMenu = new ModeMenu();
 		this.playersMenu = new PlayersMenu();
+		this.boardModel = new BoardModel();
 		this.board = new Board();
 		
 		mainGame.AddGameObject(mainMenu);
-		mainMenu.setActiveVisible(false);
+		mainMenu.setActiveVisible(true);
 		mainGame.AddGameObject(modeMenu);
 		modeMenu.setActiveVisible(false);
 		mainGame.AddGameObject(playersMenu);
 		playersMenu.setActiveVisible(false);
 		mainGame.AddGameObject(board);
-		board.setActiveVisible(true);
+		board.setActiveVisible(false);
 	}
 
 	/**
@@ -70,9 +71,23 @@ public class GameManager {
 			this.state = "players";
 		}
 	}
-	public void addCoin (int column) {
-		boardModel.putCoin(column);
+	
+	public int getTopRow(int column) {
+		return boardModel.getTopRow(column);
 	}
+	
+	public boolean addCoin (int column) {
+		return boardModel.putCoin(column);
+	}
+	
+	public int[][] getCoins() {
+		return boardModel.getBoard();
+	}
+	
+	public int getCurrentPlayer() {
+		return boardModel.getCurrentPlayer();
+	}
+	
 	public void activateBoard(int numPlayers) {
 		boardModel.setNumPlayers(numPlayers);
 

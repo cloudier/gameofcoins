@@ -43,20 +43,34 @@ public class BoardModel {
 		this.currentPlayer = currentPlayer;
 	}
 
-	// put coin into the board
-	public void putCoin(int column) {
+	public int getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+
+	// returns row that coin would be placed in
+	// else returns -1
+	public int getTopRow(int column) {
 		if (gameOver)
-			return;
-		System.out.println(gameOver);
+			return -1;
+		for (int row = 0; row < this.boardRow; row++) {
+			if (boardModel[row][column] == 0) {
+				return row;
+			}
+		}
+		
+		return -1;
+	}
+	
+	// put coin into the board
+	public boolean putCoin(int column) {
+		if (gameOver)
+			return false;
 		for (int row = 0; row < this.boardRow; row++) {
 			if (boardModel[row][column] == 0) {
 				boardModel[row][column] = currentPlayer;
-				// System.out.println("Put coin in " + String.valueOf(row) + ","
-				// + String.valueOf(column) + " by " + this.currentPlayer);
 				if (this.isVictorious(this.currentPlayer)) {
 					System.out.println(this.currentPlayer + " won!");
 					gameOver = true;
-					// resetGame();
 				}
 
 				if (currentPlayer == numPlayers) {
@@ -65,9 +79,11 @@ public class BoardModel {
 					currentPlayer++;
 				}
 
-				return;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
 	// check if a player wins
@@ -142,6 +158,7 @@ public class BoardModel {
 		return boardModel[r][c];
 	}
 
-	// get coins in given column and their colour
-	
+	public int[][] getBoard() {
+		return boardModel;
+	}
 }

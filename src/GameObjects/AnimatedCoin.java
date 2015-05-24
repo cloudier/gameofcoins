@@ -2,31 +2,30 @@ package gameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
-public class Coin extends UIObject {
-	//private BufferedImage image;
+public class AnimatedCoin extends UIObject {
+	private Vec2 endPosition;
+	private int column;
 	private Color color;
 	private float circleRadius;
+	private boolean coinNotAdded;
+	private static float ANIMATION_STEP = 0.04f;
+	private Coin coin;
 	
-	public Coin() {
-		circleRadius = .06f;
-		position = new Vec2();
-		color = Color.WHITE;
-		/*try {
-			image = ImageIO.read(new File("assets/red.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+	public AnimatedCoin(Vec2 endPosition, int column, Coin coin) {
+		super();
+		this.position = new Vec2();
+		this.endPosition = endPosition;
+		this.column = column;
+		this.circleRadius = .06f;
+		this.color = Color.BLACK;
+		this.coinNotAdded = true;
+		this.coin = coin;
 	}
-	
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -58,7 +57,9 @@ public class Coin extends UIObject {
 	@Override
 	protected void onRender(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		if (this.color != null) {
+		if (this.position.y < endPosition.y - ANIMATION_STEP) {
+			this.position = position.plus(new Vec2(0f, ANIMATION_STEP));
+			
 			Vec2 worldPos = getWorldPosition();
 
 			int pixelX = (int) (worldPos.x * JPANEL.getWidth());
@@ -70,6 +71,9 @@ public class Coin extends UIObject {
 			g2d.setColor(this.color);
 			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
 					pixelWidth, pixelHeight);
+		} else if (coinNotAdded){
+			coin.setColor(this.color);
+			coinNotAdded = false;
 		}
 	}
 

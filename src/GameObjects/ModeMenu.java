@@ -11,6 +11,9 @@ public class ModeMenu extends UIObject{
 	private float height;
 
 	private String mode;
+	private int victoryCondition;
+	private int boardWidth;
+	private int boardHeight;
 
 	public ModeMenu() {
 		position = new Vec2(0.5f, 0.2f);
@@ -27,15 +30,17 @@ public class ModeMenu extends UIObject{
 		addChild(modeMenuNormal);
 		addChild(modeMenuBlitz);
 		// select victory condition: 4 <= n <= 10
-//		UIObject modeMenuVictory = new ModeMenuVictory();
+		UIObject modeMenuVictory = new ModeMenuVictory();
 		
-//		UIObject modeMenuBoard = new ModeMenuBoard();
 		// select width of board: 4 <= n <= 20
-		
 		// select height of board: 4 <= n <= 20
-		
-//		UIObject modeMenuNext = new ModeMenuNext();
-		// confirm settings and go to next window button
+		UIObject modeMenuBoard = new ModeMenuBoard();
+
+		// confirm settings and go to next window button		
+		UIObject modeMenuNext = new ModeMenuNext();
+		modeMenuNext.position = new Vec2(0f, 0.5f);
+		addChild(modeMenuNext);
+
 	}
 	
 	public String getMode() {
@@ -44,6 +49,50 @@ public class ModeMenu extends UIObject{
 
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+	
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public void setVictoryCondition(int victoryCondition) {
+		this.victoryCondition = victoryCondition;
+	}
+
+	public void setBoardWidth(int boardWidth) {
+		this.boardWidth = boardWidth;
+	}
+
+	public void setBoardHeight(int boardHeight) {
+		this.boardHeight = boardHeight;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public int getVictoryCondition() {
+		return victoryCondition;
+	}
+
+	public int getBoardWidth() {
+		return boardWidth;
+	}
+
+	public int getBoardHeight() {
+		return boardHeight;
+	}
+
+	public void activatePlayers() {
+		GAME_MANAGER.activatePlayers(mode, boardHeight, boardWidth, victoryCondition);
 	}
 
 	@Override
@@ -72,7 +121,7 @@ public class ModeMenu extends UIObject{
 		g2d.setColor(Color.BLACK);
 		// replace this with an image
 		g2d.drawString("Game Settings", pixelX - width*JPANEL.getWidth(), pixelY);
-		g2d.drawString("Choose Mode", pixelX - width*JPANEL.getWidth(), pixelY);
+		g2d.drawString("Choose Mode", pixelX - width*JPANEL.getWidth(), pixelY + height*JPANEL.getHeight());
 	}
 
 }
