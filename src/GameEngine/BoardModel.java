@@ -117,6 +117,8 @@ public class BoardModel {
 
 		// checks vertical
 		for (int c = 0; c < this.columns; c++) {
+			sum = 0;
+			
 			for (int r = 0; r < this.rows; r++) {
 				if (boardModel[r][c] == currentPlayer) {
 					sum++;
@@ -129,8 +131,9 @@ public class BoardModel {
 		}
 
 		// checks horizontal
-		sum = 0;
 		for (int r = 0; r < this.rows; r++) {
+			sum = 0;
+
 			for (int c = 0; c < this.columns; c++) {
 				if (boardModel[r][c] == currentPlayer) {
 					sum++;
@@ -143,8 +146,9 @@ public class BoardModel {
 		}
 
 		// checks diagonal left
-		sum = 0;
 		for (int c = -this.rows; c < this.columns; c++) {
+			sum = 0;
+			
 			for (int r = 0; r < this.rows; r++) {
 
 				if (getCoin(r, c + r) == currentPlayer) {
@@ -158,8 +162,9 @@ public class BoardModel {
 		}
 
 		// checks diagonal right
-		sum = 0;
 		for (int c = 0; c < this.columns + this.rows; c++) {
+			sum = 0;
+			
 			for (int r = 0; r < this.rows; r++) {
 
 				if (getCoin(r, c - r) == currentPlayer) {
