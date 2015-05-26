@@ -215,8 +215,12 @@ public class Board extends UIObject {
 					coins[0][column].setColor(Color.WHITE);
 				} else if (boardModel.getCurrentPlayer() == 1) {
 					coins[0][column].setColor(Color.RED);
-				} if (boardModel.getCurrentPlayer() == 2) {
+				} else if (boardModel.getCurrentPlayer() == 2) {
 					coins[0][column].setColor(Color.YELLOW);
+				} else if (boardModel.getCurrentPlayer() == 3) {
+					coins[0][column].setColor(Color.GREEN);
+				} else if (boardModel.getCurrentPlayer() == 4) {
+					coins[0][column].setColor(Color.MAGENTA);
 				}
 			}
 		}

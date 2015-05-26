@@ -9,7 +9,6 @@ public class Player {
 	private String name;
 	private int boardValue;
 	private Color coinColor;
-//	private Image image;
 	
 	public Player (String name, int boardValue, Color coinColor, PlayerType playerType) {
 		this.name = name;

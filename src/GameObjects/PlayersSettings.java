@@ -17,25 +17,15 @@ public class PlayersSettings extends UIObject {
 	private int id;
 	private float width;
 	private float height;
-	private Font font;
 	private Player player;
 	private PlayersSettingsType type;
 	private PlayersSettingsColor color;
 
 	public PlayersSettings(int id) {
+		super();
 		this.id = id;
 		this.width = 0.3f;
 		this.height = 0.1f;
-
-		try {
-			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public boolean nextStage() {

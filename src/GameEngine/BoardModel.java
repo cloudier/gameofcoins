@@ -126,6 +126,7 @@ public class BoardModel {
 		for (int row = 0; row < this.rows; row++) {
 			if (boardModel[row][column] == 0) {
 				boardModel[row][column] = currentPlayer;
+				System.out.println("row " + row + " column " + column);
 				if (this.isVictorious(this.currentPlayer) || isFilled()) {
 					gameOver = true;
 				}
@@ -135,6 +136,7 @@ public class BoardModel {
 				} else {
 					currentPlayer++;
 				}
+				return;
 			}
 		}
 	}
