@@ -12,7 +12,8 @@ package gameEngine;
 public final class Vec2 {
 
 	public Vec2() {
-		this(0, 0);
+		this.x = 0;
+		this.y = 0;
 	}
 	
 	public Vec2(float x, float y) {
@@ -43,6 +44,18 @@ public final class Vec2 {
 		return new Vec2((float)newX, (float)newY);
 	}
 	
+	public Vec2 rotateLeft() {
+		return new Vec2(-this.y, this.x);
+	}
+	
+	public Vec2 rotateRight() {
+		return new Vec2(this.y, -this.x);
+	}
+	
+	public Vec2 flip() {
+		return new Vec2(-this.x, -this.y);
+	}
+	
 	public float magnitude() {
 		return (float)Math.sqrt(x*x + y*y);
 	}
@@ -54,6 +67,15 @@ public final class Vec2 {
 	
 	public Vec2 rotatedByDeg(float degrees) {
 		return rotatedByRad(degrees * (float)Math.PI / 180f);
+	}
+	
+	public float dot(Vec2 other) {
+		return this.x * other.x + this.y * other.y;
+	}
+	
+	public Vec2 project(Vec2 direction) {
+		Vec2 dir = direction.normalised();
+		return dir.scale(dir.dot(this));
 	}
 	
 	public String toString() { 

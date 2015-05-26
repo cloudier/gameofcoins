@@ -21,6 +21,7 @@ public abstract class GameObject {
 	public static JPanel JPANEL;
 	public static int TICK_RATE;
 	public static GameManager GAME_MANAGER;
+	public static ImageStore IMAGE_STORE = new ImageStore();
 
 	public Vec2 position = new Vec2();
 	public boolean active = true; // If true, the object executes OnUpdate every
@@ -139,6 +140,33 @@ public abstract class GameObject {
 		}
 
 		return retVal;
+	}
+	
+	/**
+	 * @return the position of the GameObject with respect to the panel
+	 */
+	public Vec2 getWorldPosition(Vec2 Position)
+	{
+		Vec2 retVal = Position;
+		GameObject currentParent = parent;
+		
+		while(currentParent != null) {
+			retVal = retVal.plus(currentParent.position);
+			currentParent = currentParent.getParent();
+		}
+		
+		return retVal;
+	}
+	
+	/**
+	 * Sets the position of the GameObject such that it
+	 * is located at the specified world position
+	 */
+	public void setWorldPosition(Vec2 WorldPosition)
+	{
+		Vec2 oldWorldPos = getWorldPosition();
+		Vec2 displacement = WorldPosition.minus(oldWorldPos);
+		position = position.plus(displacement);
 	}
 
 	/**
