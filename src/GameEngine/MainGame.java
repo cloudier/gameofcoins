@@ -15,8 +15,6 @@ public class MainGame {
 	public final static int TICK_RATE = 1000 / 60; // 60 times per second
 
 	public MainGame() {
-
-		// Initialize window
 		gamePanel = new JPanel(false);
 		mainFrame = new JFrame("Game of Coins");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,31 +107,6 @@ public class MainGame {
 		GameObject.TICK_RATE = TICK_RATE;
 		gameManager = new GameManager(this);
 		GameObject.GAME_MANAGER = this.gameManager;
-
-		// Initialize game objects
-		
-//		for (int i = 0; i < 10; i++) {
-//			Puck p = new Puck();
-//			gameObjectList.add(p);
-//		}
-
-		 //60 draws without lag
-//		 for(int y = 0; y < 2; y++)
-//		 {
-//		 for(int x = 0; x < 2; x++)
-//		 {
-//		 BraidGuy bg = new BraidGuy();
-//		 bg.position = new Vec2(x*0.1f, y*0.1f);
-//		 gameObjectList.add(bg);
-//		 }
-//		 }
-
-//		 Face fa = new Face();
-//		 gameObjectList.add(fa);
-
-		// CircleButton crc = new CircleButton();
-		// AddGameObject(crc);
-
 	}
 
 	private void GameTick() {

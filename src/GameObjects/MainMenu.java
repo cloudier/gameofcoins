@@ -12,13 +12,9 @@ import java.io.*;
 
 public class MainMenu extends UIObject {
 	private Font font;
-	private int pixelShiftX;
-	private int pixelShiftY;
 	
 	public MainMenu() {
-		position = new Vec2(0.5f, 0.15f);
-		pixelShiftX = 0;
-		pixelShiftY = 0;
+		position = new Vec2(0.5f, 0.3f);
 		UIObject mainMenuNewGame = new MainMenuNewGame();
 		this.addChild(mainMenuNewGame);
 		//UIObject MainMenuExit = new MainMenuExit(); // exit button
@@ -56,53 +52,13 @@ public class MainMenu extends UIObject {
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
 		
-		Vec2 mousePos = getScaledMousePosition();
-		if (mousePos == null) {
-			if (pixelShiftX < 0) {
-				pixelShiftX += 1;
-			} else if (pixelShiftX > 0) {
-				pixelShiftX -= 1;
-			}
-			
-			if (pixelShiftY < 0) {
-				pixelShiftY += 1;
-			} else if (pixelShiftY > 0) {
-				pixelShiftY -= 1;
-			}
-			
-			g2d.setColor(Color.BLACK);
-			// replace this with an image
-			Font headerFont = this.font.deriveFont((float) JPANEL.getWidth()/5);
-			g2d.setFont(headerFont);
-			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("Connect 4")) / 2);
-			g2d.drawString("Connect 4", pixelX - x + pixelShiftX, pixelY + pixelShiftY);		
-		} else {
-			float shiftX = -mousePos.x/64;
-			float shiftY = -mousePos.y/64;
-			float currentPixelShiftX = (int) (shiftX * JPANEL.getWidth());
-			float currentPixelShiftY = (int) (shiftY * JPANEL.getHeight());
-			
-			if (pixelShiftX < currentPixelShiftX) {
-				pixelShiftX += 1;
-			} else if (pixelShiftX > currentPixelShiftX) {
-				pixelShiftX -= 1;
-			}
-
-			if (pixelShiftY < currentPixelShiftY) {
-				pixelShiftY += 1;
-			} else if (pixelShiftY > currentPixelShiftY) {
-				pixelShiftY -= 1;
-			}
-			
-			g2d.setColor(Color.BLACK);
-			// replace this with an image
-			Font headerFont = this.font.deriveFont((float) JPANEL.getWidth()/5);
-			g2d.setFont(headerFont);
-			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth("Connect 4")) / 2);
-			g2d.drawString("Connect 4", pixelX - x + pixelShiftX, pixelY + pixelShiftY);
-		}
+		g2d.setColor(Color.BLACK);
+		// replace this with an image
+		Font headerFont = this.font.deriveFont((float) JPANEL.getWidth()/5);
+		g2d.setFont(headerFont);
+		FontMetrics fm = g2d.getFontMetrics();
+        int x = ((fm.stringWidth("Connect 4")) / 2);
+		g2d.drawString("Connect 4", pixelX - x, pixelY);
 	}
 
 }

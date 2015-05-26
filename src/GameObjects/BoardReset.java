@@ -8,5 +8,7 @@ public class BoardReset extends Button {
 		super(width, height, position, string);
 	}
 
-	
+	public void onMouseDown() {
+		GAME_MANAGER.activateReset();
+	}
 }

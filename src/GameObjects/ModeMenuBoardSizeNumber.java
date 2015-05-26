@@ -67,7 +67,9 @@ public class ModeMenuBoardSizeNumber extends UIObject{
 			ModeMenu parent = (ModeMenu) gameObjParent;
 			parent.setBoardWidth(boardWidth);
 			parent.setBoardHeight(boardHeight);
-			parent.checkVictory();
+			if (parent.getVictoryCondition() > parent.maxAllowedVictory()) {
+				parent.setVictoryCondition(parent.maxAllowedVictory());
+			}
 		} else {
 			System.err.println("Parent of parent is not instance of ModeMenu");
 		}

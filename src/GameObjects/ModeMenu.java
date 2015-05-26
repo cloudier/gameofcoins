@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// move positions into this class
 
 public class ModeMenu extends UIObject{
 	private float width;
@@ -22,6 +23,10 @@ public class ModeMenu extends UIObject{
 	private int boardHeight;
 	
 	private Font font;
+	
+	private UIObject modeMenuNormal;
+	private UIObject modeMenuBlitz;
+	private UIObject back;
 
 	public ModeMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
@@ -32,8 +37,8 @@ public class ModeMenu extends UIObject{
 		//UIObject modeMenuSelect = new ModeMenuSelect();
 		
 		this.mode = "Normal";
-		UIObject modeMenuNormal = new ModeMenuNormal();
-		UIObject modeMenuBlitz = new ModeMenuBlitz();
+		modeMenuNormal = new ModeMenuNormal();
+		modeMenuBlitz = new ModeMenuBlitz();
 		
 		addChild(modeMenuNormal);
 		addChild(modeMenuBlitz);
@@ -50,9 +55,13 @@ public class ModeMenu extends UIObject{
 		UIObject modeMenuBoardSize = new ModeMenuBoardSize();
 		addChild(modeMenuBoardSize);
 
-		// confirm settings and go to next window button		
-		UIObject modeMenuNext = new ModeMenuNext();
+		// confirm settings and go to next window button
+		Button modeMenuNext = new ModeMenuNext(0.3f, 0.1f, new Vec2(0f, 0.775f), "Confirm");
 		addChild(modeMenuNext);
+		modeMenuNext.position = new Vec2(0f, 0.775f);
+		
+		back = new BackButton(0.1f, 0.1f, new Vec2(-0.35f, 0.775f));
+		addChild(back);
 
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
@@ -112,12 +121,6 @@ public class ModeMenu extends UIObject{
 		return 4;
 	}
 	
-	public void checkVictory() {
-		if (this.boardWidth == 7 && this.boardHeight == 6) victoryCondition = 4;
-		if (this.boardWidth == 14 && this.boardHeight == 12) victoryCondition = 5;
-		if (this.boardWidth == 21 && this.boardHeight == 18) victoryCondition = 7;
-	}
-	
 	public int getBoardWidth() {
 		return boardWidth;
 	}
@@ -163,16 +166,16 @@ public class ModeMenu extends UIObject{
         int y = fm.getHeight()/4;
 		g2d.drawString("Game Settings", pixelX - x, pixelY);
 		
-		textFont = this.font.deriveFont((float) JPANEL.getWidth()/33);
+		textFont = this.font.deriveFont((float) JPANEL.getWidth()/20);
 		g2d.setFont(textFont);
 		fm = g2d.getFontMetrics();
         x = ((fm.stringWidth("Choose Mode")) / 2);
         y = fm.getHeight();
-		g2d.drawString("Choose Mode", pixelX - x, pixelY + y*2);
+		g2d.drawString("Choose Mode", pixelX - x, pixelY + y*1);
         x = ((fm.stringWidth("Choose Victory Condition")) / 2);
-		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*6);
+		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*4);
         x = ((fm.stringWidth("Choose Board Size")) / 2);
-		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*10);
+		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*8);
 	}
 
 }

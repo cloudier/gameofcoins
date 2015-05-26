@@ -9,9 +9,9 @@ public class PlayersSettingsType extends UIObject {
 	private PlayersSettingsTypeAI ai;
 	
 	public PlayersSettingsType() {
-		human = new PlayersSettingsTypeHuman(0.2f, 0.1f, new Vec2(), "Human");
+		human = new PlayersSettingsTypeHuman(0.3f, 0.1f, new Vec2(0.1f, 0), "Human");
 		addChild(human);
-		ai = new PlayersSettingsTypeAI(0.1f, 0.1f, new Vec2(0.15f, 0), "AI");
+		ai = new PlayersSettingsTypeAI(0.2f, 0.1f, new Vec2(0.35f, 0), "AI");
 		addChild(ai);
 	}
 

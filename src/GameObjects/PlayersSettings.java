@@ -38,6 +38,13 @@ public class PlayersSettings extends UIObject {
 		}
 	}
 
+	public boolean nextStage() {
+		if (type.isVisible() == true) {
+			
+		}
+		return false;
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -87,6 +94,7 @@ public class PlayersSettings extends UIObject {
 			constructColor();
 		} else if (player != null && id >= 3) {
 			this.player = null;
+			type.setActiveVisible(false);
 		}
 	}
 
@@ -135,9 +143,9 @@ public class PlayersSettings extends UIObject {
 				g2d.setColor(Color.BLACK);
 				g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/20));
 				FontMetrics fm = g2d.getFontMetrics();
-		        int x = ((fm.stringWidth("Add player")) / 2);
+		        int x = ((fm.stringWidth("Join")) / 2);
 		        int y = fm.getHeight()/4;
-				g2d.drawString("Add player", pixelX - x, pixelY + y);			
+				g2d.drawString("Join", pixelX - x, pixelY + y);			
 			} else {
 				g2d.setColor(Color.BLUE);
 				g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
@@ -149,8 +157,8 @@ public class PlayersSettings extends UIObject {
 			        int x = ((fm.stringWidth(player.getName())) / 2);
 					g2d.drawString(player.getName(), pixelX - x, pixelY + y);			
 		        } else {
-			        int x = ((fm.stringWidth("Add player")) / 2);
-					g2d.drawString("Add player", pixelX - x, pixelY + y);			
+			        int x = ((fm.stringWidth("Join")) / 2);
+					g2d.drawString("Join", pixelX - x, pixelY + y);			
 		        }
 			}
 		}

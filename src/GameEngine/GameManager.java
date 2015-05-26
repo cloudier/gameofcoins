@@ -30,7 +30,7 @@ public class GameManager {
 	
 	private MainGame mainGame;
 
-	private String state;
+	private GameState state;
 	private MainMenu mainMenu;
 	private ModeMenu modeMenu;
 	private PlayersMenu playersMenu;
@@ -40,7 +40,7 @@ public class GameManager {
 	
 	public GameManager(MainGame mg) {
 		mainGame = mg;
-		this.state = "start";
+		this.state = GameState.START;
 		this.mainMenu = new MainMenu(); // active and visible
 		this.modeMenu = new ModeMenu();
 		this.playersMenu = new PlayersMenu();
@@ -62,41 +62,67 @@ public class GameManager {
 	 * @param boardColumns
 	 */
 	public void activateMode() {
-		if (state.equals("start")) {
-			mainMenu.setActiveVisible(false);
-			modeMenu.setActiveVisible(true);
-			state = "mode";
-		}
+		mainMenu.setActiveVisible(false);
+		modeMenu.setActiveVisible(true);
+		state = GameState.nextState(state);
 	}
 	
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
 		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
 		board.initialiseColumnsRows();
-		mainGame.AddGameObject(board);
-		board.setActiveVisible(false);
 		
-		if (state.equals("mode")) {
-			modeMenu.setActiveVisible(false);
-			playersMenu.setActiveVisible(true);
-			this.state = "players";
-		}
+		mainGame.AddGameObject(board);
+		board.setActiveVisible(false);			
+		
+		modeMenu.setActiveVisible(false);
+		playersMenu.setActiveVisible(true);
+		state = GameState.nextState(state);
 	}
 
 	public void activateBoard(int numPlayers, HashMap<Integer, Player> players) {
+		boardModel.initialiseMode(boardModel.getRows(), boardModel.getColumns(),
+				boardModel.getVictoryCondition(), boardModel.getMode());
+		board.initialiseColumnsRows();
 		boardModel.initialisePlayers(numPlayers, players);
 		
-		if (state.equals("players")) {
-			playersMenu.setActiveVisible(false);
-			board.setActiveVisible(true);
-			this.state = "board";			
-		}
+		mainGame.AddGameObject(board);
+		board.setActiveVisible(false);
+		
+		playersMenu.setActiveVisible(false);
+		board.setActiveVisible(true);
+		state = GameState.nextState(state);			
 	}
 
 	public void activateStart() { // go back to start menu
-		if (state.equals("board")) {
-			board.setActiveVisible(false);
+		board.setActiveVisible(false);
+		mainMenu.setActiveVisible(true);
+		state = GameState.nextState(state);			
+	}
+	
+	public void back() {
+		if (state == GameState.START) {
+			mainMenu.setActiveVisible(false);
+			board.setActiveVisible(true);
+		} else if (state == GameState.MODE) {
+			modeMenu.setActiveVisible(false);
 			mainMenu.setActiveVisible(true);
-			state = "start";			
+		} else if (state == GameState.PLAYERS) {
+			playersMenu.setActiveVisible(false);
+			modeMenu.setActiveVisible(true);
+		} else if (state == GameState.BOARD) {
+			board.setActiveVisible(false);
+			playersMenu.setActiveVisible(true);
+			board = new Board(boardModel);
 		}
+		state = GameState.prevState(state);
+	}
+	
+	public void activateReset() {
+		boardModel.reset();
+		board.reset();
+	}
+	
+	public void victorious(int id) {
+		board.victorious(id);
 	}
 }

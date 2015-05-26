@@ -22,6 +22,8 @@ public class PlayersMenu extends UIObject {
 	private PlayersMenuNext playersMenuNext;
 	private Font font;
 	
+	private Button back;
+	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.numPlayers = 2;
@@ -49,8 +51,10 @@ public class PlayersMenu extends UIObject {
 		this.addChild(four);
 		four.setPlayer(null);
 		
-		this.playersMenuNext = new PlayersMenuNext();
+		this.playersMenuNext = new PlayersMenuNext(0.3f, 0.1f, new Vec2(0f, 0.775f), "Confirm");
 		this.addChild(playersMenuNext);
+		back = new BackButton(0.1f, 0.1f, new Vec2(-0.35f, 0.775f));
+		addChild(back);
 		
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
@@ -64,7 +68,13 @@ public class PlayersMenu extends UIObject {
 	}
 
 	public void activateBoard() {
-		GAME_MANAGER.activateBoard(numPlayers, players);
+		if (one.nextStage() == false) {			
+			GAME_MANAGER.activateBoard(numPlayers, players);
+		} else {
+			two.nextStage();
+			three.nextStage();
+			four.nextStage();
+		}
 	}
 	
 	public Player makePlayer(int id){

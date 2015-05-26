@@ -13,12 +13,31 @@ public class BoardModel {
 	private int numPlayers;
 	private int currentPlayer;
 	private boolean gameOver;
+	private boolean draw;
 	private String mode;
 
 	public BoardModel() {
 		this.gameOver = false;
+		this.draw = false;
 	}
-	// make initialisation function
+
+	public boolean gameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+	
+	public boolean isDraw() {
+		return draw;
+	}
+
+	public void reset() {
+		boardModel = new int[rows][columns];
+		gameOver = false;
+	}
+	
 	public void initialiseMode(int rows, int columns, int victoryCondition, String mode) {
 		this.rows = rows;
 		this.columns = columns;
@@ -90,15 +109,24 @@ public class BoardModel {
 		return -1;
 	}
 	
+	public boolean isFilled() {
+		for (int i = 0; i < columns; i++) {
+			if (getTopRow(i) != -1) {
+				return false;
+			}
+		}
+		draw = true;
+		return true;
+	}
+	
 	// put coin into the board
-	public boolean putCoin(int column) {
+	public void putCoin(int column) {
 		if (gameOver)
-			return false;
+			return;
 		for (int row = 0; row < this.rows; row++) {
 			if (boardModel[row][column] == 0) {
 				boardModel[row][column] = currentPlayer;
-				if (this.isVictorious(this.currentPlayer)) {
-					System.out.println(this.currentPlayer + " won!");
+				if (this.isVictorious(this.currentPlayer) || isFilled()) {
 					gameOver = true;
 				}
 
@@ -107,12 +135,12 @@ public class BoardModel {
 				} else {
 					currentPlayer++;
 				}
-
-				return true;
 			}
 		}
-		
-		return false;
+	}
+
+	public void setDraw(boolean draw) {
+		this.draw = draw;
 	}
 
 	// check if a player wins

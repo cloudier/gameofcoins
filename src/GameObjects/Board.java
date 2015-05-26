@@ -13,6 +13,7 @@ public class Board extends UIObject {
 	private Vec2 cellSize;
 	private Vec2 coinOffset;
 	private boolean animated;
+	private boolean gameOver;
 
 	// private BufferedImage boardImg;
 
@@ -26,19 +27,39 @@ public class Board extends UIObject {
 	private UIObject back;
 	private UIObject menu;
 	
+	private UIObject victory;
+	private UIObject draw;
+	
 	public Board(BoardModel boardModel) {
 
 		this.boardModel = boardModel;
 		position = new Vec2(0.01f, 0.01f);
 		animated = false;
 		
-		menu = new BoardMainMenu(0.3f, 0.1f, new Vec2(0.3f, 0.91f), "Main Menu");
+		float x = 0.14f;
+		menu = new BoardMainMenu(0.3f, 0.1f, new Vec2(x + 0.25f, 0.915f), "Main Menu");
 		this.addChild(menu);
-
+		reset = new BoardReset(0.3f, 0.1f, new Vec2(x + 0.6f, 0.915f), "Restart");
+		this.addChild(reset);
+		back = new BackButton(0.1f, 0.1f, new Vec2(x, 0.915f));
+		this.addChild(back);
+		
 		/*
 		 * try { boardImg = ImageIO.read(new File("assets/board.png")); } catch
 		 * (IOException e) { e.printStackTrace(); }
 		 */
+	}
+	
+	public void isDraw() {
+		gameOver = true;
+		draw = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Draw!");
+		addChild(draw);
+	}
+	
+	public void victorious(int id) {
+		gameOver = true;
+		victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Player " + id + " wins!");
+		addChild(victory);
 	}
 
 	public void initialiseColumnsRows() {
@@ -68,6 +89,18 @@ public class Board extends UIObject {
 			}
 		}
 	}
+	
+	public void reset() {
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				coins[r][c].setColor(Color.WHITE);
+			}
+		}
+		gameOver = false;
+		if (victory != null) {
+			victory.setActiveVisible(false);
+		}
+	}
 
 	@Override
 	public boolean mouseSelected() {
@@ -94,11 +127,13 @@ public class Board extends UIObject {
 			return;
 
 		int column = (int) ((mousePos.x - position.x) / (width / columns));
+
 		// animation for dropping coin
 		if (boardModel.getTopRow(column) != -1) {
 			Vec2 endPosition = new Vec2(cellSize.x * column,
 					cellSize.y * (rows - 1 - boardModel.getTopRow(column)));
 			endPosition = endPosition.plus(coinOffset);
+			
 			AnimatedCoin animatedCoin = new AnimatedCoin(endPosition,
 					column, coins[rows - 1 - boardModel.getTopRow(column)][column]);
 			animatedCoin.setCircleRadius(this.circleRadius);
@@ -115,6 +150,14 @@ public class Board extends UIObject {
 			this.addChild(animatedCoin);
 			this.animated = true;
 			boardModel.putCoin(column);
+			
+			if (boardModel.gameOver()) {
+				if (boardModel.isDraw()) {
+					isDraw();
+				} else {
+					victorious(boardModel.getCurrentPlayer());
+				}
+			}
 		}
 	}
 
@@ -163,10 +206,10 @@ public class Board extends UIObject {
 			
 			
 			int column = (int) ((mousePos.x - position.x) / (width / columns));
-			if (column < column && column > 0 && 
+			if (column < columns && column >= 0 && 
 					coins[0][column] != null && 
 					coins[0][column].getColor().equals(Color.WHITE) &&
-					!animated) { // top row of column is empty
+					!gameOver && !animated) { // top row of column is empty
 				// set coin color to the color of the current player
 				if (boardModel.getCurrentPlayer() == 0) {
 					coins[0][column].setColor(Color.WHITE);
