@@ -1,5 +1,7 @@
 package gameEngine;
 
+import java.util.*;
+
 import gameObjects.*;
 
 /**
@@ -80,14 +82,8 @@ public class GameManager {
 		}
 	}
 
-	public void activateBoard(int numPlayers) {
-		boardModel.initialisePlayers(numPlayers);
-
-		// make players
-		
-		// set player types
-		// set AI difficulties
-		// set human chars
+	public void activateBoard(int numPlayers, HashMap<Integer, Player> players) {
+		boardModel.initialisePlayers(numPlayers, players);
 		
 		if (state.equals("players")) {
 			playersMenu.setActiveVisible(false);

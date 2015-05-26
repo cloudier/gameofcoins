@@ -1,5 +1,9 @@
 package gameEngine;
 
+import gameObjects.*;
+
+import java.util.*;
+
 public class BoardModel {
 
 	private int[][] boardModel;
@@ -23,9 +27,9 @@ public class BoardModel {
 		this.mode = mode;		
 	}
 
-	public void initialisePlayers(int numPlayers) {
+	public void initialisePlayers(int numPlayers, HashMap<Integer, Player> players) {
 		this.numPlayers = numPlayers;
-		this.currentPlayer = 1;		
+		this.currentPlayer = 1;
 	}
 	
 	public String getMode() {

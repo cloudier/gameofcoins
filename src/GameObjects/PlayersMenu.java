@@ -10,23 +10,44 @@ import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.*;
 
 public class PlayersMenu extends UIObject {
 	private int numPlayers;
+	private HashMap<Integer, Player> players;
+	private PlayersSettings one;
+	private PlayersSettings two;
+	private PlayersSettings three;
+	private PlayersSettings four;
 	private PlayersMenuNext playersMenuNext;
 	private Font font;
 	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.numPlayers = 2;
-		// player 1 object
-			// select name
-			// select human/ai
-			// select difficulty
-			// select coin color
-		// player 2 object
-		// player 3 object
-		// player 4 object
+		
+		players = new HashMap<Integer, Player>(5);
+		players.put(1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
+		players.put(2, new Player("Player 2", 2, Color.RED, PlayerType.HUMAN));
+		players.put(3, null);
+		players.put(4, null);
+		
+		one = new PlayersSettings(1);
+		one.position = new Vec2(0f, 0.15f);
+		one.setPlayer(players.get(1));
+		this.addChild(one);
+		two = new PlayersSettings(2);
+		two.position = new Vec2(0f, 0.3f);
+		two.setPlayer(players.get(2));
+		this.addChild(two);
+		three = new PlayersSettings(3);
+		three.position = new Vec2(0f, 0.45f);
+		three.setPlayer(null);
+		this.addChild(three);
+		four = new PlayersSettings(4);
+		four.position = new Vec2(0f, 0.6f);
+		this.addChild(four);
+		four.setPlayer(null);
 		
 		this.playersMenuNext = new PlayersMenuNext();
 		this.addChild(playersMenuNext);
@@ -43,7 +64,11 @@ public class PlayersMenu extends UIObject {
 	}
 
 	public void activateBoard() {
-		GAME_MANAGER.activateBoard(numPlayers);
+		GAME_MANAGER.activateBoard(numPlayers, players);
+	}
+	
+	public void makePlayer(int id){
+		
 	}
 	
 	@Override
@@ -76,8 +101,6 @@ public class PlayersMenu extends UIObject {
 		FontMetrics fm = g2d.getFontMetrics();
         int x = ((fm.stringWidth("Player Settings")) / 2);
 		g2d.drawString("Player Settings", pixelX - x, pixelY);
-		
-		
 	}
 
 }

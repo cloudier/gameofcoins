@@ -93,7 +93,6 @@ public class ModeMenuNext extends UIObject {
 	        int y = fm.getHeight()/4;
 			g2d.drawString("confirm", pixelX - x, pixelY + y);
 		}
-
 	}
 
 }
