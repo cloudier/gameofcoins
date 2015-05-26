@@ -2,12 +2,24 @@ package gameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
 public class Coin extends UIObject {
-	//private BufferedImage image;
+	private static BufferedImage image;
+	static {
+		try {
+			image = ImageIO.read(new File("assets/red.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private Color color;
 	private float circleRadius;
 
@@ -15,11 +27,7 @@ public class Coin extends UIObject {
 		//circleRadius = .06f;
 		position = new Vec2();
 		color = Color.WHITE;
-		/*try {
-			image = ImageIO.read(new File("assets/red.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+
 	}
 	
 	public float getCircleRadius() {
@@ -68,8 +76,10 @@ public class Coin extends UIObject {
 			int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 
 			g2d.setColor(this.color);
-			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
-					pixelWidth, pixelHeight);
+//			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
+//					pixelWidth, pixelHeight);
+			g2d.drawImage(image, pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
+					pixelWidth, pixelHeight, null);
 		}
 	}
 
