@@ -4,7 +4,7 @@ import gameObjects.*;
 
 import java.util.*;
 
-public class BoardModel {
+public class BoardState {
 
 	private int[][] boardModel;
 	private int rows;
@@ -16,7 +16,7 @@ public class BoardModel {
 	private boolean draw;
 	private String mode;
 
-	public BoardModel() {
+	public BoardState() {
 		this.gameOver = false;
 		this.draw = false;
 	}

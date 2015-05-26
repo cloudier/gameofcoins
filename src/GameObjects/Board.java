@@ -17,7 +17,7 @@ public class Board extends UIObject {
 
 	// private BufferedImage boardImg;
 
-	private BoardModel boardModel;
+	private BoardState boardModel;
 	private int columns;
 	private int rows;
 
@@ -30,7 +30,7 @@ public class Board extends UIObject {
 	private UIObject victory;
 	private UIObject draw;
 	
-	public Board(BoardModel boardModel) {
+	public Board(BoardState boardModel) {
 
 		this.boardModel = boardModel;
 		position = new Vec2(0.01f, 0.01f);

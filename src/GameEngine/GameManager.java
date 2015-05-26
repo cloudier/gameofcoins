@@ -36,7 +36,7 @@ public class GameManager {
 	private PlayersMenu playersMenu;
 	private Board board;
 
-	private BoardModel boardModel;
+	private BoardState boardModel;
 	
 	public GameManager(MainGame mg) {
 		mainGame = mg;
@@ -44,7 +44,7 @@ public class GameManager {
 		this.mainMenu = new MainMenu(); // active and visible
 		this.modeMenu = new ModeMenu();
 		this.playersMenu = new PlayersMenu();
-		this.boardModel = new BoardModel();
+		this.boardModel = new BoardState();
 		this.board = new Board(boardModel);
 		
 		mainGame.AddGameObject(mainMenu);
