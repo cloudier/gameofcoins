@@ -12,6 +12,7 @@ public class BoardModel {
 	private int victoryCondition;
 	private int numPlayers;
 	private int currentPlayer;
+	private int initPlayer;
 	private boolean gameOver;
 	private String mode;
 
@@ -29,7 +30,8 @@ public class BoardModel {
 
 	public void initialisePlayers(int numPlayers, HashMap<Integer, Player> players) {
 		this.numPlayers = numPlayers;
-		this.currentPlayer = 1;
+		this.initPlayer = initPlayer;
+		this.currentPlayer = initPlayer;
 	}
 	
 	public String getMode() {
@@ -103,7 +105,7 @@ public class BoardModel {
 				}
 
 				if (currentPlayer == numPlayers) {
-					currentPlayer = 1;
+					currentPlayer = initPlayer;
 				} else {
 					currentPlayer++;
 				}

@@ -28,24 +28,24 @@ public class PlayersMenu extends UIObject {
 		
 		players = new HashMap<Integer, Player>(5);
 		players.put(1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
-		players.put(2, new Player("Player 2", 2, Color.RED, PlayerType.HUMAN));
+		players.put(2, new Player("Player 2", 2, Color.YELLOW, PlayerType.HUMAN));
 		players.put(3, null);
 		players.put(4, null);
 		
 		one = new PlayersSettings(1);
-		one.position = new Vec2(0f, 0.15f);
+		one.position = new Vec2(-0.3f, 0.15f);
 		one.setPlayer(players.get(1));
 		this.addChild(one);
 		two = new PlayersSettings(2);
-		two.position = new Vec2(0f, 0.3f);
+		two.position = new Vec2(-0.3f, 0.3f);
 		two.setPlayer(players.get(2));
 		this.addChild(two);
 		three = new PlayersSettings(3);
-		three.position = new Vec2(0f, 0.45f);
+		three.position = new Vec2(-0.3f, 0.45f);
 		three.setPlayer(null);
 		this.addChild(three);
 		four = new PlayersSettings(4);
-		four.position = new Vec2(0f, 0.6f);
+		four.position = new Vec2(-0.3f, 0.6f);
 		this.addChild(four);
 		four.setPlayer(null);
 		
@@ -67,8 +67,22 @@ public class PlayersMenu extends UIObject {
 		GAME_MANAGER.activateBoard(numPlayers, players);
 	}
 	
-	public void makePlayer(int id){
-		
+	public Player makePlayer(int id){
+		this.numPlayers++;
+		Color c = null;
+		if (id == 3) {
+			c = Color.GREEN;
+		} else if (id == 4) {
+			c = Color.MAGENTA;
+		}
+		Player p = new Player("Player " + id, id, c, PlayerType.HUMAN);
+		players.put(id, p);
+		return p;
+	}
+	
+	public void deletePlayer(int id) {
+		this.numPlayers--;
+		players.put(id, null);
 	}
 	
 	@Override
@@ -96,7 +110,7 @@ public class PlayersMenu extends UIObject {
 
 		g2d.setColor(Color.BLACK);
 		// replace this with an image
-		Font headerFont = this.font.deriveFont(worldPos.x * JPANEL.getWidth()/5);
+		Font headerFont = this.font.deriveFont((float) JPANEL.getWidth()/10);
 		g2d.setFont(headerFont);
 		FontMetrics fm = g2d.getFontMetrics();
         int x = ((fm.stringWidth("Player Settings")) / 2);
