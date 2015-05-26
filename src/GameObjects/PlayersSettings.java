@@ -20,6 +20,7 @@ public class PlayersSettings extends UIObject {
 	private Font font;
 	private Player player;
 	private PlayersSettingsType type;
+	private PlayersSettingsColor color;
 
 	public PlayersSettings(int id) {
 		this.id = id;
@@ -45,13 +46,22 @@ public class PlayersSettings extends UIObject {
 		this.player = player;
 		
 		if (player != null) {
-			this.type = new PlayersSettingsType();
-			type.position = new Vec2(0.3f, 0f);
-			addChild(type);
+			constructType();
+			constructColor();
 		}
-		// make players setting color
+	}
+
+	private void constructType() {
+		this.type = new PlayersSettingsType();
+		type.position = new Vec2(0.24f, 0f);
+		addChild(type);
 	}
 	
+	private void constructColor() {
+		this.color = new PlayersSettingsColor();
+		color.position = new Vec2(0.6f, 0f);
+		addChild(color);
+	}
 	@Override
 	public boolean mouseSelected() {
 		Vec2 mousePos = getScaledMousePosition();
@@ -73,11 +83,8 @@ public class PlayersSettings extends UIObject {
 	public void onMouseDown() {
 		if (player == null) {
 			this.player = ((PlayersMenu) this.getParent()).makePlayer(id);
-			// make PlayersSettingsType
-			this.type = new PlayersSettingsType();
-			type.position = new Vec2(0.24f, 0f);
-			addChild(type);
-			// make PlayersSettingsColor
+			constructType();
+			constructColor();
 		} else if (player != null && id >= 3) {
 			this.player = null;
 		}

@@ -30,8 +30,7 @@ public class BoardModel {
 
 	public void initialisePlayers(int numPlayers, HashMap<Integer, Player> players) {
 		this.numPlayers = numPlayers;
-		this.initPlayer = initPlayer;
-		this.currentPlayer = initPlayer;
+		this.currentPlayer = 1;
 	}
 	
 	public String getMode() {
@@ -105,7 +104,7 @@ public class BoardModel {
 				}
 
 				if (currentPlayer == numPlayers) {
-					currentPlayer = initPlayer;
+					currentPlayer = 1;
 				} else {
 					currentPlayer++;
 				}
