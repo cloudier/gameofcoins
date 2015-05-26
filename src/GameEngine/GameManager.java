@@ -92,7 +92,7 @@ public class GameManager {
 		}
 	}
 
-	public void activateStart() { // game has finished or is being reset - go back to start menu? maybe go back to mode
+	public void activateStart() { // go back to start menu
 		if (state.equals("board")) {
 			board.setActiveVisible(false);
 			mainMenu.setActiveVisible(true);

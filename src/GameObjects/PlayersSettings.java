@@ -53,7 +53,7 @@ public class PlayersSettings extends UIObject {
 
 	private void constructType() {
 		this.type = new PlayersSettingsType();
-		type.position = new Vec2(0.24f, 0f);
+		type.position = new Vec2(0.3f, 0f);
 		addChild(type);
 	}
 	

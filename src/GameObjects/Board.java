@@ -22,11 +22,18 @@ public class Board extends UIObject {
 
 	public Coin[][] coins;
 	
+	private UIObject reset;
+	private UIObject back;
+	private UIObject menu;
+	
 	public Board(BoardModel boardModel) {
 
 		this.boardModel = boardModel;
 		position = new Vec2(0.01f, 0.01f);
 		animated = false;
+		
+		menu = new BoardMainMenu(0.3f, 0.1f, new Vec2(0.3f, 0.91f), "Main Menu");
+		this.addChild(menu);
 
 		/*
 		 * try { boardImg = ImageIO.read(new File("assets/board.png")); } catch
@@ -38,15 +45,9 @@ public class Board extends UIObject {
 		this.rows = boardModel.getRows();
 		this.columns = boardModel.getColumns();
 		
-		if (columns >= rows) {
-			width = 0.98f;		
-			circleRadius = width / columns / 2 - 0.01f;
-			height = (circleRadius + 0.01f) * 2 * rows;
-		} else {
-			height = 0.9f;		
-			circleRadius = height / rows / 2 - 0.01f;
-			width = (circleRadius + 0.01f) * 2 * columns;
-		}
+		width = 0.98f;
+		circleRadius = width / columns / 2 - 0.01f;
+		height = (circleRadius + 0.01f) * 2 * rows;
 		
 		coins = new Coin[rows][columns];
 
@@ -70,7 +71,19 @@ public class Board extends UIObject {
 
 	@Override
 	public boolean mouseSelected() {
-		return true;
+		Vec2 mousePos = getScaledMousePosition();
+		if (mousePos == null)
+			return false;
+
+		Vec2 worldPosition = getWorldPosition();
+
+		if ((mousePos.x >= worldPosition.x - width &&
+				mousePos.y >= worldPosition.y - height) &&
+				(mousePos.x <= worldPosition.x + width) &&
+				(mousePos.y <= worldPosition.y + height)) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

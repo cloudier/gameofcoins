@@ -12,7 +12,6 @@ public class BoardModel {
 	private int victoryCondition;
 	private int numPlayers;
 	private int currentPlayer;
-	private int initPlayer;
 	private boolean gameOver;
 	private String mode;
 

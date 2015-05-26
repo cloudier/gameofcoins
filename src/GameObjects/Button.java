@@ -76,7 +76,7 @@ public class Button extends UIObject {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/10));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/20));
 			FontMetrics fm = g2d.getFontMetrics();
 	        int x = ((fm.stringWidth(string)) / 2);
 	        int y = fm.getHeight()/4;
@@ -85,7 +85,7 @@ public class Button extends UIObject {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
-			g2d.setFont(this.font.deriveFont(worldPos.x * JPANEL.getWidth()/10));
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/20));
 			FontMetrics fm = g2d.getFontMetrics();
 	        int x = ((fm.stringWidth(string)) / 2);
 	        int y = fm.getHeight()/4;
