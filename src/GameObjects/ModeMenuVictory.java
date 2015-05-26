@@ -11,40 +11,25 @@ public class ModeMenuVictory extends UIObject {
 	private ModeMenuVictoryNumber five;
 	private ModeMenuVictoryNumber six;
 	private ModeMenuVictoryNumber seven;
-	private ModeMenuVictoryNumber eight;
-	private ModeMenuVictoryNumber nine;
-	private ModeMenuVictoryNumber ten;
 	
 	public ModeMenuVictory() {
 		position = new Vec2(0, 0.3f);
-		// 4 <= n <= 10
+		// 4 <= n <= 7
 		four = new ModeMenuVictoryNumber(4);
 		addChild(four);
-		four.position = new Vec2(-0.295f, 0f);
+		four.position = new Vec2(-0.15f, 0f);
 
 		five = new ModeMenuVictoryNumber(5);
 		addChild(five);
-		five.position = new Vec2(-0.2f, 0f);
+		five.position = new Vec2(-0.05f, 0f);
 		
 		six = new ModeMenuVictoryNumber(6);
 		addChild(six);
-		six.position = new Vec2(-0.1f, 0f);
+		six.position = new Vec2(0.05f, 0f);
 
 		seven = new ModeMenuVictoryNumber(7);
 		addChild(seven);
-		seven.position = new Vec2(0.0f, 0f);
-
-		eight = new ModeMenuVictoryNumber(8);
-		addChild(eight);
-		eight.position = new Vec2(0.1f, 0f);
-
-		nine = new ModeMenuVictoryNumber(9);
-		addChild(nine);
-		nine.position = new Vec2(+0.2f, 0f);
-
-		ten = new ModeMenuVictoryNumber(10);
-		addChild(ten);
-		ten.position = new Vec2(+0.3f, 0f);
+		seven.position = new Vec2(0.15f, 0f);
 	}
 	
 	@Override

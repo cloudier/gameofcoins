@@ -88,7 +88,16 @@ public class ModeMenuVictoryNumber extends UIObject{
 
 //		BufferedImage currentSprite = getCurrentSprite();
 		
-		if (((ModeMenu) this.getParent().getParent()).getVictoryCondition() == number || mouseSelected()) {
+		if (checkAllowed()) {
+			g2d.setColor(Color.GRAY);
+			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
+			FontMetrics fm = g2d.getFontMetrics();
+	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
+	        int y = fm.getHeight()/4;
+			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
+		} else if (checkSelected() || mouseSelected()) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
@@ -97,7 +106,7 @@ public class ModeMenuVictoryNumber extends UIObject{
 	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
 			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
-		} else if (((ModeMenu) this.getParent().getParent()).getVictoryCondition() != number) {
+		} else if (!checkSelected()) {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
@@ -109,4 +118,11 @@ public class ModeMenuVictoryNumber extends UIObject{
 		}
 	}
 
+	private boolean checkAllowed() {
+		return this.number > ((ModeMenu) this.getParent().getParent()).maxAllowedVictory();
+	}
+	
+	private boolean checkSelected() {
+		return ((ModeMenu) this.getParent().getParent()).getVictoryCondition() == number;
+	}
 }

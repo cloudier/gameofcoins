@@ -47,10 +47,8 @@ public class ModeMenu extends UIObject{
 		this.boardHeight = 6;
 		// select width of board: 4 <= n <= 20
 		// select height of board: 4 <= n <= 20
-		UIObject modeMenuBoardWidth = new ModeMenuBoardWidth();
-		addChild(modeMenuBoardWidth);
-		UIObject modeMenuBoardHeight = new ModeMenuBoardHeight();
-		addChild(modeMenuBoardHeight);
+		UIObject modeMenuBoardSize = new ModeMenuBoardSize();
+		addChild(modeMenuBoardSize);
 
 		// confirm settings and go to next window button		
 		UIObject modeMenuNext = new ModeMenuNext();
@@ -106,7 +104,20 @@ public class ModeMenu extends UIObject{
 	public int getVictoryCondition() {
 		return victoryCondition;
 	}
-
+	
+	public int maxAllowedVictory() {
+		if (this.boardWidth == 7 && this.boardHeight == 6) return 4;
+		if (this.boardWidth == 14 && this.boardHeight == 12) return 5;
+		if (this.boardWidth == 21 && this.boardHeight == 18) return 7;
+		return 4;
+	}
+	
+	public void checkVictory() {
+		if (this.boardWidth == 7 && this.boardHeight == 6) victoryCondition = 4;
+		if (this.boardWidth == 14 && this.boardHeight == 12) victoryCondition = 5;
+		if (this.boardWidth == 21 && this.boardHeight == 18) victoryCondition = 7;
+	}
+	
 	public int getBoardWidth() {
 		return boardWidth;
 	}
@@ -160,11 +171,8 @@ public class ModeMenu extends UIObject{
 		g2d.drawString("Choose Mode", pixelX - x, pixelY + y*2);
         x = ((fm.stringWidth("Choose Victory Condition")) / 2);
 		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*6);
-        x = ((fm.stringWidth("Choose Board Width")) / 2);
-		g2d.drawString("Choose Board Width", pixelX - x, pixelY + y*10);
-        x = ((fm.stringWidth("Choose Board Height")) / 2);
-		g2d.drawString("Choose Board Height", pixelX - x, pixelY + y*14);
-
+        x = ((fm.stringWidth("Choose Board Size")) / 2);
+		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*10);
 	}
 
 }

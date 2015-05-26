@@ -13,19 +13,24 @@ import gameEngine.GameObject;
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
-public class ModeMenuBoardHeightNumber extends UIObject{
+public class ModeMenuBoardSizeNumber extends UIObject{
 
-	private int number;
+	private int boardHeight;
+	private String stringOfBoardHeight;
+	private int boardWidth;
+	private String stringOfBoardWidth;
+
 	private float width;
 	private float height;
-	private String stringOfNumber;
 	
 	private Font font;
 	
-	public ModeMenuBoardHeightNumber (int number) {
-		this.number = number;
-		this.stringOfNumber = Integer.toString(number);
-		width = .1f;
+	public ModeMenuBoardSizeNumber (int boardWidth, int boardHeight) {
+		this.boardWidth = boardWidth;
+		this.stringOfBoardWidth = Integer.toString(boardWidth);
+		this.boardHeight = boardHeight;
+		this.stringOfBoardHeight = Integer.toString(boardHeight);
+		width = .2f;
 		height = .1f;
 		
 		try {
@@ -60,7 +65,9 @@ public class ModeMenuBoardHeightNumber extends UIObject{
 		GameObject gameObjParent = this.getParent().getParent();
 		if (gameObjParent instanceof ModeMenu) {
 			ModeMenu parent = (ModeMenu) gameObjParent;
-			parent.setBoardHeight(number);
+			parent.setBoardWidth(boardWidth);
+			parent.setBoardHeight(boardHeight);
+			parent.checkVictory();
 		} else {
 			System.err.println("Parent of parent is not instance of ModeMenu");
 		}
@@ -88,25 +95,30 @@ public class ModeMenuBoardHeightNumber extends UIObject{
 
 //		BufferedImage currentSprite = getCurrentSprite();
 		
-		if (((ModeMenu) this.getParent().getParent()).getBoardHeight() == number || mouseSelected()) {
+		if (checkSelected() || mouseSelected()) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
 			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
-	        int y = fm.getHeight()/4;
-			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
-		} else if (((ModeMenu) this.getParent().getParent()).getBoardHeight() != number) {
+			int x = ((fm.stringWidth(stringOfBoardWidth + "x" + stringOfBoardHeight)) / 2);
+		    int y = fm.getHeight()/4;
+			g2d.drawString(stringOfBoardWidth + "x" + stringOfBoardHeight, pixelX - x, pixelY + y);			
+		} else if (!checkSelected()) {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/30));
 			FontMetrics fm = g2d.getFontMetrics();
-	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
+	        int x = ((fm.stringWidth(stringOfBoardWidth + "x" + stringOfBoardHeight)) / 2);
 	        int y = fm.getHeight()/4;
-			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
+			g2d.drawString(stringOfBoardWidth + "x" + stringOfBoardHeight, pixelX - x, pixelY + y);			
 		}
+	}
+	
+	private boolean checkSelected() {
+		return ((ModeMenu) this.getParent().getParent()).getBoardHeight() == boardHeight
+				&& ((ModeMenu) this.getParent().getParent()).getBoardWidth() == boardWidth;
 	}
 
 }
