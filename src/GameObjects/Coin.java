@@ -3,37 +3,18 @@ package gameObjects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
 public class Coin extends UIObject {
-//	private static BufferedImage image;
-//	static {
-//
-//	}
-//	private Image image;
+
 	private Color color;
 	private float circleRadius;
 
 	public Coin() {
-		//circleRadius = .06f;
+		circleRadius = .06f;
 		position = new Vec2();
-		color = Color.WHITE;
-
-//		try {
-//			image = ImageIO.read(new File("assets/redCoin.png")).getScaledInstance(
-//					(int) (0.06f * JPANEL.getWidth() * 2f),
-//					(int) (0.06f * JPANEL.getHeight() * 2f),
-//					Image.SCALE_SMOOTH);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public float getCircleRadius() {
@@ -72,21 +53,30 @@ public class Coin extends UIObject {
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
-		if (this.color != null) {
-			Vec2 worldPos = getWorldPosition();
-
-			int pixelX = (int) (worldPos.x * JPANEL.getWidth());
-			int pixelY = (int) (worldPos.y * JPANEL.getHeight());
-
-			int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
-			int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
-
-			g2d.setColor(this.color);
-			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
-					pixelWidth, pixelHeight);
-//			g2d.drawImage(image, pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
-//					pixelWidth, pixelHeight, null);
+		Vec2 worldPos = getWorldPosition();
+		
+		int pixelX = (int) ((worldPos.x-circleRadius) * JPANEL.getWidth());
+		int pixelY = (int) ((worldPos.y-circleRadius) * JPANEL.getHeight());
+		
+		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
+		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
+		
+		if(color == Color.RED)
+		{
+			Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
+			g2d.drawImage(coinImage, pixelX, pixelY, null);
 		}
+		else if(color == Color.YELLOW)
+		{
+			Image coinImage = IMAGE_STORE.GetScaledImage("coin_Yellow", pixelWidth, pixelHeight);
+			g2d.drawImage(coinImage, pixelX, pixelY, null);
+		}
+		else 
+		{
+			g2d.setColor(color);
+			g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
+		}
+		
 	}
 
 }

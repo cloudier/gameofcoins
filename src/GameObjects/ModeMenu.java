@@ -1,4 +1,5 @@
 package gameObjects;
+import gameEngine.RectButton;
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
@@ -26,7 +27,10 @@ public class ModeMenu extends UIObject{
 	
 	private UIObject modeMenuNormal;
 	private UIObject modeMenuBlitz;
+	private RectButton modeMenuAngry;
 	private UIObject back;
+	
+	
 
 	public ModeMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
@@ -40,8 +44,16 @@ public class ModeMenu extends UIObject{
 		modeMenuNormal = new ModeMenuNormal();
 		modeMenuBlitz = new ModeMenuBlitz();
 		
+		modeMenuAngry = new RectButton("modeMenu_Angry") {
+			@Override
+			public void onMouseDown() {
+				System.out.println("Bring on the anger!");
+			}
+		};
+		
 		addChild(modeMenuNormal);
 		addChild(modeMenuBlitz);
+		addChild(modeMenuAngry);
 		
 		this.victoryCondition = 4;
 		// select victory condition: 4 <= n <= 10

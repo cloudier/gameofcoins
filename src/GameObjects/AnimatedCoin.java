@@ -2,6 +2,7 @@ package gameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import gameEngine.UIObject;
 import gameEngine.Vec2;
@@ -59,16 +60,29 @@ public class AnimatedCoin extends UIObject {
 			this.position = position.plus(new Vec2(0f, ANIMATION_STEP));
 			
 			Vec2 worldPos = getWorldPosition();
-
-			int pixelX = (int) (worldPos.x * JPANEL.getWidth());
-			int pixelY = (int) (worldPos.y * JPANEL.getHeight());
-
+			
+			int pixelX = (int) ((worldPos.x-circleRadius) * JPANEL.getWidth());
+			int pixelY = (int) ((worldPos.y-circleRadius) * JPANEL.getHeight());
+			
 			int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 			int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
-
-			g2d.setColor(this.color);
-			g2d.fillOval(pixelX - pixelWidth / 2, pixelY - pixelHeight / 2,
-					pixelWidth, pixelHeight);
+			
+			if(color == Color.RED)
+			{
+				Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
+				g2d.drawImage(coinImage, pixelX, pixelY, null);
+			}
+			else if(color == Color.YELLOW)
+			{
+				Image coinImage = IMAGE_STORE.GetScaledImage("coin_Yellow", pixelWidth, pixelHeight);
+				g2d.drawImage(coinImage, pixelX, pixelY, null);
+			}
+			else 
+			{
+				g2d.setColor(color);
+				g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
+			}
+			
 			((Board) this.getParent()).setAnimated(true);
 		}
 		if ((this.position.y >= endPosition.y - ANIMATION_STEP * 2) && coinNotAdded){

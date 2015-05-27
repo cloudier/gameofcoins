@@ -172,7 +172,8 @@ public abstract class GameObject {
 	/**
 	 * @return Position of mouse scaled to game coordinates
 	 */
-	public Vec2 getScaledMousePosition() {
+	public Vec2 getScaledMousePosition() 
+	{
 		Point mousePos = JPANEL.getMousePosition();
 		if (mousePos != null) {
 			float mx = (float) mousePos.x / JPANEL.getWidth();
@@ -181,6 +182,16 @@ public abstract class GameObject {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * Converts a position to pixel coordinates
+	 */
+	public Point toPixelCoordinates(Vec2 position)
+	{
+		int x = (int) (position.x * JPANEL.getWidth());
+		int y = (int) (position.y * JPANEL.getHeight());
+		return new Point(x,y);
 	}
 
 	/**
@@ -209,7 +220,7 @@ public abstract class GameObject {
 
 		return retVal;
 	}
-
+	
 	/**
 	 * Sets the active field of a GameObject and all its children.
 	 */

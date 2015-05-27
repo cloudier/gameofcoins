@@ -24,19 +24,22 @@ public final class ImageStore {
 		try 
 		{
 			Image boardImage = ImageIO.read(new File("assets/board.png"));
-			rawImages.put("Board", boardImage);
+			rawImages.put("board", boardImage);
 			
 			Image redCoinImage = ImageIO.read(new File("assets/coin_Red.png"));
-			rawImages.put("RedCoin", redCoinImage);
+			rawImages.put("coin_Red", redCoinImage);
 			
 			Image yellowCoinImage = ImageIO.read(new File("assets/coin_Yellow.png"));
-			rawImages.put("YellowCoin", yellowCoinImage);
+			rawImages.put("coin_Yellow", yellowCoinImage);
 			
 			Image blueTileImage = ImageIO.read(new File("assets/tile_Blue.png"));
-			rawImages.put("BlueTile", blueTileImage);
+			rawImages.put("tile_Blue", blueTileImage);
 			
 			Image yellowTileImage = ImageIO.read(new File("assets/tile_Yellow.png"));
-			rawImages.put("YellowTile", yellowTileImage);
+			rawImages.put("tile_Yellow", yellowTileImage);
+			
+			Image modeMenu_Angry = ImageIO.read(new File("assets/modeMenu_Angry.png"));
+			rawImages.put("modeMenu_Angry", modeMenu_Angry);
 			
 		} 
 		catch (IOException e) 

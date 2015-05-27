@@ -44,10 +44,6 @@ public class Board extends UIObject {
 		back = new BackButton(0.1f, 0.1f, new Vec2(x, 0.915f));
 		this.addChild(back);
 		
-		/*
-		 * try { boardImg = ImageIO.read(new File("assets/board.png")); } catch
-		 * (IOException e) { e.printStackTrace(); }
-		 */
 	}
 	
 	public void isDraw() {

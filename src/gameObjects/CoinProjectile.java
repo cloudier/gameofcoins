@@ -13,9 +13,9 @@ public class CoinProjectile extends GameObject {
 	public static LinkedList<StaticWall> WallColliders = new LinkedList<StaticWall>();
 	
 	public CoinProjectile() {
-		velocity = new Vec2(0.50f, 0f);
+		velocity = new Vec2(0.30f, -0.1f);
 		position = new Vec2(.1f, .1f);
-		circleRadius = .035f;
+		circleRadius = .06f;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class CoinProjectile extends GameObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		Image coinImage = IMAGE_STORE.GetScaledImage("RedCoin", pixelWidth, pixelHeight);
+		Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
 		
 		g2d.drawImage(coinImage, pixelX, pixelY, null);
 	}

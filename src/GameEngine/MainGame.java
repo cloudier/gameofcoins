@@ -1,5 +1,9 @@
 package gameEngine;
 
+import gameObjects.CoinProjectile;
+import gameObjects.PhysicsBoard;
+import gameObjects.PhysicsBoundary;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
@@ -107,6 +111,16 @@ public class MainGame {
 		GameObject.TICK_RATE = TICK_RATE;
 		gameManager = new GameManager(this);
 		GameObject.GAME_MANAGER = this.gameManager;
+		
+//		CoinProjectile cp = new CoinProjectile();
+//		gameObjectList.add(cp);
+//		
+//		PhysicsBoard pb = new PhysicsBoard();
+//		gameObjectList.add(pb);
+//		
+//		PhysicsBoundary bound = new PhysicsBoundary();
+//		gameObjectList.add(bound);
+		
 	}
 
 	private void GameTick() {
