@@ -298,11 +298,11 @@ public class BoardState {
         if (column < 0 || column >= this.boardColumn){
         	return false;
         }
-		if (boardGame[(this.boardRow - 1)][column] != 0) {
-			return false;
+		if (boardGame[(this.boardRow - 1)][column] == 0) {
+			return true;
 		}
 
-        return true;
+        return false;
 	}
 
 	public boolean isBoardFull(){ //node is terminal (or in other word full)
@@ -335,6 +335,7 @@ public class BoardState {
 
         for (int col = 0; col < this.boardColumn; col++) {
             if (isLegalMove(col)) {
+            	System.out.println("Column: " + col);
                 possibleMoves.add(col);
             }
         }

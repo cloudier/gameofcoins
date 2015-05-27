@@ -45,7 +45,6 @@ public class GameManager {
 		this.modeMenu = new ModeMenu();
 		this.playersMenu = new PlayersMenu();
 		this.boardModel = new BoardState();
-		this.board = new Board(boardModel);
 		
 		mainGame.AddGameObject(mainMenu);
 		mainMenu.setActiveVisible(true);
@@ -69,6 +68,7 @@ public class GameManager {
 	
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
 		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
+		this.board = new Board(boardModel);
 		board.initialiseColumnsRows();
 		
 		mainGame.AddGameObject(board);
@@ -82,7 +82,10 @@ public class GameManager {
 	public void activateBoard(int numPlayers, HashMap<Integer, Player> players) {
 		boardModel.initialiseMode(boardModel.getBoardRow(), boardModel.getBoardColumn(),
 				boardModel.getVictoryCondition(), boardModel.getMode());
-		board.initialiseColumnsRows();
+		if (!board.visible && !board.active) {
+			board = new Board(boardModel);
+			board.initialiseColumnsRows();
+		}
 		boardModel.initialisePlayers(numPlayers, players);
 		
 		mainGame.AddGameObject(board);
@@ -112,7 +115,6 @@ public class GameManager {
 		} else if (state == GameState.BOARD) {
 			board.setActiveVisible(false);
 			playersMenu.setActiveVisible(true);
-			board = new Board(boardModel);
 		}
 		state = GameState.prevState(state);
 	}

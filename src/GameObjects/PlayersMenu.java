@@ -12,17 +12,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class PlayersMenu extends UIObject {
+public class PlayersMenu extends GameObject {
 	private int numPlayers;
 	private HashMap<Integer, Player> players;
 	private PlayersSettings one;
 	private PlayersSettings two;
 	private PlayersSettings three;
 	private PlayersSettings four;
-	private PlayersMenuNext playersMenuNext;
 	private Font font;
 	
-	private Button back;
+	private RectButton back;
+	private RectButton confirm;
 	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
@@ -51,10 +51,7 @@ public class PlayersMenu extends UIObject {
 		this.addChild(four);
 		four.setPlayer(null);
 		
-		this.playersMenuNext = new PlayersMenuNext(0.3f, 0.1f, new Vec2(0f, 0.775f), "Confirm");
-		this.addChild(playersMenuNext);
-		back = new BackButton(0.1f, 0.1f, new Vec2(-0.35f, 0.775f));
-		addChild(back);
+		createButtons();
 		
 		try {
 			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
@@ -94,24 +91,10 @@ public class PlayersMenu extends UIObject {
 		this.numPlayers--;
 		players.put(id, null);
 	}
+
+	@Override
+	protected void onUpdate() {	}
 	
-	@Override
-	public boolean mouseSelected() {
-		return false;
-	}
-
-	@Override
-	public void onMouseDown() {
-	}
-
-	@Override
-	public void onMouseUp() {
-	}
-
-	@Override
-	protected void onUpdate() {
-	}
-
 	@Override
 	protected void onRender(Graphics2D g2d) {
 		Vec2 worldPos = getWorldPosition();
@@ -127,4 +110,24 @@ public class PlayersMenu extends UIObject {
 		g2d.drawString("Player Settings", pixelX - x, pixelY);
 	}
 
+	private void createButtons()
+	{
+		back = new RectButton("back", "backSelected", -0.4f, 0.7f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.back();
+			}
+		};
+		
+		confirm = new RectButton("confirm", "confirmSelected", -0.1f, 0.7f, 0.2f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				activateBoard();
+			}
+		};
+		
+		this.addChild(back);
+		this.addChild(confirm);
+	}
+	
 }

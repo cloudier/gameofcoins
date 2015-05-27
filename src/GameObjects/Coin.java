@@ -61,7 +61,11 @@ public class Coin extends UIObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		if(color == Color.RED)
+		if(color == Color.WHITE)
+		{
+			//Do nothing
+		}
+		else if(color == Color.RED)
 		{
 			Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
 			g2d.drawImage(coinImage, pixelX, pixelY, null);

@@ -13,7 +13,7 @@ public class ModeMenuVictory extends UIObject {
 	private ModeMenuVictoryNumber seven;
 	
 	public ModeMenuVictory() {
-		position = new Vec2(0, 0.3f);
+		position = new Vec2(0.5f, 0.8f);
 		// 4 <= n <= 7
 		four = new ModeMenuVictoryNumber(4);
 		addChild(four);

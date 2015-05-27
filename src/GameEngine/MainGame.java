@@ -3,6 +3,7 @@ package gameEngine;
 import gameObjects.CoinProjectile;
 import gameObjects.PhysicsBoard;
 import gameObjects.PhysicsBoundary;
+import gameObjects.Wallpaper;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -109,17 +110,12 @@ public class MainGame {
 
 		GameObject.JPANEL = gamePanel;
 		GameObject.TICK_RATE = TICK_RATE;
+		
+		Wallpaper wp = new Wallpaper();
+		gameObjectList.add(wp);
+		
 		gameManager = new GameManager(this);
 		GameObject.GAME_MANAGER = this.gameManager;
-		
-//		CoinProjectile cp = new CoinProjectile();
-//		gameObjectList.add(cp);
-//		
-//		PhysicsBoard pb = new PhysicsBoard();
-//		gameObjectList.add(pb);
-//		
-//		PhysicsBoundary bound = new PhysicsBoundary();
-//		gameObjectList.add(bound);
 		
 	}
 

@@ -4,13 +4,8 @@ import gameEngine.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
-/*
- * StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-    StackTraceElement e = stacktrace[1];//coz 0th will be getStackTrace so 1st
-    String methodName = e.getMethodName();
-    System.out.println(methodName);
- */
+import java.awt.Image;
+import java.awt.Point;
 
 public class Board extends UIObject {
 
@@ -28,12 +23,36 @@ public class Board extends UIObject {
 
 	public Coin[][] coins;
 	
-	private UIObject reset;
-	private UIObject back;
-	private UIObject menu;
+	private RectButton reset;
+	private RectButton back;
+	private RectButton menu;
 	
 	private UIObject victory;
 	private UIObject draw;
+	
+	private void createButtons()
+	{
+		reset = new RectButton("reset", "resetSelected", 0.6f, 0.6f, 0.2f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				
+			}
+		};
+		
+		back = new RectButton("back", "backSelected", 0.1f, 0.85f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.back();
+			}
+		};
+		
+		menu = new RectButton("menu", "menuSelected", 0.4f, 0.85f, 0.2f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				
+			}
+		};
+	}
 	
 	public Board(BoardState boardModel) {
 
@@ -63,6 +82,7 @@ public class Board extends UIObject {
 	}
 
 	public void initialiseColumnsRows() {
+		
 		this.rows = boardState.getBoardRow();
 		this.columns = boardState.getBoardColumn();
 		
@@ -85,6 +105,8 @@ public class Board extends UIObject {
 				coins[r][c].setColor(Color.WHITE);
 				coins[r][c].setCircleRadius(circleRadius);
 
+				coins[r][c].setActiveVisible(false);
+				
 				this.addChild(coins[r][c]);
 			}
 		}
@@ -170,7 +192,7 @@ public class Board extends UIObject {
 			endPosition = new Vec2(cellSize.x * aiChoice,
 					cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
 			endPosition = endPosition.plus(coinOffset);
-			System.out.println(aiChoice);
+
 			animatedCoin = new AnimatedCoin(endPosition,
 					aiChoice, coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice]);
 			animatedCoin.setCircleRadius(this.circleRadius);
@@ -214,6 +236,7 @@ public class Board extends UIObject {
 
 	@Override
 	public void onMouseUp() {
+		
 	}
 
 	@Override
@@ -225,17 +248,27 @@ public class Board extends UIObject {
 	protected void onRender(Graphics2D g2d) {
 
 		Vec2 worldPos = getWorldPosition();
+		
+		Point pixelDim = toPixelCoordinates(cellSize);
 
-		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
-		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
-
-		int pixelWidth = (int) (width * JPANEL.getWidth());
-		int pixelHeight = (int) (height * JPANEL.getHeight());
-
-		// draw board background
-		// g2d.drawImage(boardImg, pixelX, pixelY, pixelWidth, pixelHeight, null);
-		g2d.setColor(Color.BLUE);
-		g2d.fillRect(pixelX, pixelY, pixelWidth, pixelHeight);
+		Image blueTile = IMAGE_STORE.GetScaledImage("tile_Blue", pixelDim.x, pixelDim.y);
+		Image yellowTile = IMAGE_STORE.GetScaledImage("tile_Yellow", pixelDim.x, pixelDim.y);
+		
+		for(int y = 0; y < rows; y++)
+		{
+			for(int x = 0; x < columns; x++)
+			{
+				Vec2 offset = new Vec2(x * cellSize.x, y * cellSize.y);
+				Point pixelPos = toPixelCoordinates(worldPos.plus(offset));
+				
+				if((x + y) % 2 == 0) {
+					g2d.drawImage(blueTile, pixelPos.x, pixelPos.y, null);
+				} else {
+					g2d.drawImage(yellowTile, pixelPos.x, pixelPos.y, null);
+				}
+			}
+		}
+		
 		
 		if (mouseSelected()) {
 			Vec2 mousePos = getScaledMousePosition();

@@ -43,6 +43,9 @@ public final class ImageStore {
 			
 			
 			//Main Menu Images
+			Image mainTitle = ImageIO.read(new File("assets/MainMenu/mainTitle.png"));
+			rawImages.put("mainTitle", mainTitle);
+			
 			Image newGame = ImageIO.read(new File("assets/MainMenu/newGame.png"));
 			rawImages.put("newGame", newGame);
 			
@@ -62,6 +65,39 @@ public final class ImageStore {
 			
 			Image angrySelected = ImageIO.read(new File("assets/ModeMenu/angrySelected.png"));
 			rawImages.put("angrySelected", angrySelected);
+			
+			//BoardSize Button Images
+			Image btn7by6 = ImageIO.read(new File("assets/ModeMenu/btn7by6.png"));
+			rawImages.put("btn7by6", btn7by6);
+			
+			Image btn7by6Selected = ImageIO.read(new File("assets/ModeMenu/btn7by6Selected.png"));
+			rawImages.put("btn7by6Selected", btn7by6Selected);
+			
+			Image btn14by12 = ImageIO.read(new File("assets/ModeMenu/btn14by12.png"));
+			rawImages.put("btn14by12", btn14by12);
+			
+			Image btn14by12Selected = ImageIO.read(new File("assets/ModeMenu/btn14by12Selected.png"));
+			rawImages.put("btn14by12Selected", btn14by12Selected);
+
+			Image btn21by18 = ImageIO.read(new File("assets/ModeMenu/btn21by18.png"));
+			rawImages.put("btn21by18", btn21by18);
+			
+			Image btn21by18Selected = ImageIO.read(new File("assets/ModeMenu/btn21by18Selected.png"));
+			rawImages.put("btn21by18Selected", btn21by18Selected);
+			
+			//Back Button
+			Image back = ImageIO.read(new File("assets/ModeMenu/back.png"));
+			rawImages.put("back", back);
+			
+			Image backSelected = ImageIO.read(new File("assets/ModeMenu/backSelected.png"));
+			rawImages.put("backSelected", backSelected);
+			
+			//Confirm Button
+			Image confirm = ImageIO.read(new File("assets/ModeMenu/confirm.png"));
+			rawImages.put("confirm", confirm);
+			
+			Image confirmSelected = ImageIO.read(new File("assets/ModeMenu/confirmSelected.png"));
+			rawImages.put("confirmSelected", confirmSelected);
 			
 		} 
 		catch (IOException e) 
