@@ -2,7 +2,7 @@ package ai;
 
 import java.util.*;
 import gameEngine.*;
-
+//work on
 public class ManualAI implements AIX{
 	
 	private BoardState boardState;

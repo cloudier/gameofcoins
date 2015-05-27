@@ -2,17 +2,20 @@ package ai;
 
 import java.util.*;
 import gameEngine.*;
-
+//work on
 public class MonteCarloAI implements AIX{
 
 	private BoardState boardState;
 	private int numberSearch;
 	private int player;
 	
-	public MonteCarloAI(BoardState latest, int player, int searchNum){
+	
+	
+	public MonteCarloAI(BoardState latest, int searchNum, int player){
 		this.boardState = latest;
 		this.numberSearch = searchNum;
 		this.player = player;
+		System.out.println("Player ID : " + player);
 	}
 
 	public int putCoin(){
@@ -32,21 +35,31 @@ public class MonteCarloAI implements AIX{
 		column = bestOption(points, columns);
 		//printOutWinningPoint(points, columns);
 
-		//System.out.println("Column chosen : " + column);
+		System.out.println("Column chosen : " + column);
 		return column;
 	}
 
 	private int columnSimulation(int col){
-		char pc1 = 'O';
-		char pc2 = 'X';
 		int wins = 0;
 
-		/*//temp = placement_Sim(temp, inputcolumn, pc1);
-		BoardState temp = new BoardState(boardState, pc1);
-		temp.putCoin(col, 'O');
-
+		BoardState temp = new BoardState(this.boardState, this.player);
+		temp.putCoinForAI(col, this.player);
+		
 		int i = 0;
+		
+		while (i < numberSearch){
+			BoardState copyboard = new BoardState(temp, this.player);
+			
+			while (true){
+				int random = simMove();
+				//copyboard.putCoinForAI(random, pc2);
+				//copyboard.putCoinForAI(random, pc2);
 
+				
+			}
+		}
+		
+		/*
 		while (i < numberSearch){
 			BoardState copyboard = new BoardState(temp, 'O');
 
@@ -71,6 +84,13 @@ public class MonteCarloAI implements AIX{
 		return wins;
 	}
 
+	private int helpChecker(){
+		
+		
+		
+		return 0;
+	}
+	
 	private int simMove(){
 		Random random = new Random();
 		int column = random.nextInt(6 - 0 + 1) + 0;

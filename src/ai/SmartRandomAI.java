@@ -18,9 +18,9 @@ public class SmartRandomAI implements AIX{
 		List<Integer> columns = boardState.getPossibleMoves();
 		Random random = new Random();
 		column = random.nextInt(columns.size());
-
+		column = columns.get(column);
+		
 		for (int col : columns) {
-        	
 			for (int i = 0; i < boardState.getNumPlayers(); i++){
 				boardState.putCoinForAI(col, (i + 1));
 				if (boardState.isWinner((i + 1))){

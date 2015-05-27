@@ -8,7 +8,7 @@ public class MiniMaxAI implements AIX{
 	private BoardState boardState;
 	private int depthLimit;
 	private int player;
-	
+		
 	public MiniMaxAI(BoardState latest, int depthLimit, int player){
 		this.boardState = latest;
 		this.depthLimit = depthLimit;
@@ -20,12 +20,12 @@ public class MiniMaxAI implements AIX{
 
 		int maxValue = - 1;
 		int column = 0;
-/*
+
 		List<Integer> columns = boardState.getPossibleMoves();
 
 		for (int col : columns){
-			BoardState bs = new BoardState(boardState, player);
-			bs.putCoin(col, player);
+			BoardState bs = new BoardState(boardState, this.player);
+			bs.putCoinForAI(col, this.player);
 			//bs.output();	
 
 			int value = miniMax(bs, 0);
@@ -33,40 +33,34 @@ public class MiniMaxAI implements AIX{
 				maxValue = value;
 				column = col;
 			}
-
+			
 			//System.out.println("======================");
-			System.out.println("Result for Column " + col + " : " + value);
+			//System.out.println("Result for Column " + col + " : " + value);
 		}
 
-		System.out.println("Column chosen : " + column);*/
+		//System.out.println("Column chosen : " + column);
 		return column;
 	}
-/*
+
 	private int miniMax(BoardState bs, int depth){
 		//bs.output();
 
 		int returnValue;
 
-		if (bs.isWinner(this.player)){
-			//System.out.println("Above AI win");
-			return 1;
+		if (bs.isWinner(this.player - 1)){
+			//System.out.println("Above Player win");
+			return -1;
 		}
-		else{
-			for (int i = 0; i < boardState.getNumPlayers(); i++){
-				if ((i+ 1) != this.player){
-					if (bs.isWinner(i + 1)){
-						//System.out.println("Above Player win");
-						return -1;
-					}
-				}
-			}
+		else if (bs.isWinner(this.player)){
+			//System.out.println("Above AI win");
+			return 1;	
 		}
 		
-		if (depthLimit == depth || bs.isBoardFull()){
+		if (depth == depthLimit || bs.isBoardFull()){
 			return 0;
 		}
 
-		if (bs.getCurrentPlayer() == 'X'){
+		if (bs.getCurrentPlayer() == (this.player - 1)){
 			//max
 			returnValue = -100000;
 
@@ -90,5 +84,5 @@ public class MiniMaxAI implements AIX{
 		}
 
 		return returnValue;
-	}*/
+	}
 }
