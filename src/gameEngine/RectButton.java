@@ -90,6 +90,20 @@ public abstract class RectButton extends UIObject {
 		}
 	}
 	
+	public void setDefaultImage(String DefaultImage) {
+		this.defaultImage = DefaultImage;
+	}
+	
+	public void setHoveringOver(String HoveringOverImage) {
+		this.hoveringOver = HoveringOverImage;
+	}
+	
+	public float getWidth() { return width; }
+	public float getHeight() { return height; }
+	
+	public void setWidth(float width) {	this.width = width; }
+	public void setHeight(float height) { this.height = height; }
+
 	private float width, height;
 	private String defaultImage, hoveringOver;
 

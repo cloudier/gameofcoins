@@ -80,7 +80,7 @@ public class GameManager {
 	}
 
 	public void activateBoard(int numPlayers, HashMap<Integer, Player> players) {
-		boardModel.initialiseMode(boardModel.getRows(), boardModel.getColumns(),
+		boardModel.initialiseMode(boardModel.getBoardRow(), boardModel.getBoardColumn(),
 				boardModel.getVictoryCondition(), boardModel.getMode());
 		board.initialiseColumnsRows();
 		boardModel.initialisePlayers(numPlayers, players);

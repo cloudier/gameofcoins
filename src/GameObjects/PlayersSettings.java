@@ -19,7 +19,6 @@ public class PlayersSettings extends UIObject {
 	private float height;
 	private Player player;
 	private PlayersSettingsType type;
-	private PlayersSettingsColor color;
 
 	public PlayersSettings(int id) {
 		super();
@@ -44,7 +43,6 @@ public class PlayersSettings extends UIObject {
 		
 		if (player != null) {
 			constructType();
-			constructColor();
 		}
 	}
 
@@ -54,11 +52,7 @@ public class PlayersSettings extends UIObject {
 		addChild(type);
 	}
 	
-	private void constructColor() {
-		this.color = new PlayersSettingsColor();
-		color.position = new Vec2(0.6f, 0f);
-		addChild(color);
-	}
+
 	@Override
 	public boolean mouseSelected() {
 		Vec2 mousePos = getScaledMousePosition();
@@ -81,7 +75,6 @@ public class PlayersSettings extends UIObject {
 		if (player == null) {
 			this.player = ((PlayersMenu) this.getParent()).makePlayer(id);
 			constructType();
-			constructColor();
 		} else if (player != null && id >= 3) {
 			this.player = null;
 			type.setActiveVisible(false);

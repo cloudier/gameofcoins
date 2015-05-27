@@ -7,11 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public abstract class UIObject extends GameObject {
-	protected Font font;
+	public static Font font;
 	
 	public UIObject() {
 		try {
-			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
+			UIObject.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (FontFormatException e) {

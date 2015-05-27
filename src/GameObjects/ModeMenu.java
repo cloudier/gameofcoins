@@ -25,35 +25,17 @@ public class ModeMenu extends UIObject{
 	
 	private Font font;
 	
-	private UIObject modeMenuNormal;
-	private UIObject modeMenuBlitz;
+	private RectButton modeMenuNormal;
 	private RectButton modeMenuAngry;
 	private UIObject back;
-	
 	
 
 	public ModeMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.width = 0.04f;
 		this.height = 0.05f;
-
-		// select mode: normal/blitz
-		//UIObject modeMenuSelect = new ModeMenuSelect();
 		
 		this.mode = "Normal";
-		modeMenuNormal = new ModeMenuNormal();
-		modeMenuBlitz = new ModeMenuBlitz();
-		
-		modeMenuAngry = new RectButton("modeMenu_Angry") {
-			@Override
-			public void onMouseDown() {
-				System.out.println("Bring on the anger!");
-			}
-		};
-		
-		addChild(modeMenuNormal);
-		addChild(modeMenuBlitz);
-		addChild(modeMenuAngry);
 		
 		this.victoryCondition = 4;
 		// select victory condition: 4 <= n <= 10
@@ -84,6 +66,9 @@ public class ModeMenu extends UIObject{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		createButtons();
+		
 	}
 	
 	public String getMode() {
@@ -142,6 +127,14 @@ public class ModeMenu extends UIObject{
 	}
 
 	public void activatePlayers() {
+		if(mode == "Angry") 
+		{
+			
+		}
+		else 
+		{
+			
+		}
 		GAME_MANAGER.activatePlayers(mode, boardHeight, boardWidth, victoryCondition);
 	}
 
@@ -159,8 +152,7 @@ public class ModeMenu extends UIObject{
 	}
 
 	@Override
-	protected void onUpdate() {
-	}
+	protected void onUpdate() { }
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
@@ -190,4 +182,28 @@ public class ModeMenu extends UIObject{
 		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*8);
 	}
 
+	private void createButtons()
+	{
+		modeMenuNormal = new RectButton("normalUnselected", "normalSelected", -0.4f, 0.08f, 0.4f, 0.2f) {
+			@Override
+			public void onMouseDown() {
+				modeMenuNormal.setDefaultImage("normalSelected");
+				modeMenuAngry.setDefaultImage("angryUnselected");
+				setMode("Normal");
+			}
+		};
+		
+		modeMenuAngry = new RectButton("angryUnselected", "angrySelected", 0.0f, 0.08f, 0.4f, 0.2f) {
+			@Override
+			public void onMouseDown() {
+				modeMenuNormal.setDefaultImage("normalUnselected");
+				modeMenuAngry.setDefaultImage("angrySelected");
+				setMode("Angry");
+			}
+		};
+		
+		addChild(modeMenuNormal);
+		addChild(modeMenuAngry);
+	}
+	
 }

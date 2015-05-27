@@ -15,7 +15,7 @@ public class CoinProjectile extends GameObject {
 	public CoinProjectile() {
 		velocity = new Vec2(0.30f, -0.1f);
 		position = new Vec2(.1f, .1f);
-		circleRadius = .06f;
+		circleRadius = .05f;
 	}
 
 	@Override

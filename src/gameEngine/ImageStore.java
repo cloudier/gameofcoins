@@ -23,6 +23,9 @@ public final class ImageStore {
 		
 		try 
 		{
+			Image background = ImageIO.read(new File("assets/background.jpg"));
+			rawImages.put("background", background);
+			
 			Image boardImage = ImageIO.read(new File("assets/board.png"));
 			rawImages.put("board", boardImage);
 			
@@ -38,8 +41,27 @@ public final class ImageStore {
 			Image yellowTileImage = ImageIO.read(new File("assets/tile_Yellow.png"));
 			rawImages.put("tile_Yellow", yellowTileImage);
 			
-			Image modeMenu_Angry = ImageIO.read(new File("assets/modeMenu_Angry.png"));
-			rawImages.put("modeMenu_Angry", modeMenu_Angry);
+			
+			//Main Menu Images
+			Image newGame = ImageIO.read(new File("assets/MainMenu/newGame.png"));
+			rawImages.put("newGame", newGame);
+			
+			Image newGameHover = ImageIO.read(new File("assets/MainMenu/newGameHover.png"));
+			rawImages.put("newGameHover", newGameHover);
+			
+			
+			//Mode Menu Images
+			Image normalUnselected = ImageIO.read(new File("assets/ModeMenu/normalUnselected.png"));
+			rawImages.put("normalUnselected", normalUnselected);
+			
+			Image normalSelected = ImageIO.read(new File("assets/ModeMenu/normalSelected.png"));
+			rawImages.put("normalSelected", normalSelected);
+			
+			Image angryUnselected = ImageIO.read(new File("assets/ModeMenu/angryUnselected.png"));
+			rawImages.put("angryUnselected", angryUnselected);
+			
+			Image angrySelected = ImageIO.read(new File("assets/ModeMenu/angrySelected.png"));
+			rawImages.put("angrySelected", angrySelected);
 			
 		} 
 		catch (IOException e) 
@@ -103,7 +125,9 @@ public final class ImageStore {
 	}
 	
 	private Image createScaledImage(String ImageName, int width, int height) {
-		return GetRawImage(ImageName).getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		Image raw = GetRawImage(ImageName);
+		if(raw == null) System.err.println("Invalid Image Name");
+		return raw.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 	
 	private HashMap<String, Image> rawImages;
