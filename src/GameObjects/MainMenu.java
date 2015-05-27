@@ -39,7 +39,7 @@ public class MainMenu extends UIObject {
 	
 	private void createButtons()
 	{
-		mainMenuButton = new RectButton("newGame", "newGameHover", -0.15f, 0.35f, 0.3f, 0.1f) {
+		mainMenuButton = new RectButton("newGame", "newGameSelected", -0.15f, 0.35f, 0.3f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.activateMode();

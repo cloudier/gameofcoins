@@ -142,19 +142,19 @@ public class ModeMenu extends GameObject {
 
 	private void createButtons()
 	{
-		modeMenuNormal = new RectButton("normalUnselected", "normalSelected", 0.3f, 0.4f, 0.2f, 0.1f) {
+		modeMenuNormal = new RectButton("normal", "normalSelected", 0.3f, 0.4f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				modeMenuNormal.setDefaultImage("normalSelected");
-				modeMenuAngry.setDefaultImage("angryUnselected");
+				modeMenuAngry.setDefaultImage("angry");
 				setMode("Normal");
 			}
 		};
 		
-		modeMenuAngry = new RectButton("angryUnselected", "angrySelected", 0.5f, 0.4f, 0.2f, 0.1f) {
+		modeMenuAngry = new RectButton("angry", "angrySelected", 0.5f, 0.4f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
-				modeMenuNormal.setDefaultImage("normalUnselected");
+				modeMenuNormal.setDefaultImage("normal");
 				modeMenuAngry.setDefaultImage("angrySelected");
 				setMode("Angry");
 			}

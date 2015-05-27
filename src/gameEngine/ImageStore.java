@@ -26,78 +26,43 @@ public final class ImageStore {
 			Image background = ImageIO.read(new File("assets/background.jpg"));
 			rawImages.put("background", background);
 			
-			Image boardImage = ImageIO.read(new File("assets/board.png"));
-			rawImages.put("board", boardImage);
-			
-			Image redCoinImage = ImageIO.read(new File("assets/coin_Red.png"));
-			rawImages.put("coin_Red", redCoinImage);
-			
-			Image yellowCoinImage = ImageIO.read(new File("assets/coin_Yellow.png"));
-			rawImages.put("coin_Yellow", yellowCoinImage);
-			
-			Image blueTileImage = ImageIO.read(new File("assets/tile_Blue.png"));
-			rawImages.put("tile_Blue", blueTileImage);
-			
-			Image yellowTileImage = ImageIO.read(new File("assets/tile_Yellow.png"));
-			rawImages.put("tile_Yellow", yellowTileImage);
+			//Game Board Images
+			AddFile("coin_Red", "Board");
+			AddFile("coin_Yellow", "Board");
+			AddFile("tile_Blue", "Board");
+			AddFile("tile_Yellow", "Board");
 			
 			
 			//Main Menu Images
-			Image mainTitle = ImageIO.read(new File("assets/MainMenu/mainTitle.png"));
-			rawImages.put("mainTitle", mainTitle);
+			AddFile("mainTitle", "MainMenu");
+			AddButtonFiles("newGame", "MainMenu");
 			
-			Image newGame = ImageIO.read(new File("assets/MainMenu/newGame.png"));
-			rawImages.put("newGame", newGame);
-			
-			Image newGameHover = ImageIO.read(new File("assets/MainMenu/newGameHover.png"));
-			rawImages.put("newGameHover", newGameHover);
-			
+			//Add Global Images
+			AddButtonFiles("back", "Global");
+			AddButtonFiles("confirm", "Global");
+
 			
 			//Mode Menu Images
-			Image normalUnselected = ImageIO.read(new File("assets/ModeMenu/normalUnselected.png"));
-			rawImages.put("normalUnselected", normalUnselected);
+			AddButtonFiles("normal", "ModeMenu");
+			AddButtonFiles("angry", "ModeMenu");
 			
-			Image normalSelected = ImageIO.read(new File("assets/ModeMenu/normalSelected.png"));
-			rawImages.put("normalSelected", normalSelected);
+			AddButtonFiles("btn7by6", "ModeMenu");
+			AddButtonFiles("btn14by12", "ModeMenu");
+			AddButtonFiles("btn21by18", "ModeMenu");
 			
-			Image angryUnselected = ImageIO.read(new File("assets/ModeMenu/angryUnselected.png"));
-			rawImages.put("angryUnselected", angryUnselected);
+			//Add PlayerMenu buttons
+			AddButtonFiles("ai", "PlayerMenu");
+			AddButtonFiles("easy", "PlayerMenu");
+			AddButtonFiles("medium", "PlayerMenu");
+			AddButtonFiles("hard", "PlayerMenu");
+			AddButtonFiles("human", "PlayerMenu");
+			AddButtonFiles("join", "PlayerMenu");
 			
-			Image angrySelected = ImageIO.read(new File("assets/ModeMenu/angrySelected.png"));
-			rawImages.put("angrySelected", angrySelected);
 			
-			//BoardSize Button Images
-			Image btn7by6 = ImageIO.read(new File("assets/ModeMenu/btn7by6.png"));
-			rawImages.put("btn7by6", btn7by6);
-			
-			Image btn7by6Selected = ImageIO.read(new File("assets/ModeMenu/btn7by6Selected.png"));
-			rawImages.put("btn7by6Selected", btn7by6Selected);
-			
-			Image btn14by12 = ImageIO.read(new File("assets/ModeMenu/btn14by12.png"));
-			rawImages.put("btn14by12", btn14by12);
-			
-			Image btn14by12Selected = ImageIO.read(new File("assets/ModeMenu/btn14by12Selected.png"));
-			rawImages.put("btn14by12Selected", btn14by12Selected);
-
-			Image btn21by18 = ImageIO.read(new File("assets/ModeMenu/btn21by18.png"));
-			rawImages.put("btn21by18", btn21by18);
-			
-			Image btn21by18Selected = ImageIO.read(new File("assets/ModeMenu/btn21by18Selected.png"));
-			rawImages.put("btn21by18Selected", btn21by18Selected);
-			
-			//Back Button
-			Image back = ImageIO.read(new File("assets/ModeMenu/back.png"));
-			rawImages.put("back", back);
-			
-			Image backSelected = ImageIO.read(new File("assets/ModeMenu/backSelected.png"));
-			rawImages.put("backSelected", backSelected);
-			
-			//Confirm Button
-			Image confirm = ImageIO.read(new File("assets/ModeMenu/confirm.png"));
-			rawImages.put("confirm", confirm);
-			
-			Image confirmSelected = ImageIO.read(new File("assets/ModeMenu/confirmSelected.png"));
-			rawImages.put("confirmSelected", confirmSelected);
+			//Add Board images
+			AddButtonFiles("mainmenu", "Board");
+			AddButtonFiles("restart", "Board");
+			AddFile("undo", "Board");
 			
 		} 
 		catch (IOException e) 
@@ -128,6 +93,52 @@ public final class ImageStore {
 	
 	public Image GetRawImage(String name) {
 		return rawImages.get(name);
+	}
+	
+	private void AddFile(String fileName)
+	{
+		AddFile(fileName, "");
+	}
+	
+	private void AddFile(String fileName, String subDirectory)
+	{
+		String assetsDirectory = "assets/" + subDirectory + "/";
+		String extension = ".png";
+
+		String fileDir = assetsDirectory + fileName + extension;
+		
+		Image file = null;
+		
+		try {
+			file = ImageIO.read(new File(fileDir));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		rawImages.put(fileName, file);
+	}
+	
+	private void AddButtonFiles(String buttonFileName, String subDirectory)
+	{
+		String assetsDirectory = "assets/" + subDirectory + "/";
+		String extension = ".png";
+		String selectedFileName = buttonFileName + "Selected";
+		
+		String buttonDir = assetsDirectory + buttonFileName + extension;
+		String selectedDir = assetsDirectory + selectedFileName + extension;
+		
+		Image button = null;
+		Image selected = null;
+		
+		try {
+			button = ImageIO.read(new File(buttonDir));
+			selected = ImageIO.read(new File(selectedDir));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		rawImages.put(buttonFileName, button);
+		rawImages.put(selectedFileName, selected);
 	}
 	
 	class ScaledImageRequest {
@@ -162,7 +173,7 @@ public final class ImageStore {
 	
 	private Image createScaledImage(String ImageName, int width, int height) {
 		Image raw = GetRawImage(ImageName);
-		if(raw == null) System.err.println("Invalid Image Name");
+		if(raw == null) System.err.println("Invalid Image Name: " + ImageName);
 		return raw.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 	

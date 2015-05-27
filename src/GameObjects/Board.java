@@ -23,35 +23,41 @@ public class Board extends UIObject {
 
 	public Coin[][] coins;
 	
+	private RectButton menu;
 	private RectButton reset;
 	private RectButton back;
-	private RectButton menu;
-	
+
 	private UIObject victory;
 	private UIObject draw;
 	
 	private void createButtons()
 	{
-		reset = new RectButton("reset", "resetSelected", 0.6f, 0.6f, 0.2f, 0.1f) {
+		float x = 0.14f;
+		
+		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
 			@Override
 			public void onMouseDown() {
-				
+				GAME_MANAGER.activateStart();
 			}
 		};
 		
-		back = new RectButton("back", "backSelected", 0.1f, 0.85f, 0.1f, 0.1f) {
+		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.activateReset();
+			}
+		};
+		
+		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.back();
 			}
 		};
 		
-		menu = new RectButton("menu", "menuSelected", 0.4f, 0.85f, 0.2f, 0.1f) {
-			@Override
-			public void onMouseDown() {
-				
-			}
-		};
+		this.addChild(menu);
+		this.addChild(reset);
+		this.addChild(back);
 	}
 	
 	public Board(BoardState boardModel) {
@@ -60,13 +66,7 @@ public class Board extends UIObject {
 		position = new Vec2(0.01f, 0.01f);
 		animated = false;
 		
-		float x = 0.14f;
-		menu = new BoardMainMenu(0.3f, 0.1f, new Vec2(x + 0.25f, 0.915f), "Main Menu");
-		this.addChild(menu);
-		reset = new BoardReset(0.3f, 0.1f, new Vec2(x + 0.6f, 0.915f), "Restart");
-		this.addChild(reset);
-		back = new BackButton(0.1f, 0.1f, new Vec2(x, 0.915f));
-		this.addChild(back);
+		createButtons();
 	}
 	
 	public void isDraw() {
