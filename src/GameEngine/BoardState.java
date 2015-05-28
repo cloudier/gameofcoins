@@ -94,18 +94,18 @@ public class BoardState {
 //		for (Player p : players.values()) {
 //			if (p.getPlayerType() == PlayerType.AI) {
 //				if (p.getDifficulty() == 0) {
-//			    	artificialIntelligence = new SmartRandomAI(this);				//Smart Random AI					
+//			    	artificialIntelligence = new SmartRandomAI();				//Smart Random AI					
 //				} else if (p.getDifficulty() == 1) {
 //					
 //				} else if (p.getDifficulty() == 2) {
-//					artificialIntelligence = new AlphaBetaMiniMaxAI(this, 7, 2);			//Alpha Beta AI (Depth 7)					
+//					artificialIntelligence = new AlphaBetaMiniMaxAI(7);			//Alpha Beta AI (Depth 7)					
 //				}
 //			}
 //		}
 		
-//    	artificialIntelligence = new RandomAI(this);					//Random AI
-		artificialIntelligence = new MonteCarloAI(this, 1000, 2);		//Monte Carlo AI (Search 1000)
-//		artificialIntelligence = new MiniMaxAI(this, 5, 2);			//Mini Max AI (Depth 5)
+//    	artificialIntelligence = new RandomAI();				//Random AI
+		artificialIntelligence = new MonteCarloAI(1000);		//Monte Carlo AI (Search 1000)
+//		artificialIntelligence = new MiniMaxAI(5);				//MiniMax AI (Depth 5)
 	}
 
 	/**
