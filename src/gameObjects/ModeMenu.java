@@ -4,15 +4,8 @@ import gameEngine.RectButton;
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class ModeMenu extends GameObject {
 
@@ -20,8 +13,6 @@ public class ModeMenu extends GameObject {
 	private int victoryCondition;
 	private int boardWidth;
 	private int boardHeight;
-	
-	private Font font;
 	
 	private RectButton modeMenuNormal;
 	private RectButton modeMenuAngry;
@@ -34,7 +25,7 @@ public class ModeMenu extends GameObject {
 	private RectButton confirm;
 
 	/**
-	 * Create main menu for the game panel
+	 * Create mode menu for the game panel
 	 */
 	public ModeMenu() {
 		this.position = new Vec2();
@@ -51,43 +42,63 @@ public class ModeMenu extends GameObject {
 		// select width of board: 4 <= n <= 20
 		// select height of board: 4 <= n <= 20
 
-		try {
-			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		createButtons();
 	}
 	
+	/**
+	 * Gets the currently selected mode
+	 * @return string representing the currently selected mode
+	 */
 	public String getMode() {
 		return mode;
 	}
 
+	/**
+	 * Sets the currently selected game mode
+	 * @param mode
+	 */
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
 
+	/**
+	 * Sets the currently selected victory condition
+	 * @param int representing the victory condition
+	 */
 	public void setVictoryCondition(int victoryCondition) {
 		this.victoryCondition = victoryCondition;
 	}
 
+	/**
+	 * Sets the currently selected width of the board
+	 * @param int representing the board width
+	 */
 	public void setBoardWidth(int boardWidth) {
 		this.boardWidth = boardWidth;
 	}
 
+	/**
+	 * Sets the currently selected height of the board
+	 * @param int representing the board height
+	 */
 	public void setBoardHeight(int boardHeight) {
 		this.boardHeight = boardHeight;
 	}
 
+	/**
+	 * Returns the currently selected victory condition
+	 * @return int representing the number of consecutive coins
+	 * required to win
+	 */
 	public int getVictoryCondition() {
 		return victoryCondition;
 	}
 	
+	/**
+	 * Returns the maximum allowable victory condition given the current
+	 * board width and height.
+	 * @return int indicating the maximum allowable victory condition
+	 */
 	public int maxAllowedVictory() {
 		if (this.boardWidth == 7 && this.boardHeight == 6) return 4;
 		if (this.boardWidth == 14 && this.boardHeight == 12) return 5;
@@ -95,14 +106,26 @@ public class ModeMenu extends GameObject {
 		return 4;
 	}
 	
+	/**
+	 * Returns the currently selected board width
+	 * @return width of the board as an int
+	 */
 	public int getBoardWidth() {
 		return boardWidth;
 	}
 
+	/**
+	 * Returns the currently selected board height
+	 * @return height of the board as an int
+	 */
 	public int getBoardHeight() {
 		return boardHeight;
 	}
 
+	/**
+	 * Tells the game manager to move to the next window and to set
+	 * the properties of the board.
+	 */
 	public void activatePlayers() {
 		GAME_MANAGER.activatePlayers(mode, boardHeight, boardWidth, victoryCondition);
 	}
@@ -116,33 +139,11 @@ public class ModeMenu extends GameObject {
 		//Draw Background
 		Image mainTitle = IMAGE_STORE.GetScaledImage("mainTitle", JPANEL.getWidth(), JPANEL.getHeight());
 		g2d.drawImage(mainTitle, 0, 0, null);
-		
-//		Vec2 worldPos = getWorldPosition();
-//		int pixelX = (int) ((worldPos.x+0.5f) * JPANEL.getWidth());
-//		int pixelY = (int) ((worldPos.y+0.3f) * JPANEL.getHeight());
-//
-//		g2d.setColor(Color.WHITE);
-//
-//		Font textFont = this.font.deriveFont(worldPos.x * JPANEL.getWidth()/5);
-//		g2d.setFont(textFont);
-//		FontMetrics fm = g2d.getFontMetrics();
-//        int x = ((fm.stringWidth("Game Settings")) / 2);
-//        int y = fm.getHeight()/4;
-//        
-//		g2d.drawString("Game Settings", pixelX - x, pixelY);
-//		
-//		textFont = this.font.deriveFont((float) JPANEL.getWidth()/20);
-//		g2d.setFont(textFont);
-//		fm = g2d.getFontMetrics();
-//        x = ((fm.stringWidth("Choose Mode")) / 2);
-//        y = fm.getHeight();
-//		g2d.drawString("Choose Mode", pixelX - x, pixelY + y*1);
-//        x = ((fm.stringWidth("Choose Victory Condition")) / 2);
-//		g2d.drawString("Choose Victory Condition", pixelX - x, pixelY + y*4);
-//        x = ((fm.stringWidth("Choose Board Size")) / 2);
-//		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*8);
 	}
 
+	/**
+	 * Creates the buttons for the mode menu
+	 */
 	private void createButtons(){
 		modeMenuNormal = new RectButton("normal", "normalSelected", 0.3f, 0.4f, 0.2f, 0.1f) {
 			@Override
@@ -217,6 +218,11 @@ public class ModeMenu extends GameObject {
 		addChild(confirm);
 	}
 	
+	/**
+	 * Sets the board dimensions
+	 * @param width of the board
+	 * @param height of the board
+	 */
 	private void setBoardDim(int boardWidth, int boardHeight){
 		this.boardWidth = boardWidth;
 		this.boardHeight = boardHeight;

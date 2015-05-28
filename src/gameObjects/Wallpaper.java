@@ -6,15 +6,18 @@ import java.awt.Image;
 import gameEngine.GameObject;
 import gameEngine.Vec2;
 
+/**
+ * Generates a wooden background for the game.
+ * @author ivormetcalf
+ *
+ */
 public class Wallpaper extends GameObject {
 
 	public Wallpaper() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void onUpdate() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

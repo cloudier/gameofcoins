@@ -30,6 +30,15 @@ public class NormalGame extends Game{
 	private UIObject victory;
 	private UIObject draw;
 	
+	public NormalGame(BoardState boardModel) {
+		this.boardState = boardModel;
+		position = new Vec2(0.01f, 0.01f);
+		animated = false;	
+		createButtons();
+	}
+	/**
+	 * Generates reset, main menu and back buttons in the board window.
+	 */
 	private void createButtons(){
 		float x = 0.14f;
 		
@@ -60,18 +69,7 @@ public class NormalGame extends Game{
 	}
 	
 	/**
-	 * Create button for "Normal" mode
-	 * @param boardModel
-	 */
-	public NormalGame(BoardState boardModel) {
-		this.boardState = boardModel;
-		position = new Vec2(0.01f, 0.01f);
-		animated = false;	
-		createButtons();
-	}
-	
-	/**
-	 * Creates a child of Draw when the game ends up in a draw
+	 * Creates an alert when the game ends up in a draw
 	 */
 	public void isDraw() {
 		gameOver = true;
@@ -80,7 +78,7 @@ public class NormalGame extends Game{
 	}
 	
 	/**
-	 * Creates a child of Victory when a player win
+	 * Creates an alert when a player wins
 	 * @param id The ID of the Player
 	 */
 	public void victorious(int id) {
@@ -90,7 +88,7 @@ public class NormalGame extends Game{
 	}
 
 	/**
-	 * Initialise the board
+	 * Initialises the board's rows and columns
 	 */
 	public void initialiseColumnsRows() {
 		this.rows = boardState.getBoardRow();
@@ -123,7 +121,7 @@ public class NormalGame extends Game{
 	}
 	
 	/**
-	 * Reset the Game
+	 * Resets the Game (when the reset button is pressed)
 	 */
 	public void reset() {
 		for (int r = 0; r < rows; r++) {
@@ -194,8 +192,10 @@ public class NormalGame extends Game{
 		}
 	}
 
+	/**
+	 * Animates the AI's move
+	 */
 	public void animateAI() {
-		// animate AI move
 		int aiChoice = boardState.ai_Move();
 		
 		Vec2 endPosition = new Vec2(cellSize.x * aiChoice,
@@ -228,27 +228,32 @@ public class NormalGame extends Game{
 		}
 	}
 	
+	/**
+	 * Gets a boolean describing whether there is a currently falling animated coin
+	 * @return boolean describing whether there is currently a falling animated coin
+	 */
 	public boolean isAnimated() {
 		return animated;
 	}
 
+	/**
+	 * Sets the boolean that indicates if there a currently falling animated coin
+	 * @param the boolean indicating if there is a currently falling animated coin
+	 */
 	public void setAnimated(boolean animated) {
 		this.animated = animated;
 	}
 
 	@Override
 	public void onMouseUp() {
-		
 	}
 
 	@Override
 	protected void onUpdate() {
-		
 	}
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
-
 		Vec2 worldPos = getWorldPosition();
 		
 		Point pixelDim = toPixelCoordinates(cellSize);

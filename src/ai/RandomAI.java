@@ -16,7 +16,6 @@ import gameEngine.*;
 public class RandomAI implements AI{
 	
 	private BoardState boardState;
-	private int player;
 
 	/**
 	 * Construct a RandomAI Object
@@ -38,7 +37,6 @@ public class RandomAI implements AI{
 	 */
 	public int putCoin(BoardState latest, int player){
 		this.boardState = latest;
-		this.player = player;
 		int column = 0;
 
 		List<Integer> columns = boardState.getPossibleMoves();

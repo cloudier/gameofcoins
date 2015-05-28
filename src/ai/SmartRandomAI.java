@@ -18,7 +18,6 @@ import gameEngine.*;
 public class SmartRandomAI implements AI{
 	
 	private BoardState boardState;
-	private int player;
 	
 	/**
 	 * Construct a SmartRandomAI Object
@@ -45,7 +44,6 @@ public class SmartRandomAI implements AI{
 	 */
 	public int putCoin(BoardState latest, int player){
 		this.boardState = latest;
-		this.player = player;
 		
 		int column = 0;
 

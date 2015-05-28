@@ -127,16 +127,16 @@ public class ModeMenuVictoryNumber extends UIObject{
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Checks if the victory condition that the current class represents is allowed given the board dimensions.
+	 * @return true if the victory condition is allowed
 	 */
 	private boolean checkAllowed() {
 		return this.number > ((ModeMenu) this.getParent().getParent()).maxAllowedVictory();
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Checks if the victory condition that the current class represents is selected.
+	 * @return true if this victory condition is selected
 	 */
 	private boolean checkSelected() {
 		return ((ModeMenu) this.getParent().getParent()).getVictoryCondition() == number;

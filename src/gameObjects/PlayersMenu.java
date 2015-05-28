@@ -114,6 +114,9 @@ public class PlayersMenu extends UIObject {
 		g2d.drawString("Player Settings", pixelX - x, pixelY);
 	}
 
+	/**
+	 * Creates the buttons for the players menu
+	 */
 	private void createButtons(){
 		back = new RectButton("back", "backSelected", -0.4f, 0.7f, 0.1f, 0.1f) {
 			@Override
@@ -243,6 +246,12 @@ public class PlayersMenu extends UIObject {
 		this.addChild(ai2Hard);
 	}
 	
+	/**
+	 * Sets the fields active and visible to the given boolean for the 
+	 * buttons related to the given AI.
+	 * @param boolean to set active and visible fields to
+	 * @param AI that the buttons relate to
+	 */
 	public void setActiveVisible(boolean visibility, int ai) {
 		if (ai == 1) {
 			ai1Easy.setActiveVisible(visibility);
@@ -255,6 +264,12 @@ public class PlayersMenu extends UIObject {
 		}
 	}
 
+	/**
+	 * Sets the difficulty of the given AI. Easy is 1, medium is 2
+	 * and hard is 3.
+	 * @param AI to set the difficulty of
+	 * @param difficulty
+	 */
 	protected void setAIDifficulty(int ai, int difficulty) {
 		if (ai == 1) {
 			ai1 = difficulty;
