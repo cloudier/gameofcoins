@@ -26,15 +26,6 @@ public class BoardState {
 	}
 
 	public BoardState(BoardState oldState, int player){
-		boardGame = new int[this.boardRow][this.boardColumn];
-
-		for (int row = 0; row < this.boardRow; row++){
-			for (int col = 0; col < this.boardColumn; col++){
-				this.boardGame[row][col] = oldState.getBoard()[row][col];
-			}
-		}
-		
-
 		this.boardRow = oldState.getBoardRow();
 		this.boardColumn = oldState.getBoardColumn();
 		this.victoryCondition = oldState.getVictoryCondition();
@@ -42,6 +33,14 @@ public class BoardState {
 
 		this.currentPlayer = player;
 		this.numPlayers = oldState.getNumPlayers();
+		
+		boardGame = new int[this.boardRow][this.boardColumn];
+
+		for (int row = 0; row < this.boardRow; row++){
+			for (int col = 0; col < this.boardColumn; col++){
+				this.boardGame[row][col] = oldState.getBoard()[row][col];
+			}
+		}
 	}
 
 	public void reset() {
@@ -64,10 +63,10 @@ public class BoardState {
 		this.currentPlayer = 1;
 		
     	//artificialIntelligence = new RandomAI(this);					//Random AI
-    	artificialIntelligence = new SmartRandomAI(this);				//Smart Random AI
+//    	artificialIntelligence = new SmartRandomAI(this);				//Smart Random AI
 		//artificialIntelligence = new MonteCarloAI(this, 1000, 2);		//Monte Carlo AI (Search 1000)
 		//artificialIntelligence = new MiniMaxAI(this, 5, 2);			//Mini Max AI (Depth 5)
-		//artificialIntelligence = new AlphaBeta(this, 7, 2);			//Alpha Beta AI (Depth 7)
+		artificialIntelligence = new AlphaBetaMiniMaxAI(this, 7, 2);			//Alpha Beta AI (Depth 7)
 		//artificialIntelligence = new ManualAI(this);					//Manual
 	}
 

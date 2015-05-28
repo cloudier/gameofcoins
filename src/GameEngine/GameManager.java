@@ -93,7 +93,7 @@ public class GameManager {
 		
 		playersMenu.setActiveVisible(false);
 		board.setActiveVisible(true);
-		state = GameState.nextState(state);			
+		state = GameState.nextState(state);
 	}
 
 	public void activateStart() { // go back to start menu

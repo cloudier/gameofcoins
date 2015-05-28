@@ -24,6 +24,8 @@ public class PlayersMenu extends GameObject {
 	private RectButton back;
 	private RectButton confirm;
 	
+	//
+	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.numPlayers = 2;
@@ -108,6 +110,29 @@ public class PlayersMenu extends GameObject {
 		FontMetrics fm = g2d.getFontMetrics();
         int x = ((fm.stringWidth("Player Settings")) / 2);
 		g2d.drawString("Player Settings", pixelX - x, pixelY);
+	}
+	
+	class PlayerSetting extends GameObject
+	{
+		public RectButton joinButton;
+		public RectButton humanButton;
+		public RectButton aiButton;
+		
+//		public PlayerSetting() {
+//			joinButton = new RectButton() {
+//				
+//				@Override
+//				public void onMouseDown() {
+//					
+//				}
+//			};
+//		}
+		
+		@Override
+		protected void onUpdate() {	}
+
+		@Override 
+		protected void onRender(Graphics2D g2d) { }
 	}
 
 	private void createButtons()
