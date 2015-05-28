@@ -4,16 +4,27 @@ import java.util.*;
 
 import gameEngine.*;
 
-public class RandomAI implements AIX{
+/**
+ * 
+ * @author Timothy
+ *
+ */
+public class RandomAI implements AI{
 	
 	private BoardState boardState;
 	
+	/**
+	 * 
+	 * @param latest
+	 */
 	public RandomAI(BoardState latest){
 		this.boardState = latest;
 	}
 
+	/**
+	 * @return
+	 */
 	public int putCoin(){
-		//System.out.println("Calculating...");
 		int column = 0;
 
 		List<Integer> columns = boardState.getPossibleMoves();

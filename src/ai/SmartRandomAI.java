@@ -3,16 +3,27 @@ package ai;
 import java.util.*;
 import gameEngine.*;
 
-public class SmartRandomAI implements AIX{
+/**
+ * 
+ * @author Timothy
+ *
+ */
+public class SmartRandomAI implements AI{
 	
 	private BoardState boardState;
 	
+	/**
+	 * 
+	 * @param latest
+	 */
 	public SmartRandomAI(BoardState latest){
 		this.boardState = latest;
 	}
 
+	/**
+	 * @return
+	 */
 	public int putCoin(){
-		//System.out.println("Calculating...");
 		int column = 0;
 
 		List<Integer> columns = boardState.getPossibleMoves();
@@ -20,9 +31,7 @@ public class SmartRandomAI implements AIX{
 		column = random.nextInt(columns.size());
 		column = columns.get(column);
 		
-		for (int col : columns) {
-        	
-			System.out.println(col);
+		for (int col : columns) {        	
 			for (int i = 0; i < boardState.getNumPlayers(); i++){
 				
 				boardState.putCoinForAI(col, (i + 1));

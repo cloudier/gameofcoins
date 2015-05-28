@@ -3,21 +3,33 @@ package ai;
 import java.util.*;
 import gameEngine.*;
 
-public class MiniMaxAI implements AIX{
+/**
+ * 
+ * @author Timothy
+ *
+ */
+public class MiniMaxAI implements AI{
 	
 	private BoardState boardState;
 	private int depthLimit;
 	private int player;
-		
+	
+	/**
+	 * 
+	 * @param latest
+	 * @param depthLimit
+	 * @param player
+	 */
 	public MiniMaxAI(BoardState latest, int depthLimit, int player){
 		this.boardState = latest;
 		this.depthLimit = depthLimit;
 		this.player = player;
 	}
 
+	/**
+	 * @return
+	 */
 	public int putCoin(){
-		System.out.println("Calculating...");
-
 		int maxValue = - 1;
 		int column = 0;
 
@@ -42,17 +54,21 @@ public class MiniMaxAI implements AIX{
 		return column;
 	}
 
+	/**
+	 * 
+	 * @param bs
+	 * @param depth
+	 * @return
+	 */
 	private int miniMax(BoardState bs, int depth){
 		//bs.output();
 
 		int returnValue;
 
 		if (bs.isWinner(this.player - 1)){
-			//System.out.println("Above Player win");
 			return -1;
 		}
 		else if (bs.isWinner(this.player)){
-			//System.out.println("Above AI win");
 			return 1;	
 		}
 		
@@ -69,7 +85,6 @@ public class MiniMaxAI implements AIX{
 				int val = miniMax(tmp, (depth + 1));
 				returnValue = Math.max(returnValue, val);
 			}
-			//System.out.println("~~~~~~~~~~~~~~~~~");
 		}
 		else{
 			//min
@@ -80,7 +95,6 @@ public class MiniMaxAI implements AIX{
 				int val = miniMax(tmp, (depth + 1));
 				returnValue = Math.min(returnValue, val);
 			}
-			//System.out.println("~~~~~~~~~~~~~~~~~");
 		}
 
 		return returnValue;
