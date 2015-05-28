@@ -26,6 +26,8 @@ public class BoardState {
 
 	private int ai_Selection;
 	
+	private HashMap<Integer, Player> players;
+	
 	/**
 	 * Construct a BoardState Object.
 	 * 
@@ -90,22 +92,19 @@ public class BoardState {
 	public void initialisePlayers(int numPlayers, HashMap<Integer, Player> players) {
 		this.numPlayers = numPlayers;
 		this.currentPlayer = 1;
+		this.players = players;
 		
-//		for (Player p : players.values()) {
-//			if (p.getPlayerType() == PlayerType.AI) {
-//				if (p.getDifficulty() == 0) {
-//			    	artificialIntelligence = new SmartRandomAI();				//Smart Random AI					
-//				} else if (p.getDifficulty() == 1) {
-//					
-//				} else if (p.getDifficulty() == 2) {
-//					artificialIntelligence = new AlphaBetaMiniMaxAI(7);			//Alpha Beta AI (Depth 7)					
-//				}
-//			}
-//		}
-		
-//    	artificialIntelligence = new RandomAI();				//Random AI
-		artificialIntelligence = new MonteCarloAI(1000);		//Monte Carlo AI (Search 1000)
-//		artificialIntelligence = new MiniMaxAI(5);				//MiniMax AI (Depth 5)
+		for (Player p : players.values()) {
+			if (p.getPlayerType() == PlayerType.AI) {
+				if (p.getDifficulty() == 0) {
+			    	artificialIntelligence = new SmartRandomAI();				//Smart Random AI					
+				} else if (p.getDifficulty() == 1) {
+					artificialIntelligence = new AlphaBetaMiniMaxAI(7);			//Alpha Beta AI (Depth 7)					
+				} else if (p.getDifficulty() == 2) {
+					artificialIntelligence = new MonteCarloAI(1000);		//Monte Carlo AI (Search 1000)
+				}
+			}
+		}
 	}
 
 	/**
@@ -192,7 +191,11 @@ public class BoardState {
 	 * 
 	 * @return
 	 */
-	public int getCurrentPlayer() {
+	public Player getCurrentPlayer() {
+		return this.players.get(currentPlayer);
+	}
+	
+	public int getCurrentPlayerID() {
 		return this.currentPlayer;
 	}
 

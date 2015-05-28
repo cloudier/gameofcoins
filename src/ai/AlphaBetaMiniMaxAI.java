@@ -110,7 +110,7 @@ public class AlphaBetaMiniMaxAI implements AI{
 			return 0;
 		}
 
-		if (bs.getCurrentPlayer() == (this.player - 1)){
+		if (bs.getCurrentPlayerID() == (this.player - 1)){
 			for (BoardState tmp : bs.getChildren()){
 				int val = alphaBeta(tmp, (depth + 1), alpha, beta);
 				alpha = Math.max(alpha, val);

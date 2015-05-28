@@ -105,7 +105,7 @@ public class MiniMaxAI implements AI{
 			return 0;
 		}
 
-		if (bs.getCurrentPlayer() == (this.player - 1)){
+		if (bs.getCurrentPlayerID() == (this.player - 1)){
 			returnValue = -100000;
 			
 			for (BoardState tmp : bs.getChildren()){

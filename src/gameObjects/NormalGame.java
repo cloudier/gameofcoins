@@ -150,7 +150,8 @@ public class NormalGame extends Game{
 
 		int column = (int) ((mousePos.x - position.x) / (width / columns));
 		// animation for dropping coin
-		if (boardState.getTopRow(column) != -1) {
+		if (boardState.getTopRow(column) != -1 &&
+				!boardState.getCurrentPlayer().getPlayerType().equals(PlayerType.AI)) {
 			Vec2 endPosition = new Vec2(cellSize.x * column,
 					cellSize.y * (rows - 1 - boardState.getTopRow(column)));
 			endPosition = endPosition.plus(coinOffset);
@@ -160,17 +161,7 @@ public class NormalGame extends Game{
 			animatedCoin.setCircleRadius(this.circleRadius);
 			animatedCoin.position = new Vec2(cellSize.x * column, cellSize.y * 0);
 			animatedCoin.position = animatedCoin.position.plus(coinOffset);
-			if (boardState.getCurrentPlayer() == 0) {
-				animatedCoin.setColor(Color.WHITE);
-			} else if (boardState.getCurrentPlayer() == 1) {
-				animatedCoin.setColor(Color.RED);
-			} else if (boardState.getCurrentPlayer() == 2) {
-				animatedCoin.setColor(Color.YELLOW);
-			} else if (boardState.getCurrentPlayer() == 3) {
-				animatedCoin.setColor(Color.GREEN);
-			} else if (boardState.getCurrentPlayer() == 4) {
-				animatedCoin.setColor(Color.MAGENTA);
-			}
+			animatedCoin.setColor(boardState.getCurrentPlayer().getColor());
 			
 			coins[rows - 1 - boardState.getTopRow(column)][column].setColor(Color.WHITE);
 			this.addChild(animatedCoin);
@@ -181,51 +172,48 @@ public class NormalGame extends Game{
 				if (boardState.isDraw()) {
 					isDraw();
 				} else {
-					victorious(boardState.getCurrentPlayer());
+					victorious(boardState.getCurrentPlayerID());
 				}
 				return;
-			}
-			
-			// animate AI move
-			int aiChoice = boardState.ai_Move();
-			
-			endPosition = new Vec2(cellSize.x * aiChoice,
-					cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
-			endPosition = endPosition.plus(coinOffset);
-
-			animatedCoin = new AnimatedCoin(endPosition,
-					aiChoice, coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice]);
-			animatedCoin.setCircleRadius(this.circleRadius);
-			animatedCoin.position = new Vec2(cellSize.x * aiChoice, cellSize.y * 0);
-			animatedCoin.position = animatedCoin.position.plus(coinOffset);
-			if (boardState.getCurrentPlayer() == 0) {
-				animatedCoin.setColor(Color.WHITE);
-			} else if (boardState.getCurrentPlayer() == 1) {
-				animatedCoin.setColor(Color.RED);
-			} else if (boardState.getCurrentPlayer() == 2) {
-				animatedCoin.setColor(Color.YELLOW);
-			} else if (boardState.getCurrentPlayer() == 3) {
-				animatedCoin.setColor(Color.GREEN);
-			} else if (boardState.getCurrentPlayer() == 4) {
-				animatedCoin.setColor(Color.MAGENTA);
-			}
-			
-			coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice].setColor(Color.WHITE);
-			this.addChild(animatedCoin);
-			this.animated = true;
-			gameOver = boardState.putCoin(aiChoice);
-			
-			if (gameOver) {
-				if (boardState.isDraw()) {
-					isDraw();
-				} else {
-					victorious(boardState.getCurrentPlayer());
-				}
 			}
 		}
 		
 	}
 
+	public void animateAI() {
+		// animate AI move
+		int aiChoice = boardState.ai_Move();
+		
+		Vec2 endPosition = new Vec2(cellSize.x * aiChoice,
+				cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
+		endPosition = endPosition.plus(coinOffset);
+		
+		endPosition = new Vec2(cellSize.x * aiChoice,
+				cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
+		endPosition = endPosition.plus(coinOffset);
+
+		System.out.println("ai chose column" + aiChoice);
+		AnimatedCoin animatedCoin = new AnimatedCoin(endPosition,
+				aiChoice, coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice]);
+		animatedCoin.setCircleRadius(this.circleRadius);
+		animatedCoin.position = new Vec2(cellSize.x * aiChoice, cellSize.y * 0);
+		animatedCoin.position = animatedCoin.position.plus(coinOffset);
+		animatedCoin.setColor(boardState.getCurrentPlayer().getColor());
+		
+		coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice].setColor(Color.WHITE);
+		this.addChild(animatedCoin);
+		this.animated = true;
+		gameOver = boardState.putCoin(aiChoice);
+		
+		if (gameOver) {
+			if (boardState.isDraw()) {
+				isDraw();
+			} else {
+				victorious(boardState.getCurrentPlayerID());
+			}
+		}
+	}
+	
 	public boolean isAnimated() {
 		return animated;
 	}
@@ -286,20 +274,19 @@ public class NormalGame extends Game{
 			if (column < columns && column >= 0 && 
 					coins[0][column] != null && 
 					coins[0][column].getColor().equals(Color.WHITE) &&
-					!gameOver && !animated) { // top rows of column is empty
+					!gameOver && !animated) {
+				// hover
+				// top rows of column is empty
 				// set coin color to the color of the current player
-				if (boardState.getCurrentPlayer() == 0) {
-					coins[0][column].setColor(Color.WHITE);
-				} else if (boardState.getCurrentPlayer() == 1) {
-					coins[0][column].setColor(Color.RED);
-				} else if (boardState.getCurrentPlayer() == 2) {
-					coins[0][column].setColor(Color.YELLOW);
-				} else if (boardState.getCurrentPlayer() == 3) {
-					coins[0][column].setColor(Color.GREEN);
-				} else if (boardState.getCurrentPlayer() == 4) {
-					coins[0][column].setColor(Color.MAGENTA);
-				}
+				Color color = boardState.getCurrentPlayer().getColor();
+				coins[0][column].setColor(color);
 			}
+		}
+		
+		if(boardState.getCurrentPlayer().getPlayerType().equals(PlayerType.AI) &&
+				!animated &&
+				!gameOver) { // current player is an ai and there is no animated coin
+			animateAI();
 		}
 	}
 }
