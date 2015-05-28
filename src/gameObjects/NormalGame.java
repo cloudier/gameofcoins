@@ -192,7 +192,6 @@ public class NormalGame extends Game{
 				cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
 		endPosition = endPosition.plus(coinOffset);
 
-		System.out.println("ai chose column" + aiChoice);
 		AnimatedCoin animatedCoin = new AnimatedCoin(endPosition,
 				aiChoice, coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice]);
 		animatedCoin.setCircleRadius(this.circleRadius);

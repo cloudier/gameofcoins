@@ -81,7 +81,9 @@ public class BoardState {
 		this.boardColumn = boardColumn;
 		this.boardGame = new int[boardRow][boardColumn];
 		this.victoryCondition = victoryCondition;
-		this.mode = mode;		
+		this.mode = mode;	
+		this.gameOver = false;
+		this.draw = false;
 	}
 
 	/**
@@ -93,7 +95,7 @@ public class BoardState {
 		this.numPlayers = numPlayers;
 		this.currentPlayer = 1;
 		this.players = players;
-		
+
 		for (Player p : players.values()) {
 			if (p.getPlayerType() == PlayerType.AI) {
 				if (p.getDifficulty() == 0) {
@@ -291,9 +293,6 @@ public class BoardState {
 		for(int row = 0; row < this.boardRow; row++){
 			if(boardGame[row][column] == 0){
 				boardGame[row][column] = this.currentPlayer;
-				//System.out.println("User Move : " + column);
-				//output();
-				//System.out.println("\n");
 				break;
 			}
 			else if (row == (this.boardRow - 1)){
