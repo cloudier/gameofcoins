@@ -126,10 +126,18 @@ public class ModeMenuVictoryNumber extends UIObject{
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkAllowed() {
 		return this.number > ((ModeMenu) this.getParent().getParent()).maxAllowedVictory();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkSelected() {
 		return ((ModeMenu) this.getParent().getParent()).getVictoryCondition() == number;
 	}
