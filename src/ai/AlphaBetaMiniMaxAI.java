@@ -4,21 +4,33 @@ import java.util.*;
 
 import gameEngine.*;
 
-public class AlphaBetaMiniMaxAI implements AIX{
+/**
+ * 
+ * @author Timothy
+ *
+ */
+public class AlphaBetaMiniMaxAI implements AI{
 	
 	private BoardState boardState;
 	private int depthLimit;
 	private int player;
 	
+	/**
+	 * 
+	 * @param latest
+	 * @param depthLimit
+	 * @param player
+	 */
 	public AlphaBetaMiniMaxAI(BoardState latest, int depthLimit, int player){
 		this.boardState = latest;
 		this.depthLimit = depthLimit;
 		this.player = player;
 	}
 
+	/**
+	 * @return
+	 */
 	public int putCoin(){
-		System.out.println("Calculating...");
-
 		int maxValue = - 1;
 		int column = 0;
 
@@ -43,17 +55,21 @@ public class AlphaBetaMiniMaxAI implements AIX{
 		return column;
 	}
 
+	/**
+	 * 
+	 * @param bs
+	 * @param depth
+	 * @param alpha
+	 * @param beta
+	 * @return
+	 */
 	private int alphaBeta(BoardState bs, int depth, int alpha, int beta){
 		//bs.output();
 
-		//int returnValue;
-		
 		if (bs.isWinner(this.player - 1)){
-			//System.out.println("Above Player win");
 			return -1;
 		}
 		else if (bs.isWinner(this.player)){
-			//System.out.println("Above AI win");
 			return 1;	
 		}
 
@@ -63,38 +79,30 @@ public class AlphaBetaMiniMaxAI implements AIX{
 
 		if (bs.getCurrentPlayer() == (this.player - 1)){
 			//max
-			//returnValue = -100000;
-
 			//System.out.println("Printing out Max Children of Depth : " + depth);
 			for (BoardState tmp : bs.getChildren()){
 				int val = alphaBeta(tmp, (depth + 1), alpha, beta);
 				alpha = Math.max(alpha, val);
-				//returnValue = alpha;
 
 				if (beta <= alpha){
 					break;
 				}
 			}
 			
-			//System.out.println("~~~~~~~~~~~~~~~~~");
 			return alpha;
 		}
 		else{
 			//min
-			//returnValue = 100000;
-
 			//System.out.println("Printing out Min Children of Depth : " + depth);
 			for (BoardState tmp : bs.getChildren()){
 				int val = alphaBeta(tmp, (depth + 1), alpha, beta);
 				beta = Math.min(beta, val);
-				//returnValue = beta;
 
 				if (beta <= alpha){
 					break;
 				}
 			}
 
-			//System.out.println("~~~~~~~~~~~~~~~~~");
 			return beta;
 		}
 	}

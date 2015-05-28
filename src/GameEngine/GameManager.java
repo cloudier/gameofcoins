@@ -38,6 +38,10 @@ public class GameManager {
 
 	private BoardState boardModel;
 	
+	/**
+	 * 
+	 * @param mg
+	 */
 	public GameManager(MainGame mg) {
 		mainGame = mg;
 		this.state = GameState.START;
@@ -66,6 +70,13 @@ public class GameManager {
 		state = GameState.nextState(state);
 	}
 	
+	/**
+	 * 
+	 * @param mode
+	 * @param boardRows
+	 * @param boardColumns
+	 * @param victoryCondition
+	 */
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
 		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
 		this.board = new Board(boardModel);
@@ -79,6 +90,11 @@ public class GameManager {
 		state = GameState.nextState(state);
 	}
 
+	/**
+	 * 
+	 * @param numPlayers
+	 * @param players
+	 */
 	public void activateBoard(int numPlayers, HashMap<Integer, Player> players) {
 		boardModel.initialiseMode(boardModel.getBoardRow(), boardModel.getBoardColumn(),
 				boardModel.getVictoryCondition(), boardModel.getMode());
@@ -96,12 +112,18 @@ public class GameManager {
 		state = GameState.nextState(state);
 	}
 
+	/**
+	 * 
+	 */
 	public void activateStart() { // go back to start menu
 		board.setActiveVisible(false);
 		mainMenu.setActiveVisible(true);
 		state = GameState.nextState(state);			
 	}
 	
+	/**
+	 * 
+	 */
 	public void back() {
 		if (state == GameState.START) {
 			mainMenu.setActiveVisible(false);
@@ -119,11 +141,18 @@ public class GameManager {
 		state = GameState.prevState(state);
 	}
 	
+	/**
+	 * 
+	 */
 	public void activateReset() {
 		boardModel.reset();
 		board.reset();
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 */
 	public void victorious(int id) {
 		board.victorious(id);
 	}

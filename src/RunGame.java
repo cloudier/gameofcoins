@@ -2,6 +2,11 @@ import gameEngine.*;
 
 import javax.swing.SwingUtilities;
 
+/**
+ * 
+ * @author
+ *
+ */
 public class RunGame {
 	/**
 	 * Method to bootstrap the main frame

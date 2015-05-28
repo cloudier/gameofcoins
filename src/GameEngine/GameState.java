@@ -1,5 +1,10 @@
 package gameEngine;
 
+/**
+ * 
+ * @author 
+ *
+ */
 public enum GameState {
 	START (1),
 	MODE (2),
@@ -8,10 +13,19 @@ public enum GameState {
 	
 	private int id;
 	
+	/**
+	 * 
+	 * @param id
+	 */
 	private GameState(int id) {
 		this.id = id;
 	}
 	
+	/**
+	 * 
+	 * @param ID
+	 * @return
+	 */
     public static GameState getStateByID(int ID) {
 	    switch(ID) {
 	    case 1:
@@ -26,6 +40,11 @@ public enum GameState {
 	    return START;
     }
     
+    /**
+     * 
+     * @param gs
+     * @return
+     */
 	public static GameState nextState(GameState gs) {
 		if (gs.id < 4) {
 			return getStateByID(gs.id + 1);
@@ -34,6 +53,11 @@ public enum GameState {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param gs
+	 * @return
+	 */
 	public static GameState prevState(GameState gs) {
 		if (gs.id > 0) {
 			return getStateByID(gs.id - 1);
