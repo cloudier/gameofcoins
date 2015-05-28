@@ -80,7 +80,7 @@ public abstract class RectButton extends UIObject {
 			img2 = IMAGE_STORE.GetScaledImage(hoveringOver, pixelWidth, pixelHeight);
 		}
 		
-		if(mouseSelected() && img2 != null)
+		if((mouseSelected() || modeSelected()) && img2 != null)
 		{
 			g2d.drawImage(img2, pixelX, pixelY, null);
 		}
@@ -88,6 +88,10 @@ public abstract class RectButton extends UIObject {
 		{
 			g2d.drawImage(img1, pixelX, pixelY, null);
 		}
+	}
+	
+	public boolean modeSelected() {
+		return false;
 	}
 	
 	public void setDefaultImage(String DefaultImage) {

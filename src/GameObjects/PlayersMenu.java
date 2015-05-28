@@ -15,17 +15,21 @@ import java.util.*;
 public class PlayersMenu extends UIObject {
 	private int numPlayers;
 	private int playerTypes;
+	private int ai1;
+	private int ai2;
 	// 0 -> human v human (default)
 	// 1 -> human v ai
 	// 2 -> ai v ai
 	
 	private RectButton back;
 	private RectButton confirm;
+	
 	private RectButton humanhuman;
 	private RectButton humanai;
 	private RectButton aiai;
-	
-	//
+
+	private RectButton aiButton1;
+	private RectButton aiButton2;
 	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
@@ -51,6 +55,17 @@ public class PlayersMenu extends UIObject {
 	
 	public void activateBoard() {
 		HashMap<Integer, Player> players = new HashMap<Integer, Player>();
+		if (playerTypes == 0) {
+			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
+			players.put (2, new Player("Player 2", 2, Color.YELLOW, PlayerType.HUMAN));
+		} else if (playerTypes == 1) {
+			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
+			players.put (2, new Player("Player 2", 2, Color.YELLOW, PlayerType.AI));			
+		} else if (playerTypes == 2) {
+			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.AI));
+			players.put (2, new Player("Player 2", 2, Color.YELLOW, PlayerType.AI));
+		}
+		
 		GAME_MANAGER.activateBoard(numPlayers, players);
 	}
 
@@ -111,40 +126,54 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		humanhuman = new RectButton("back", "back", -0.3f, 0.15f, 0.1f, 0.1f) {
+		humanhuman = new RectButton("back", "backSelected", -0.3f, 0.15f, 0.1f, 0.1f) {
 			@Override
 			public void onMouseDown() {
-				
+				setPlayerTypes(0);
+			}
+			public boolean modeSelected() {
+				return playerTypes == 0;
 			}
 		}; // need to change asset and dimension
 		
-		one.position = new Vec2(-0.3f, 0.15f);
-		two.position = new Vec2(-0.3f, 0.3f);
-		three.position = new Vec2(-0.3f, 0.45f);
-		four.position = new Vec2(-0.3f, 0.6f);
+		humanai = new RectButton("back", "backSelected", -0.3f, 0.3f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				setPlayerTypes(1);
+			}
+			public boolean modeSelected() {
+				return playerTypes == 1;
+			}
+		};
 		
-
+		aiai = new RectButton("back", "backSelected", -0.3f, 0.45f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				setPlayerTypes(2);
+			}
+			public boolean modeSelected() {
+				return playerTypes == 2;
+			}
+		};
 		
 		this.addChild(back);
 		this.addChild(confirm);
+		this.addChild(humanhuman);
+		this.addChild(humanai);
+		this.addChild(aiai);
 	}
 
 	@Override
 	public boolean mouseSelected() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void onMouseDown() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onMouseUp() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
