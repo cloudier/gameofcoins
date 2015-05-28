@@ -8,7 +8,7 @@ import java.util.*;
 public class BoardState {
 
 	private int[][] boardGame;
-	private AIX artificialIntelligence;
+	private AI artificialIntelligence;
 	private int currentPlayer;
 	private int boardRow;
 	private int boardColumn;
@@ -65,7 +65,7 @@ public class BoardState {
     	//artificialIntelligence = new RandomAI(this);					//Random AI
 //    	artificialIntelligence = new SmartRandomAI(this);				//Smart Random AI
 		//artificialIntelligence = new MonteCarloAI(this, 1000, 2);		//Monte Carlo AI (Search 1000)
-		//artificialIntelligence = new MiniMaxAI(this, 5, 2);			//Mini Max AI (Depth 5)
+//		artificialIntelligence = new MiniMaxAI(this, 5, 2);			//Mini Max AI (Depth 5)
 		artificialIntelligence = new AlphaBetaMiniMaxAI(this, 7, 2);			//Alpha Beta AI (Depth 7)
 		//artificialIntelligence = new ManualAI(this);					//Manual
 	}
@@ -189,9 +189,9 @@ public class BoardState {
 		for(int row = 0; row < this.boardRow; row++){
 			if(boardGame[row][column] == 0){
 				boardGame[row][column] = this.currentPlayer;
-				System.out.println("User Move : " + column);
-				output();
-				System.out.println("\n");
+//				System.out.println("User Move : " + column);
+//				output();
+//				System.out.println("\n");
 				break;
 			}
 			else if (row == (this.boardRow - 1)){
@@ -243,14 +243,7 @@ public class BoardState {
 
 				if(this.currentPlayer == 1){
 					newPlayer = 2;
-				} 
-				else if(this.currentPlayer == 2){
-					newPlayer = 3;
-				}
-				else if(this.currentPlayer == 3){
-					newPlayer = 4;
-				}
-				else{
+				} else{
 					newPlayer = 1;
 				}
 

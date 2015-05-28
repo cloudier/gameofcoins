@@ -12,51 +12,30 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
-public class PlayersMenu extends GameObject {
+public class PlayersMenu extends UIObject {
 	private int numPlayers;
-	private HashMap<Integer, Player> players;
-	private PlayersSettings one;
-	private PlayersSettings two;
-	private PlayersSettings three;
-	private PlayersSettings four;
-	private Font font;
+	private int playerTypes;
+	// 0 -> human v human (default)
+	// 1 -> human v ai
+	// 2 -> ai v ai
 	
 	private RectButton back;
 	private RectButton confirm;
+	private RectButton humanhuman;
+	private RectButton humanai;
+	private RectButton aiai;
 	
 	//
 	
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.numPlayers = 2;
-		
-		players = new HashMap<Integer, Player>(5);
-		players.put(1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
-		players.put(2, new Player("Player 2", 2, Color.YELLOW, PlayerType.HUMAN));
-		players.put(3, null);
-		players.put(4, null);
-		
-		one = new PlayersSettings(1);
-		one.position = new Vec2(-0.3f, 0.15f);
-		one.setPlayer(players.get(1));
-		this.addChild(one);
-		two = new PlayersSettings(2);
-		two.position = new Vec2(-0.3f, 0.3f);
-		two.setPlayer(players.get(2));
-		this.addChild(two);
-		three = new PlayersSettings(3);
-		three.position = new Vec2(-0.3f, 0.45f);
-		three.setPlayer(null);
-		this.addChild(three);
-		four = new PlayersSettings(4);
-		four.position = new Vec2(-0.3f, 0.6f);
-		this.addChild(four);
-		four.setPlayer(null);
+		this.playerTypes = 0;
 		
 		createButtons();
 		
 		try {
-			this.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
+			UIObject.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (FontFormatException e) {
@@ -66,32 +45,13 @@ public class PlayersMenu extends GameObject {
 		}
 	}
 
+	public void setPlayerTypes(int playerTypes) {
+		this.playerTypes = playerTypes;
+	}
+	
 	public void activateBoard() {
-		if (one.nextStage() == false) {			
-			GAME_MANAGER.activateBoard(numPlayers, players);
-		} else {
-			two.nextStage();
-			three.nextStage();
-			four.nextStage();
-		}
-	}
-	
-	public Player makePlayer(int id){
-		this.numPlayers++;
-		Color c = null;
-		if (id == 3) {
-			c = Color.GREEN;
-		} else if (id == 4) {
-			c = Color.MAGENTA;
-		}
-		Player p = new Player("Player " + id, id, c, PlayerType.HUMAN);
-		players.put(id, p);
-		return p;
-	}
-	
-	public void deletePlayer(int id) {
-		this.numPlayers--;
-		players.put(id, null);
+		HashMap<Integer, Player> players = new HashMap<Integer, Player>();
+		GAME_MANAGER.activateBoard(numPlayers, players);
 	}
 
 	@Override
@@ -151,8 +111,40 @@ public class PlayersMenu extends GameObject {
 			}
 		};
 		
+		humanhuman = new RectButton("back", "back", -0.3f, 0.15f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				
+			}
+		}; // need to change asset and dimension
+		
+		one.position = new Vec2(-0.3f, 0.15f);
+		two.position = new Vec2(-0.3f, 0.3f);
+		three.position = new Vec2(-0.3f, 0.45f);
+		four.position = new Vec2(-0.3f, 0.6f);
+		
+
+		
 		this.addChild(back);
 		this.addChild(confirm);
+	}
+
+	@Override
+	public boolean mouseSelected() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onMouseDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseUp() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

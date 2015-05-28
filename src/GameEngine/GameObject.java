@@ -20,7 +20,7 @@ public abstract class GameObject {
 
 	public static JPanel JPANEL;
 	public static int TICK_RATE;
-	public static GameManager GAME_MANAGER;
+	public static WindowManager GAME_MANAGER;
 	public static ImageStore IMAGE_STORE = new ImageStore();
 
 	public Vec2 position = new Vec2();

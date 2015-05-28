@@ -1,7 +1,7 @@
 package gameEngine;
 
 import gameObjects.CoinProjectile;
-import gameObjects.PhysicsBoard;
+import gameObjects.AngryGame;
 import gameObjects.PhysicsBoundary;
 import gameObjects.Wallpaper;
 
@@ -114,7 +114,7 @@ public class MainGame {
 		Wallpaper wp = new Wallpaper();
 		gameObjectList.add(wp);
 		
-		gameManager = new GameManager(this);
+		gameManager = new WindowManager(this);
 		GameObject.GAME_MANAGER = this.gameManager;
 		
 	}
@@ -210,5 +210,5 @@ public class MainGame {
 	private JFrame mainFrame;
 	private JPanel gamePanel;
 
-	private GameManager gameManager;
+	private WindowManager gameManager;
 }

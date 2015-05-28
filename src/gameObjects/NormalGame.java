@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 
-public class Board extends UIObject {
+public class NormalGame extends Game{
 
 	private float width;
 	private float height;
@@ -60,7 +60,7 @@ public class Board extends UIObject {
 		this.addChild(back);
 	}
 	
-	public Board(BoardState boardModel) {
+	public NormalGame(BoardState boardModel) {
 
 		this.boardState = boardModel;
 		position = new Vec2(0.01f, 0.01f);

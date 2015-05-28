@@ -83,14 +83,14 @@ public class AnimatedCoin extends UIObject {
 				g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
 			}
 			
-			((Board) this.getParent()).setAnimated(true);
+			((NormalGame) this.getParent()).setAnimated(true);
 		}
 		if ((this.position.y >= endPosition.y - ANIMATION_STEP * 2) && coinNotAdded){
 			coin.setColor(this.color);
 			coinNotAdded = false;
 		}
 		if (!coinNotAdded) {
-			((Board) this.getParent()).setAnimated(false);
+			((NormalGame) this.getParent()).setAnimated(false);
 		}
 	}
 

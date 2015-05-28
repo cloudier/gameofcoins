@@ -1,5 +1,7 @@
 package gameObjects;
 
+import gameEngine.BoardState;
+import gameEngine.Game;
 import gameEngine.UIObject;
 import gameEngine.Vec2;
 
@@ -8,25 +10,19 @@ import java.awt.Image;
 import java.awt.Point;
 
 
-public class PhysicsBoard extends UIObject{
+public class AngryGame extends Game{
 
-	public PhysicsBoard() {
+	public AngryGame(BoardState boardState) {
 
-		tilesX = 7;
-		tilesY = 6;
+		this.boardState = boardState;
+		totalBoardSize = new Vec2(0.9f, 0.8f);
 		
-		Vec2 totalBoardSize = new Vec2(0.9f, 0.8f);
-		
-		tileWidth = totalBoardSize.x/tilesX;
-		tileHeight = totalBoardSize.y/tilesY;
-		
-		AddPhysicsBoard();
+		initialiseColumnsRows();
 		
 		Vec2 totalSize = GetTotalSize();
-		
 		position = new Vec2(1f - totalSize.x, 1f - totalSize.y);
+		velocity = new Vec2(0f, 0f);
 		
-		velocity = new Vec2(0.0003f, 0f);
 	}
 	
 	public Vec2 GetTotalSize() {
@@ -76,6 +72,24 @@ public class PhysicsBoard extends UIObject{
 		}
 	}
 	
+	@Override
+	public void initialiseColumnsRows() {
+		
+		tilesX = boardState.getBoardRow();
+		tilesY = boardState.getBoardColumn();
+		
+		tileWidth = totalBoardSize.x/tilesX;
+		tileHeight = totalBoardSize.y/tilesY;
+		
+		AddPhysicsBoard();
+
+	}
+
+	@Override
+	public void reset() {
+		
+	}
+	
 	private void AddPhysicsBoard()
 	{
 		StaticWall columns[] = new StaticWall[tilesX+1];
@@ -94,7 +108,10 @@ public class PhysicsBoard extends UIObject{
 			this.addChild(columns[i]);
 		}
 	}
-
+	
+	private BoardState boardState;
+	
+	Vec2 totalBoardSize;
 	private Vec2 velocity;
 	
 	private float tileWidth, tileHeight;

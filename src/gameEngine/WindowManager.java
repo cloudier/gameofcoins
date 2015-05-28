@@ -10,7 +10,7 @@ import gameObjects.*;
  * @author ivormetcalf
  *
  */
-public class GameManager {
+public class WindowManager {
 
 	/*
 	 * States: start - menu that you start in. new game and exit button.
@@ -34,7 +34,7 @@ public class GameManager {
 	private MainMenu mainMenu;
 	private ModeMenu modeMenu;
 	private PlayersMenu playersMenu;
-	private Board board;
+	private Game board;
 
 	private BoardState boardModel;
 	
@@ -42,7 +42,7 @@ public class GameManager {
 	 * 
 	 * @param mg
 	 */
-	public GameManager(MainGame mg) {
+	public WindowManager(MainGame mg) {
 		mainGame = mg;
 		this.state = GameState.START;
 		this.mainMenu = new MainMenu(); // active and visible
@@ -79,8 +79,11 @@ public class GameManager {
 	 */
 	public void activatePlayers(String mode, int boardRows, int boardColumns, int victoryCondition) {		
 		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
-		this.board = new Board(boardModel);
-		board.initialiseColumnsRows();
+		if (mode.equals("Normal")) {
+			this.board = new NormalGame(boardModel);
+		} else if (mode.equals("Angry")) {
+			this.board = new AngryGame(boardModel);
+		}
 		
 		mainGame.AddGameObject(board);
 		board.setActiveVisible(false);			
@@ -99,14 +102,16 @@ public class GameManager {
 		boardModel.initialiseMode(boardModel.getBoardRow(), boardModel.getBoardColumn(),
 				boardModel.getVictoryCondition(), boardModel.getMode());
 		if (!board.visible && !board.active) {
-			board = new Board(boardModel);
+			if (boardModel.getMode().equals("Normal")) {
+				this.board = new NormalGame(boardModel);
+			} else if (boardModel.getMode().equals("Angry")) {
+				this.board = new AngryGame(boardModel);
+			}
 			board.initialiseColumnsRows();
 		}
 		boardModel.initialisePlayers(numPlayers, players);
 		
 		mainGame.AddGameObject(board);
-		board.setActiveVisible(false);
-		
 		playersMenu.setActiveVisible(false);
 		board.setActiveVisible(true);
 		state = GameState.nextState(state);
@@ -147,13 +152,5 @@ public class GameManager {
 	public void activateReset() {
 		boardModel.reset();
 		board.reset();
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 */
-	public void victorious(int id) {
-		board.victorious(id);
 	}
 }
