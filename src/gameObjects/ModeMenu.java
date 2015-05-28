@@ -33,6 +33,9 @@ public class ModeMenu extends GameObject {
 	private RectButton back;
 	private RectButton confirm;
 
+	/**
+	 * Create main menu for the game panel
+	 */
 	public ModeMenu() {
 		this.position = new Vec2();
 		
@@ -140,8 +143,7 @@ public class ModeMenu extends GameObject {
 //		g2d.drawString("Choose Board Size", pixelX - x, pixelY + y*8);
 	}
 
-	private void createButtons()
-	{
+	private void createButtons(){
 		modeMenuNormal = new RectButton("normal", "normalSelected", 0.3f, 0.4f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
@@ -215,13 +217,11 @@ public class ModeMenu extends GameObject {
 		addChild(confirm);
 	}
 	
-	private void setBoardDim(int boardWidth, int boardHeight)
-	{
+	private void setBoardDim(int boardWidth, int boardHeight){
 		this.boardWidth = boardWidth;
 		this.boardHeight = boardHeight;
 		if (getVictoryCondition() > maxAllowedVictory()) {
 			setVictoryCondition(maxAllowedVictory());
 		}
 	}
-	
 }

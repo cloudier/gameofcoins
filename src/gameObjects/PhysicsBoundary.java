@@ -7,6 +7,9 @@ import java.awt.Graphics2D;
 
 public class PhysicsBoundary extends GameObject {
 
+	/**
+	 * Create boundaries for the board 
+	 */
 	public PhysicsBoundary() {
 		position = new Vec2();
 		AddWallBounds();
@@ -18,8 +21,7 @@ public class PhysicsBoundary extends GameObject {
 	@Override
 	protected void onRender(Graphics2D g2d) { }
 	
-	private void AddWallBounds()
-	{
+	private void AddWallBounds(){
 		Vec2 p1 = new Vec2(0.0f, 0.0f);
 		Vec2 p2 = new Vec2(1.0f, 0.0f);
 		Vec2 p3 = new Vec2(1.0f, 1.0f);
@@ -37,5 +39,4 @@ public class PhysicsBoundary extends GameObject {
 		sw = new StaticWall(p1, p4);
 		this.addChild(sw);
 	}
-
 }

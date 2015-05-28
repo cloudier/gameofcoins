@@ -38,6 +38,9 @@ public class PlayersMenu extends UIObject {
 	private RectButton ai2Medium;
 	private RectButton ai2Hard;
 	
+	/**
+	 * Set up the player's menu
+	 */
 	public PlayersMenu() {
 		this.position = new Vec2(0.5f, 0.15f);
 		this.numPlayers = 2;
@@ -58,21 +61,30 @@ public class PlayersMenu extends UIObject {
 		}
 	}
 
+	/**
+	 * Set the player type 
+	 * @param playerTypes
+	 */
 	public void setPlayerTypes(int playerTypes) {
 		this.playerTypes = playerTypes;
 	}
 	
+	/**
+	 * Activate the board
+	 */
 	public void activateBoard() {
 		HashMap<Integer, Player> players = new HashMap<Integer, Player>();
 		if (playerTypes == 0) {
 			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
 			players.put (2, new Player("Player 2", 2, Color.YELLOW, PlayerType.HUMAN));
-		} else if (playerTypes == 1) {
+		} 
+		else if (playerTypes == 1) {
 			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
 			Player ai = new Player("Player 2", 2, Color.YELLOW, PlayerType.AI);
 			ai.setDifficulty(ai1);
 			players.put (2, ai);
-		} else if (playerTypes == 2) {
+		} 
+		else if (playerTypes == 2) {
 			Player p1 = new Player("Player 1", 1, Color.RED, PlayerType.AI);
 			p1.setDifficulty(ai1);
 			Player p2 = new Player("Player 2", 2, Color.YELLOW, PlayerType.AI);
@@ -102,8 +114,7 @@ public class PlayersMenu extends UIObject {
 		g2d.drawString("Player Settings", pixelX - x, pixelY);
 	}
 
-	private void createButtons()
-	{
+	private void createButtons(){
 		back = new RectButton("back", "backSelected", -0.4f, 0.7f, 0.1f, 0.1f) {
 			@Override
 			public void onMouseDown() {
@@ -247,7 +258,8 @@ public class PlayersMenu extends UIObject {
 	protected void setAIDifficulty(int ai, int difficulty) {
 		if (ai == 1) {
 			ai1 = difficulty;
-		} if (ai == 2) {
+		} 
+		if (ai == 2) {
 			ai2 = difficulty;
 		}
 	}
@@ -264,5 +276,4 @@ public class PlayersMenu extends UIObject {
 	@Override
 	public void onMouseUp() {
 	}
-	
 }

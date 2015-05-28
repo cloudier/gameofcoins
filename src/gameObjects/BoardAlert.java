@@ -8,6 +8,13 @@ import gameEngine.Vec2;
 
 public class BoardAlert extends Button {
 
+	/**
+	 * Create board button
+	 * @param width The width of the board alert
+	 * @param height The height of the board alert
+	 * @param position The position of type Vec2 of the board alert
+	 * @param string The string to be displayed in the board alert
+	 */
 	public BoardAlert(float width, float height, Vec2 position, String string) {
 		super(width, height, position, string);
 	}

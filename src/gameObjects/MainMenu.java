@@ -11,6 +11,9 @@ public class MainMenu extends UIObject {
 	
 	RectButton mainMenuButton;
 	
+	/**
+	 * Create "Main Menu" button and place it on the board
+	 */
 	public MainMenu() {
 		position = new Vec2(0.5f, 0.5f);
 		createButtons();
@@ -37,8 +40,7 @@ public class MainMenu extends UIObject {
 		
 	}
 	
-	private void createButtons()
-	{
+	private void createButtons(){
 		mainMenuButton = new RectButton("newGame", "newGameSelected", -0.15f, 0.35f, 0.3f, 0.1f) {
 			@Override
 			public void onMouseDown() {
@@ -48,5 +50,4 @@ public class MainMenu extends UIObject {
 		
 		this.addChild(mainMenuButton);
 	}
-
 }

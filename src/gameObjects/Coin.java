@@ -12,23 +12,42 @@ public class Coin extends UIObject {
 	private Color color;
 	private float circleRadius;
 
+	/**
+	 * Create a coin and initialise its radius and position
+	 */
 	public Coin() {
 		circleRadius = .06f;
 		position = new Vec2();
 	}
 	
+	/**
+	 * Method to get the radius of the coin
+	 * @return Returns the radius of the circle
+	 */
 	public float getCircleRadius() {
 		return circleRadius;
 	}
 
+	/**
+	 * Method to set the radius of the coin
+	 * @param circleRadius The radius of the circle
+	 */
 	public void setCircleRadius(float circleRadius) {
 		this.circleRadius = circleRadius;
 	}
 	
+	/**
+	 * Get coin's color
+	 * @return Returns the color of the coin
+	 */
 	public Color getColor() {
 		return this.color;
 	}
 	
+	/**
+	 * Set coin's color
+	 * @param color The color of the coin
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -61,26 +80,20 @@ public class Coin extends UIObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		if(color == Color.WHITE)
-		{
+		if(color == Color.WHITE){
 			//Do nothing
 		}
-		else if(color == Color.RED)
-		{
+		else if(color == Color.RED){
 			Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
 			g2d.drawImage(coinImage, pixelX, pixelY, null);
 		}
-		else if(color == Color.YELLOW)
-		{
+		else if(color == Color.YELLOW){
 			Image coinImage = IMAGE_STORE.GetScaledImage("coin_Yellow", pixelWidth, pixelHeight);
 			g2d.drawImage(coinImage, pixelX, pixelY, null);
 		}
-		else 
-		{
+		else {
 			g2d.setColor(color);
 			g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
-		}
-		
+		}	
 	}
-
 }

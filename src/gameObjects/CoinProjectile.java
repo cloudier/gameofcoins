@@ -12,6 +12,9 @@ public class CoinProjectile extends GameObject {
 	public static LinkedList<StaticPeg> PegColliders = new LinkedList<StaticPeg>();
 	public static LinkedList<StaticWall> WallColliders = new LinkedList<StaticWall>();
 	
+	/**
+	 * Constructor to create a coin which will be thrown by player
+	 */
 	public CoinProjectile() {
 		velocity = new Vec2(0.30f, -0.1f);
 		position = new Vec2(.1f, .1f);
@@ -20,17 +23,14 @@ public class CoinProjectile extends GameObject {
 
 	@Override
 	protected void onUpdate() {
-		
 		velocity = velocity.plus(new Vec2(0, gravity));
 		position = position.plus(velocity.divide(TICK_RATE));
 		
-		for(StaticPeg sp : PegColliders)
-		{
+		for(StaticPeg sp : PegColliders){
 			sp.Collide(this);
 		}
 		
-		for(StaticWall sw : WallColliders)
-		{
+		for(StaticWall sw : WallColliders){
 			sw.Collide(this);
 		}
 	}

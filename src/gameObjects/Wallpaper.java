@@ -15,7 +15,6 @@ public class Wallpaper extends GameObject {
 	@Override
 	protected void onUpdate() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -23,5 +22,4 @@ public class Wallpaper extends GameObject {
 		Image bgImage = IMAGE_STORE.GetScaledImage("background", 1280, 800);
 		g2d.drawImage(bgImage, 0, 0, null);
 	}
-
 }

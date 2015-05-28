@@ -12,6 +12,9 @@ public class ModeMenuVictory extends UIObject {
 	private ModeMenuVictoryNumber six;
 	private ModeMenuVictoryNumber seven;
 	
+	/**
+	 * Constructor to define the position of the winning condition on the panel
+	 */
 	public ModeMenuVictory() {
 		position = new Vec2(0.5f, 0.8f);
 		// 4 <= n <= 7
@@ -52,5 +55,4 @@ public class ModeMenuVictory extends UIObject {
 	@Override
 	protected void onRender(Graphics2D g2d) {
 	}
-
 }

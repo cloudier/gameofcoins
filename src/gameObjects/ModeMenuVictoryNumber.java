@@ -22,6 +22,10 @@ public class ModeMenuVictoryNumber extends UIObject{
 	
 	private Font font;
 	
+	/**
+	 * Put the number into the button
+	 * @param number
+	 */
 	public ModeMenuVictoryNumber (int number) {
 		this.number = number;
 		this.stringOfNumber = Integer.toString(number);
@@ -52,6 +56,7 @@ public class ModeMenuVictoryNumber extends UIObject{
 				(mousePos.y <= worldPosition.y + height/2)) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -61,7 +66,8 @@ public class ModeMenuVictoryNumber extends UIObject{
 		if (gameObjParent instanceof ModeMenu) {
 			ModeMenu parent = (ModeMenu) gameObjParent;
 			parent.setVictoryCondition(number);
-		} else {
+		} 
+		else {
 			System.err.println("Parent of parent is not instance of ModeMenu");
 		}
 	}
@@ -97,7 +103,8 @@ public class ModeMenuVictoryNumber extends UIObject{
 	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
 			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
-		} else if (checkSelected() || mouseSelected()) {
+		} 
+		else if (checkSelected() || mouseSelected()) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.BLACK);
@@ -106,7 +113,8 @@ public class ModeMenuVictoryNumber extends UIObject{
 	        int x = ((fm.stringWidth(stringOfNumber)) / 2);
 	        int y = fm.getHeight()/4;
 			g2d.drawString(stringOfNumber, pixelX - x, pixelY + y);			
-		} else if (!checkSelected()) {
+		} 
+		else if (!checkSelected()) {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);

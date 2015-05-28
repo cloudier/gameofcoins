@@ -30,8 +30,7 @@ public class NormalGame extends Game{
 	private UIObject victory;
 	private UIObject draw;
 	
-	private void createButtons()
-	{
+	private void createButtons(){
 		float x = 0.14f;
 		
 		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
@@ -60,29 +59,40 @@ public class NormalGame extends Game{
 		this.addChild(back);
 	}
 	
+	/**
+	 * Create button for "Normal" mode
+	 * @param boardModel
+	 */
 	public NormalGame(BoardState boardModel) {
-
 		this.boardState = boardModel;
 		position = new Vec2(0.01f, 0.01f);
-		animated = false;
-		
+		animated = false;	
 		createButtons();
 	}
 	
+	/**
+	 * Creates a child of Draw when the game ends up in a draw
+	 */
 	public void isDraw() {
 		gameOver = true;
 		draw = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Draw!");
 		addChild(draw);
 	}
 	
+	/**
+	 * Creates a child of Victory when a player win
+	 * @param id The ID of the Player
+	 */
 	public void victorious(int id) {
 		gameOver = true;
 		victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Player " + id + " wins!");
 		addChild(victory);
 	}
 
+	/**
+	 * Initialise the board
+	 */
 	public void initialiseColumnsRows() {
-		
 		this.rows = boardState.getBoardRow();
 		this.columns = boardState.getBoardColumn();
 		
@@ -112,12 +122,16 @@ public class NormalGame extends Game{
 		}
 	}
 	
+	/**
+	 * Reset the Game
+	 */
 	public void reset() {
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				coins[r][c].setColor(Color.WHITE);
 			}
 		}
+
 		gameOver = false;
 		if (victory != null) {
 			victory.setActiveVisible(false);
@@ -161,7 +175,7 @@ public class NormalGame extends Game{
 			animatedCoin.setCircleRadius(this.circleRadius);
 			animatedCoin.position = new Vec2(cellSize.x * column, cellSize.y * 0);
 			animatedCoin.position = animatedCoin.position.plus(coinOffset);
-			animatedCoin.setColor(boardState.getCurrentPlayer().getColor());
+			animatedCoin.setColor(boardState.getCurrentPlayer().getCoinColor());
 			
 			coins[rows - 1 - boardState.getTopRow(column)][column].setColor(Color.WHITE);
 			this.addChild(animatedCoin);
@@ -171,13 +185,13 @@ public class NormalGame extends Game{
 			if (gameOver) {
 				if (boardState.isDraw()) {
 					isDraw();
-				} else {
+				} 
+				else {
 					victorious(boardState.getCurrentPlayerID());
 				}
 				return;
 			}
 		}
-		
 	}
 
 	public void animateAI() {
@@ -197,7 +211,7 @@ public class NormalGame extends Game{
 		animatedCoin.setCircleRadius(this.circleRadius);
 		animatedCoin.position = new Vec2(cellSize.x * aiChoice, cellSize.y * 0);
 		animatedCoin.position = animatedCoin.position.plus(coinOffset);
-		animatedCoin.setColor(boardState.getCurrentPlayer().getColor());
+		animatedCoin.setColor(boardState.getCurrentPlayer().getCoinColor());
 		
 		coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice].setColor(Color.WHITE);
 		this.addChild(animatedCoin);
@@ -207,7 +221,8 @@ public class NormalGame extends Game{
 		if (gameOver) {
 			if (boardState.isDraw()) {
 				isDraw();
-			} else {
+			} 
+			else {
 				victorious(boardState.getCurrentPlayerID());
 			}
 		}
@@ -241,21 +256,19 @@ public class NormalGame extends Game{
 		Image blueTile = IMAGE_STORE.GetScaledImage("tile_Blue", pixelDim.x, pixelDim.y);
 		Image yellowTile = IMAGE_STORE.GetScaledImage("tile_Yellow", pixelDim.x, pixelDim.y);
 		
-		for(int y = 0; y < rows; y++)
-		{
-			for(int x = 0; x < columns; x++)
-			{
+		for(int y = 0; y < rows; y++){
+			for(int x = 0; x < columns; x++){
 				Vec2 offset = new Vec2(x * cellSize.x, y * cellSize.y);
 				Point pixelPos = toPixelCoordinates(worldPos.plus(offset));
 				
 				if((x + y) % 2 == 0) {
 					g2d.drawImage(blueTile, pixelPos.x, pixelPos.y, null);
-				} else {
+				} 
+				else {
 					g2d.drawImage(yellowTile, pixelPos.x, pixelPos.y, null);
 				}
 			}
 		}
-		
 		
 		if (mouseSelected()) {
 			Vec2 mousePos = getScaledMousePosition();
@@ -268,7 +281,6 @@ public class NormalGame extends Game{
 				}
 			}
 			
-			
 			int column = (int) ((mousePos.x - position.x) / (width / columns));
 			if (column < columns && column >= 0 && 
 					coins[0][column] != null && 
@@ -277,7 +289,7 @@ public class NormalGame extends Game{
 				// hover
 				// top rows of column is empty
 				// set coin color to the color of the current player
-				Color color = boardState.getCurrentPlayer().getColor();
+				Color color = boardState.getCurrentPlayer().getCoinColor();
 				coins[0][column].setColor(color);
 			}
 		}

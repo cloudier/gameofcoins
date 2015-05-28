@@ -15,7 +15,14 @@ public class Button extends UIObject {
 	protected float height;
 	protected String string;
 	protected Font font;
-	
+
+	/**
+	 * Create a button with given specifications
+	 * @param width The width of the Button
+	 * @param height The height of the Button
+	 * @param position The position of type Vec2 of the Button
+	 * @param string The string to be displayed in the button
+	 */	
 	public Button(float width, float height, Vec2 position, String string) {
 		this.width = width;
 		this.height = height;
@@ -81,7 +88,8 @@ public class Button extends UIObject {
 	        int x = ((fm.stringWidth(string)) / 2);
 	        int y = fm.getHeight()/4;
 			g2d.drawString(string, pixelX - x, pixelY + y);			
-		} else {
+		} 
+		else {
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 			g2d.setColor(Color.WHITE);
@@ -92,5 +100,4 @@ public class Button extends UIObject {
 			g2d.drawString(string, pixelX - x, pixelY + y);
 		}
 	}
-
 }

@@ -27,17 +27,14 @@ public class StaticWall extends GameObject {
 	}
 	
 	public void Collide(CoinProjectile cp) {
-		
 		Vec2 coinPos = cp.getWorldPosition();
 		Vec2 worldPos1 = getWorldPosition(position);
 		Vec2 worldPos2 = getWorldPosition(position2);
 		
-		if(LineIntersection(cp))
-		{
+		if(LineIntersection(cp)){
 			CollideLineSegment(cp);
 		}
-		else 
-		{
+		else {
 			Vec2 displacement1 = coinPos.minus(worldPos1);
 			Vec2 displacement2 = coinPos.minus(worldPos2);
 			
@@ -48,8 +45,7 @@ public class StaticWall extends GameObject {
 		}
 	}
 	
-	private void CollideLineSegment(CoinProjectile cp)
-	{
+	private void CollideLineSegment(CoinProjectile cp){
 		Vec2 coinPos = cp.getWorldPosition();
 		Vec2 worldPos1 = getWorldPosition(position);
 		Vec2 worldPos2 = getWorldPosition(position2);
@@ -76,8 +72,7 @@ public class StaticWall extends GameObject {
 		
 	}
 	
-	private void CollideWithPoint(CoinProjectile cp, Vec2 point)
-	{
+	private void CollideWithPoint(CoinProjectile cp, Vec2 point){
 		Vec2 coinPos = cp.getWorldPosition();
 		
 		Vec2 displacement = coinPos.minus(point); 
@@ -98,14 +93,12 @@ public class StaticWall extends GameObject {
 			
 			cp.velocity = deflected.plus(reflected);
 		}
-		else 
-		{
+		else {
 			System.err.println("Why did I get called?");
 		}
 	}
 	
-	private boolean LineIntersection(CoinProjectile cp)
-	{
+	private boolean LineIntersection(CoinProjectile cp){
 		Vec2 coinPos = cp.getWorldPosition();
 		Vec2 worldPos1 = getWorldPosition(position);
 		Vec2 worldPos2 = getWorldPosition(position2);
@@ -128,7 +121,6 @@ public class StaticWall extends GameObject {
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
-		
 		Vec2 worldPos1 = getWorldPosition(position);
 		Vec2 worldPos2 = getWorldPosition(position2);
 		
@@ -139,9 +131,7 @@ public class StaticWall extends GameObject {
 		
 		g2d.setColor(Color.black);
 		g2d.drawLine(pixelX1, pixelY1, pixelX2, pixelY2);
-
 	}
 	
 	private Vec2 position2; //Position of other end point
-
 }

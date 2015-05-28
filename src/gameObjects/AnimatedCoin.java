@@ -15,6 +15,12 @@ public class AnimatedCoin extends UIObject {
 	private static float ANIMATION_STEP = 0.04f;
 	private Coin coin;
 	
+	/**
+	 * Constructor to create and initialise the coin
+	 * @param endPosition
+	 * @param column
+	 * @param coin
+	 */
 	public AnimatedCoin(Vec2 endPosition, int column, Coin coin) {
 		super();
 		this.position = new Vec2();
@@ -25,14 +31,26 @@ public class AnimatedCoin extends UIObject {
 		this.coin = coin;
 	}
 	
+	/**
+	 * Method get the radius of the coin
+	 * @return Returns the radius of the coin
+	 */
 	public float getCircleRadius() {
 		return circleRadius;
 	}
 
+	/**
+	 * Set the radius of the coin
+	 * @param circleRadius The radius of the coin
+	 */
 	public void setCircleRadius(float circleRadius) {
 		this.circleRadius = circleRadius;
 	}
 
+	/**
+	 * Set the colour of the coin
+	 * @param color The color of the coin
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -67,18 +85,15 @@ public class AnimatedCoin extends UIObject {
 			int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 			int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 			
-			if(color == Color.RED)
-			{
+			if(color == Color.RED){
 				Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
 				g2d.drawImage(coinImage, pixelX, pixelY, null);
 			}
-			else if(color == Color.YELLOW)
-			{
+			else if(color == Color.YELLOW){
 				Image coinImage = IMAGE_STORE.GetScaledImage("coin_Yellow", pixelWidth, pixelHeight);
 				g2d.drawImage(coinImage, pixelX, pixelY, null);
 			}
-			else 
-			{
+			else {
 				g2d.setColor(color);
 				g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
 			}
@@ -93,5 +108,4 @@ public class AnimatedCoin extends UIObject {
 			((NormalGame) this.getParent()).setAnimated(false);
 		}
 	}
-
 }

@@ -7,11 +7,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class StaticPeg extends GameObject {
-
+	/**
+	 * 
+	 */
 	public StaticPeg() {
-		
 		CoinProjectile.PegColliders.add(this);
-		
 		circleRadius = 0.012f;
 	}
 	
@@ -24,8 +24,11 @@ public class StaticPeg extends GameObject {
 	@Override
 	protected void onUpdate() { } //Does nothing
 	
-	public void Collide(CoinProjectile cp)
-	{
+	/**
+	 * Update the speed of the coin when collided
+	 * @param cp
+	 */
+	public void Collide(CoinProjectile cp){
 		Vec2 coinPos = cp.getWorldPosition();
 		Vec2 worldPos = getWorldPosition();
 		
@@ -49,8 +52,12 @@ public class StaticPeg extends GameObject {
 		}
 	}
 	
-	public boolean IntersectsWith(CoinProjectile cp)
-	{
+	/**
+	 * True if the coin is at intersect
+	 * @param cp
+	 * @return
+	 */
+	public boolean IntersectsWith(CoinProjectile cp){
 		Vec2 coinPos = cp.getWorldPosition();
 		Vec2 worldPos = getWorldPosition();
 		
@@ -58,7 +65,8 @@ public class StaticPeg extends GameObject {
 		
 		if(displacement.magnitude() < cp.circleRadius + circleRadius) {
 			return true;
-		} else {
+		} 
+		else {
 			return false;
 		}
 	}
@@ -81,5 +89,4 @@ public class StaticPeg extends GameObject {
 	
 	public float circleRadius;
 	public float restitution = 0.95f;
-	
 }
