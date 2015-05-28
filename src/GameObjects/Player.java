@@ -9,6 +9,7 @@ public class Player {
 	private String name;
 	private int boardValue;
 	private Color coinColor;
+	private int difficulty;
 	
 	public Player (String name, int boardValue, Color coinColor, PlayerType playerType) {
 		this.name = name;
@@ -55,5 +56,13 @@ public class Player {
 	
 	public void setColor(Color coinColor) {
 		this.coinColor = coinColor;
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }
