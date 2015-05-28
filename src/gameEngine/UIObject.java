@@ -8,8 +8,7 @@ import java.io.IOException;
 
 public abstract class UIObject extends GameObject {
 	public static Font font;
-	
-	public UIObject() {
+	static {
 		try {
 			UIObject.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
 		} catch (FileNotFoundException e) {

@@ -41,6 +41,9 @@ public abstract class GameObject {
 		// Maybe add to the static list of game objects
 	}
 	
+	/**
+	 * Updates the game object and its children
+	 */
 	public void tick() {
 		if (active) {
 			onUpdate();
@@ -52,6 +55,10 @@ public abstract class GameObject {
 		}
 	}
 
+	/**
+	 * Renders the game object and its children
+	 * @param the graphic to render
+	 */
 	public void draw(Graphics2D g2d) {
 		if (visible) {
 			onRender(g2d);
@@ -63,6 +70,10 @@ public abstract class GameObject {
 		}
 	}
 
+	/**
+	 * Returns the parent of the current object
+	 * @return the parent
+	 */
 	public GameObject getParent() {
 		return parent;
 	}
@@ -95,6 +106,10 @@ public abstract class GameObject {
 		Parent.getChildren().add(this);
 	}
 
+	/**
+	 * Returns the children of a game object
+	 * @return LinkedList containing the children of the game object
+	 */
 	public LinkedList<GameObject> getChildren() {
 		return children;
 	}

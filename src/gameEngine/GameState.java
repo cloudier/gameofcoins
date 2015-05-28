@@ -1,8 +1,10 @@
 package gameEngine;
 
 /**
+ * Enum used to store the different types of game states
+ * with methods that returns adjacent game states.
  * 
- * @author 
+ * @author cloudier
  *
  */
 public enum GameState {
@@ -14,7 +16,7 @@ public enum GameState {
 	private int id;
 	
 	/**
-	 * 
+	 * Sets the ID of the game state.
 	 * @param id
 	 */
 	private GameState(int id) {
@@ -22,9 +24,9 @@ public enum GameState {
 	}
 	
 	/**
-	 * 
-	 * @param ID
-	 * @return
+	 * Returns the game state with the given id.
+	 * @param id
+	 * @return game state with given id
 	 */
     public static GameState getStateByID(int ID) {
 	    switch(ID) {
@@ -41,9 +43,9 @@ public enum GameState {
     }
     
     /**
-     * 
-     * @param gs
-     * @return
+     * Returns the state that comes after the given state
+     * @param game state
+     * @return state that comes after the given state
      */
 	public static GameState nextState(GameState gs) {
 		if (gs.id < 4) {
@@ -54,9 +56,9 @@ public enum GameState {
 	}
 	
 	/**
-	 * 
-	 * @param gs
-	 * @return
+	 * Returns the state that comes before the given state
+	 * @param game state
+	 * @return state that comes before the given state
 	 */
 	public static GameState prevState(GameState gs) {
 		if (gs.id > 0) {

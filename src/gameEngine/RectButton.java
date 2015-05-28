@@ -4,30 +4,63 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 public abstract class RectButton extends UIObject {
-	
+	/**
+	 * Initialise the size and the texture for the rectangular button
+	 * with the size respect to the panel ratio.
+	 * @param DefaultImage
+	 */
 	public RectButton(String DefaultImage) {
 		defaultImage = DefaultImage;
 		this.width = 0.15f;
 		this.height = 0.10f;
 	}
 	
+	/**
+	 * Initialise the real size of the button based on the panel size
+	 * @param DefaultImage
+	 * @param Width
+	 * @param Height
+	 */
 	public RectButton(String DefaultImage, float Width, float Height) {
 		defaultImage = DefaultImage;
 		this.width = Width;
 		this.height = Height;
 	}
 	
+	/**
+	 * Initialise the button's position.
+	 * @param DefaultImage
+	 * @param X
+	 * @param Y
+	 * @param Width
+	 * @param Height
+	 */
 	public RectButton(String DefaultImage, float X, float Y, float Width, float Height) {
 		this(DefaultImage, Width, Height);
 		this.position = new Vec2(X, Y);
 	}
 	
-	
+	/**
+	 * Sets an alternate image when mouse hovers over the button.
+	 * @param DefaultImage
+	 * @param HoveringOver
+	 * @param Width
+	 * @param Height
+	 */
 	public RectButton(String DefaultImage, String HoveringOver, float Width, float Height) {
 		this(DefaultImage, Width, Height);
 		hoveringOver = HoveringOver;
 	}
 
+	/**
+	 * Initialise button given the size of the button and its position
+	 * @param DefaultImage
+	 * @param HoveringOver
+	 * @param X
+	 * @param Y
+	 * @param Width
+	 * @param Height
+	 */
 	public RectButton(String DefaultImage, String HoveringOver, float X, float Y, float Width, float Height) {
 		defaultImage = DefaultImage;
 		hoveringOver = HoveringOver;
@@ -90,14 +123,26 @@ public abstract class RectButton extends UIObject {
 		}
 	}
 	
+	/*
+	 * Used in subclasses to change the image if the mode
+	 * that the button represents is set.
+	 */
 	public boolean modeSelected() {
 		return false;
 	}
 	
+	/**
+	 * Sets the default image
+	 * @param DefaultImage
+	 */
 	public void setDefaultImage(String DefaultImage) {
 		this.defaultImage = DefaultImage;
 	}
 	
+	/**
+	 * Sets hovering image
+	 * @param HoveringOverImage
+	 */
 	public void setHoveringOver(String HoveringOverImage) {
 		this.hoveringOver = HoveringOverImage;
 	}

@@ -39,7 +39,7 @@ public class BoardState {
 	}
 
 	/**
-	 * 
+	 * Constructs a board state given the old state.
 	 * @param oldState
 	 * @param player
 	 */
@@ -70,7 +70,7 @@ public class BoardState {
 	}
 	
 	/**
-	 * 
+	 * Initialises the mode and board dimensions of the board.
 	 * @param boardRow
 	 * @param boardColumn
 	 * @param victoryCondition
@@ -87,7 +87,7 @@ public class BoardState {
 	}
 
 	/**
-	 * 
+	 * Initialises the players of the game.
 	 * @param numPlayers
 	 * @param players
 	 */
@@ -110,15 +110,15 @@ public class BoardState {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Gets the mode of the board.
+	 * @return the mode of the board as a string
 	 */
 	public String getMode() {
 		return mode;
 	}
 
 	/**
-	 * 
+	 * Sets the mode of the board.
 	 * @param mode
 	 */
 	public void setMode(String mode) {
@@ -126,77 +126,83 @@ public class BoardState {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The victory condition (number of consecutive coins to win)
+	 * of the board.
+	 * @return the number of consecutive coins required to win
 	 */
 	public int getVictoryCondition() {
 		return victoryCondition;
 	}
 
 	/**
-	 * 
-	 * @param victoryCondition
+	 * Sets the victory condition (the number of consecutive coins
+	 * required to win).
+	 * @param the number of consecutive coins required to win
 	 */
 	public void setVictoryCondition(int victoryCondition) {
 		this.victoryCondition = victoryCondition;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the number of rows in the board.
+	 * @return the number of rows in the board
 	 */
 	public int getBoardRow() {
 		return boardRow;
 	}
 
 	/**
-	 * 
-	 * @param boardRow
+	 * Sets the number of rows in the board.
+	 * @param number of rows in the board
 	 */
 	public void setBoardRow(int boardRow) {
 		this.boardRow = boardRow;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the number of columns in the board.
+	 * @return the number of columns in the board
 	 */
 	public int getBoardColumn() {
 		return boardColumn;
 	}
 
 	/**
-	 * 
-	 * @param boardColumn
+	 * Sets the number of columns in the board.
+	 * @param the number of columns in the board
 	 */
 	public void setBoardColumn(int boardColumn) {
 		this.boardColumn = boardColumn;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the number of players in the game.
+	 * @return number of players in the game
 	 */
 	public int getNumPlayers() {
 		return this.numPlayers;
 	}
 
 	/**
-	 * 
-	 * @param numPlayers
+	 * Sets the number of players in the game
+	 * @param number of players in the game
 	 */
 	public void setNumPlayers(int numPlayers) {
 		this.numPlayers = numPlayers;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the current player
+	 * @return player object representing the current player
 	 */
 	public Player getCurrentPlayer() {
 		return this.players.get(currentPlayer);
 	}
 	
+	/**
+	 * Returns the id representing the current player
+	 * @return current player's id as an int
+	 */
 	public int getCurrentPlayerID() {
 		return this.currentPlayer;
 	}
@@ -272,9 +278,9 @@ public class BoardState {
 	}
 
 	/**
-	 * 
+	 * Puts a coin in the given column
 	 * @param column
-	 * @return
+	 * @return whether or not the operation was successful
 	 */
 	public boolean putCoin(int column) {		
 		user_Move(column);
@@ -286,8 +292,8 @@ public class BoardState {
 	}
 
 	/**
-	 * 
-	 * @param column
+	 * Used by the AI to simulate a user move
+	 * @param column to put coin in
 	 */
 	private void user_Move(int column){
 		for(int row = 0; row < this.boardRow; row++){

@@ -98,14 +98,25 @@ public class MainGame {
 
 	}
 
+	/**
+	 * Add the given object into current object
+	 * @param game object to add
+	 */
 	public void AddGameObject(GameObject g) {
 		gameObjectList.add(g);
 	}
 
+	/**
+	 * Remove the given object from the current object
+	 * @param game object to remove
+	 */
 	public void RemoveGameObject(GameObject g) {
 		gameObjectList.remove(g);
 	}
 
+	/**
+	 * Method to initialise various classes and variables
+	 */
 	private void StartGame() {
 
 		GameObject.JPANEL = gamePanel;
@@ -119,12 +130,18 @@ public class MainGame {
 		
 	}
 
+	/**
+	 * Ensures all game objects are updated
+	 */
 	private void GameTick() {
 		for (GameObject obj : gameObjectList) {
 			obj.tick();
 		}
 	}
 
+	/**
+	 * Renders the game
+	 */
 	private void GameRender() {
 		Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
 
@@ -161,6 +178,10 @@ public class MainGame {
 		strategy.show();
 	}
 
+	/**
+	 * Calls UIObject abstract methods if a mouse click-down
+	 * event is received
+	 */
 	private void MouseDown() {
 		UIObject selected = GetSelectedUIObject();
 		if (selected != null) {
@@ -169,6 +190,10 @@ public class MainGame {
 
 	}
 
+	/**
+	 * Calls UIObject abstract methods if a mouse click-up
+	 * event is a received
+	 */
 	private void MouseUp() {
 		UIObject selected = GetSelectedUIObject();
 		if (selected != null) {
@@ -176,6 +201,11 @@ public class MainGame {
 		}
 	}
 
+	/**
+	 * Determines which UIObject is visible and at the top
+	 * of a position in the window when a mouse event is received
+	 * @return the visible UIObject that is at the top
+	 */
 	private UIObject GetSelectedUIObject() {
 		UIObject selected = null;
 		Point mousePos = gamePanel.getMousePosition();

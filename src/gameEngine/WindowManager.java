@@ -39,7 +39,7 @@ public class WindowManager {
 	private BoardState boardModel;
 	
 	/**
-	 * 
+	 * Constructs a window manager.
 	 * @param mg
 	 */
 	public WindowManager(MainGame mg) {
@@ -59,7 +59,9 @@ public class WindowManager {
 	}
 
 	/**
-	 * new game button has been pressed - go to player settings
+	 * New game button has been pressed.
+	 * Hides the main menu and displays the mode menu.
+	 * 
 	 * @param mode
 	 * @param boardRows
 	 * @param boardColumns
@@ -71,6 +73,10 @@ public class WindowManager {
 	}
 	
 	/**
+	 * Used to set the settings of the board state
+	 * as the application moves to the players menu.
+	 * Hides the previous menu and displays the
+	 * players menu.
 	 * 
 	 * @param mode
 	 * @param boardRows
@@ -94,6 +100,11 @@ public class WindowManager {
 	}
 
 	/**
+	 * Used to update the board state and the
+	 * board as the application moves to the
+	 * board.
+	 * Hides the players menu and displays the
+	 * board.
 	 * 
 	 * @param numPlayers
 	 * @param players
@@ -118,7 +129,8 @@ public class WindowManager {
 	}
 
 	/**
-	 * 
+	 * Hides the board when the Main Menu button
+	 * is pressed in the board screen.
 	 */
 	public void activateStart() { // go back to start menu
 		board.setActiveVisible(false);
@@ -127,7 +139,8 @@ public class WindowManager {
 	}
 	
 	/**
-	 * 
+	 * Used to hide and display the appropriate
+	 * UIObjects when the back button is pressed.
 	 */
 	public void back() {
 		if (state == GameState.START) {
@@ -147,7 +160,9 @@ public class WindowManager {
 	}
 	
 	/**
-	 * 
+	 * Used to update the boardModel and board
+	 * when the reset button is pressed when the
+	 * board is displayed.
 	 */
 	public void activateReset() {
 		boardModel.reset();
