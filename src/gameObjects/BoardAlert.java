@@ -31,11 +31,15 @@ public class BoardAlert extends Button {
 		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
 		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
 
-		int pixelWidth = (int) (width * JPANEL.getWidth());
-		int pixelHeight = (int) (height * JPANEL.getHeight());
+		//int pixelWidth = (int) (width * JPANEL.getWidth());
+		//int pixelHeight = (int) (height * JPANEL.getHeight());
 
-		g2d.setColor(Color.RED);
-		g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
+		Color blackTransluscent = new Color(0f, 0f, 0f, .7f);
+		g2d.setColor(blackTransluscent);
+		g2d.fillRect(0, 0, JPANEL.getWidth(), JPANEL.getHeight());
+		
+		//g2d.setColor(Color.RED);
+		//g2d.fillRect(pixelX - (pixelWidth/2), pixelY - (pixelHeight/2), pixelWidth, pixelHeight);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(this.font.deriveFont((float) JPANEL.getWidth()/20));
 		FontMetrics fm = g2d.getFontMetrics();

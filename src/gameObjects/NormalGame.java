@@ -41,19 +41,42 @@ public class NormalGame extends Game{
 	 * Creates an alert when the game ends up in a draw
 	 */
 	public void isDraw() {
+		this.removeChild(menu);
+		this.removeChild(reset);
+		this.removeChild(back);
+		
 		gameOver = true;
-		draw = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Draw!");
+		draw = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "The Game is Draw!");
 		addChild(draw);
+		
+		this.addChild(menu);
+		this.addChild(reset);
+		this.addChild(back);
 	}
 	
 	/**
 	 * Creates an alert when a player wins
 	 * @param id The ID of the Player
 	 */
-	public void victorious(int id) {
+	public void victorious(int id) {	
+		this.removeChild(menu);
+		this.removeChild(reset);
+		this.removeChild(back);
+		
 		gameOver = true;
-		victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Player " + id + " wins!");
-		addChild(victory);
+		
+		if(boardState.getCurrentPlayer().getPlayerType().equals(PlayerType.AI)){
+			victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Computer wins the Game!");
+			addChild(victory);
+		}
+		else{
+			victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Player " + id + " wins the Game!");
+			addChild(victory);
+		}
+		
+		this.addChild(menu);
+		this.addChild(reset);
+		this.addChild(back);
 	}
 
 	/**

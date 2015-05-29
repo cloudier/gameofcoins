@@ -25,7 +25,9 @@ public class BoardState {
 	private String mode;
 
 	private int ai_Selection;
-	
+	private ArrayList<Integer> winningColumn;
+	private ArrayList<Integer> winningRow;
+
 	private HashMap<Integer, Player> players;
 	
 	/**
@@ -36,6 +38,8 @@ public class BoardState {
 	public BoardState() {
 		this.gameOver = false;
 		this.draw = false;
+		this.winningColumn = new ArrayList<Integer>();
+		this.winningRow = new ArrayList<Integer>();
 	}
 
 	/**
@@ -50,9 +54,11 @@ public class BoardState {
 		this.mode = oldState.getMode();		
 		this.currentPlayer = player;
 		this.numPlayers = oldState.getNumPlayers();
-
-		boardGame = new int[this.boardRow][this.boardColumn];
-
+		
+		this.boardGame = new int[this.boardRow][this.boardColumn];
+		this.winningColumn = new ArrayList<Integer>();
+		this.winningRow = new ArrayList<Integer>();
+		
 		for (int row = 0; row < this.boardRow; row++){
 			for (int col = 0; col < this.boardColumn; col++){
 				this.boardGame[row][col] = oldState.getBoard()[row][col];
@@ -64,9 +70,12 @@ public class BoardState {
 	 * This function resets the game.
 	 */
 	public void reset() {
-		boardGame = new int[this.boardRow][this.boardColumn];
 		this.currentPlayer = 1;
-		gameOver = false;
+		this.gameOver = false;
+		
+		this.boardGame = new int[this.boardRow][this.boardColumn];
+		this.winningColumn.clear();
+		this.winningRow.clear();
 	}
 	
 	/**
@@ -79,11 +88,14 @@ public class BoardState {
 	public void initialiseMode(int boardRow, int boardColumn, int victoryCondition, String mode) {
 		this.boardRow = boardRow;
 		this.boardColumn = boardColumn;
-		this.boardGame = new int[boardRow][boardColumn];
 		this.victoryCondition = victoryCondition;
 		this.mode = mode;	
 		this.gameOver = false;
 		this.draw = false;
+		
+		this.boardGame = new int[boardRow][boardColumn];
+		this.winningColumn.clear();
+		this.winningRow.clear();
 	}
 
 	/**
@@ -513,20 +525,27 @@ public class BoardState {
 	 */
 	public int checkWinner(int playerID){
 		int sum = 0;
-		
+
 		//checks vertical win
 		for (int c = 0; c < this.boardColumn; c++) {
 			sum = 0;
+			this.winningColumn.clear();
+			this.winningRow.clear();
+			
 			for (int r = 0; r < this.boardRow; r++) {
 				if (boardGame[r][c] == playerID) {
 					sum++;
-					
+					this.winningColumn.add(c);
+					this.winningRow.add(r);
+
 					if(sum == victoryCondition) {
 						return 1;
 					}
 				}
 				else {
 					sum = 0;
+					this.winningColumn.clear();
+					this.winningRow.clear();
 				}
 			}			
 		}
@@ -534,15 +553,23 @@ public class BoardState {
 		//checks horizontal win
 		for (int r = 0; r < this.boardRow; r++) {
 			sum = 0;
+			this.winningColumn.clear();
+			this.winningRow.clear();
+			
 			for (int c = 0; c < this.boardColumn; c++) {
 				if (boardGame[r][c] == playerID) {
 					sum++;
+					this.winningColumn.add(c);
+					this.winningRow.add(r);
+					
 					if(sum == victoryCondition) {
 						return 1;
 					}
 				}
 				else {
 					sum = 0;
+					this.winningColumn.clear();
+					this.winningRow.clear();
 				}
 			}			
 		}
@@ -550,18 +577,23 @@ public class BoardState {
 		//checks diagonal left win
 		for (int c = -this.boardRow; c < this.boardColumn; c++) {
 			sum = 0;
+			this.winningColumn.clear();
+			this.winningRow.clear();
+			
 			for (int r = 0; r < this.boardRow; r++) {
-				
-				if(getCoin(r, c+r) == playerID)
-				{
+				if(getCoin(r, c+r) == playerID){
 					sum++;
+					this.winningColumn.add(c);
+					this.winningRow.add(r);
+					
 					if(sum == victoryCondition) {
 						return 1;
 					}
 				}
-				else
-				{
+				else{
 					sum = 0;
+					this.winningColumn.clear();
+					this.winningRow.clear();
 				}
 			}			
 		}
@@ -569,26 +601,50 @@ public class BoardState {
 		//checks diagonal right win
 		for (int c = 0; c < this.boardColumn + this.boardRow; c++) {
 			sum = 0;
+			this.winningColumn.clear();
+			this.winningRow.clear();
+			
 			for (int r = 0; r < this.boardRow; r++) {
-				
-				if(getCoin(r, c-r) == playerID)
-				{
+				if(getCoin(r, c-r) == playerID){
 					sum++;
+					this.winningColumn.add(c);
+					this.winningRow.add(r);
+					
 					if(sum == victoryCondition) {
 						return 1;
 					}
 				}
-				else
-				{
+				else{
 					sum = 0;
+					this.winningColumn.clear();
+					this.winningRow.clear();
 				}
 			}			
 		}
 
+		this.winningColumn.clear();
+		this.winningRow.clear();
+		
 		if (!isBoardFull()){
 			return 0;
 		}
 
 		return -1;
+	}
+	
+	/**
+	 * Get all the row that make the player win
+	 * @return All the winning row
+	 */
+	public ArrayList<Integer> getWinningRow(){
+		return this.winningRow;
+	}
+	
+	/**
+	 * Get all the column that make the player win
+	 * @return All the winning column
+	 */
+	public ArrayList<Integer> getWinningColumn(){
+		return this.winningColumn;
 	}
 }
