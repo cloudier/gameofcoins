@@ -33,12 +33,23 @@ public class NormalGame extends Game{
 
 	private UIObject victory;
 	private UIObject draw;
+	private Timer timer;
 	
 	public NormalGame(BoardState boardModel) {
 		this.boardState = boardModel;
 		position = new Vec2(0.01f, 0.01f);
 		animated = false;	
 		createButtons();
+		
+		int delay = 2000;
+		timer = new Timer( delay, new ActionListener(){
+		  @Override
+		  public void actionPerformed( ActionEvent e ){
+			  animateAI();
+		  }
+		} );
+		
+		timer.setRepeats(false);
 	}
 	
 	/**
@@ -156,6 +167,8 @@ public class NormalGame extends Game{
 	 * Resets the Game (when the reset button is pressed)
 	 */
 	public void reset() {
+		timer.stop();
+
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				coins[r][c].setColor(Color.WHITE);
@@ -233,16 +246,6 @@ public class NormalGame extends Game{
 			
 			if (!isCalculating){
 				isCalculating();
-				
-				int delay = 2000;
-				Timer timer = new Timer( delay, new ActionListener(){
-				  @Override
-				  public void actionPerformed( ActionEvent e ){
-					  animateAI();
-				  }
-				} );
-				
-				timer.setRepeats(false);
 				timer.start();
 			}
 		}
