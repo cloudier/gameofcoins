@@ -18,13 +18,18 @@ public class AngryGame extends Game{
 	 * @param boardState The state of the board
 	 */
 	public AngryGame(BoardState boardState) {
-		this.boardState = boardState;
+		
+		gameOver = false;
+		
+		victoryCondition = 4;
+		boardColumn = 7;
+		boardRow = 6;
 		
 		coinProjectile = new CoinProjectile();
 		this.addChild(coinProjectile);
 		coinProjectile.setActiveVisible(false);
 		
-		physicsBoard = new PhysicsBoard(boardState.getBoardColumn(), boardState.getBoardRow());
+		physicsBoard = new PhysicsBoard(7, 6);
 		this.addChild(physicsBoard);
 		
 		coinProjectile.setRadius(physicsBoard.getTileWidth()/2.5f);
@@ -62,50 +67,78 @@ public class AngryGame extends Game{
 	@Override
 	protected void onUpdate() { 
 		
-		coinProjectile.player1 = player1Turn;
-		
-		if(coinLaunched)
+		if(!gameOver)
 		{
-			ticksSinceLastDrop++;
+			coinProjectile.player1 = player1Turn;
 			
-			coinProjectile.setActive(true);
-			
-			Point tile = physicsBoard.getTile(coinProjectile.getWorldPosition());
-			
-			if(tile != null && physicsBoard.getTopEmptyRow(tile.x) == tile.y) {
+			if(coinLaunched)
+			{
+				ticksSinceLastDrop++;
 				
-				physicsBoard.putCoin(tile.x, player1Turn);
-				boardState.putCoin(tile.x);
+				coinProjectile.setActive(true);
 				
-				if(boardState.isGameOver())
-				{
+				Point tile = physicsBoard.getTile(coinProjectile.getWorldPosition());
+				
+				if(tile != null && physicsBoard.getTopEmptyRow(tile.x) == tile.y) {
 					
+					physicsBoard.putCoin(tile.x, player1Turn);
+					
+					if(player1Turn) {
+						int result = checkWinner(1);
+						if(result == 1) {
+							victorious(1);
+						}
+						else if(result == 0) {
+							gameOver = true;
+						}
+					}
+					else
+					{
+						int result = checkWinner(2);
+						if(result == 1) {
+							victorious(2);
+						}
+						else if(result == 0) {
+							gameOver = true;
+						}
+					}
+					
+					doNextTurn();
 				}
-				
-				boardState.output();
-				
-				doNextTurn();
+				else if(outOfBounds(coinProjectile))
+				{
+					doNextTurn();
+				}
+				else if(ticksSinceLastDrop > DROPDELAY)
+				{
+					doNextTurn();
+				}
 			}
-			else if(outOfBounds(coinProjectile))
+			else 
 			{
-				doNextTurn();
-			}
-			else if(ticksSinceLastDrop > DROPDELAY)
-			{
-				doNextTurn();
+				coinProjectile.setWorldPosition(coinCannon.getCoinHolderWorldPosition());
+				coinProjectile.setActive(false);
 			}
 		}
-		else 
-		{
-			coinProjectile.setWorldPosition(coinCannon.getCoinHolderWorldPosition());
-			coinProjectile.setActive(false);
-//			Vec2 mousePos = getScaledMousePosition();
-//			if(mousePos != null)
-//			{
-//				coinProjectile.setActive(false);
-//				coinProjectile.setWorldPosition(new Vec2(mousePos.x, 0.1f));
-//			}
-		}
+	}
+	
+	/**
+	 * Creates an alert when a player wins
+	 * @param id The ID of the Player
+	 */
+	private void victorious(int id) {	
+		this.removeChild(menu);
+//		this.removeChild(reset);
+		this.removeChild(back);
+		
+		gameOver = true;
+		
+		BoardAlert victory = new BoardAlert(0.5f, 0.3f, new Vec2(0.49f, 0.3f), "Player " + id + " wins the Game!");
+		addChild(victory);
+		
+		this.addChild(menu);
+//		this.addChild(reset);
+		this.addChild(back);
 	}
 	
 	private void doNextTurn()
@@ -164,13 +197,100 @@ public class AngryGame extends Game{
 		
 	}
 	
+	public int checkWinner(int playerID){
+		int sum = 0;
+
+		//checks vertical win
+		for (int c = 0; c < this.boardColumn; c++) {
+			sum = 0;
+			
+			for (int r = 0; r < this.boardRow; r++) {
+				if (getCoin(r,c) == playerID) {
+					sum++;
+
+					if(sum == victoryCondition) {
+						return 1;
+					}
+				}
+				else {
+					sum = 0;
+				}
+			}			
+		}
+		
+		//checks horizontal win
+		for (int r = 0; r < this.boardRow; r++) {
+			sum = 0;
+			
+			for (int c = 0; c < this.boardColumn; c++) {
+				if (getCoin(r,c) == playerID) {
+					sum++;
+					
+					if(sum == victoryCondition) {
+						return 1;
+					}
+				}
+				else {
+					sum = 0;
+				}
+			}			
+		}
+		
+		//checks diagonal left win
+		for (int c = -this.boardRow; c < this.boardColumn; c++) {
+			sum = 0;
+			
+			for (int r = 0; r < this.boardRow; r++) {
+				if(getCoin(r, c+r) == playerID){
+					sum++;
+					
+					if(sum == victoryCondition) {
+						return 1;
+					}
+				}
+				else{
+					sum = 0;
+				}
+			}			
+		}
+		
+		//checks diagonal right win
+		for (int c = 0; c < this.boardColumn + this.boardRow; c++) {
+			sum = 0;
+			
+			for (int r = 0; r < this.boardRow; r++) {
+				if(getCoin(r, c-r) == playerID){
+					sum++;
+					
+					if(sum == victoryCondition) {
+						return 1;
+					}
+				}
+				else{
+					sum = 0;
+				}
+			}			
+		}
+		
+		if (!physicsBoard.isBoardFull()){
+			return 0;
+		}
+
+		return -1;
+	}
+	
+	private int getCoin(int row, int column) {
+		if(row < 0 || column < 0 || row >= boardRow || column >= boardColumn) return 0;
+		return physicsBoard.getCoin(row, column);
+	}
+	
 	@Override
 	public void initialiseColumnsRows() {
 		
 		coinLaunched = false;
 		
 		this.removeChild(physicsBoard);
-		physicsBoard = new PhysicsBoard(boardState.getBoardColumn(), boardState.getBoardRow());
+		physicsBoard = new PhysicsBoard(7, 6);
 		this.addChild(physicsBoard);
 	}
 
@@ -193,12 +313,12 @@ public class AngryGame extends Game{
 			}
 		};
 		
-		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.85f, 0.2f, 0.1f) {
-			@Override
-			public void onMouseDown() {
-				GAME_MANAGER.activateReset();
-			}
-		};
+//		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.85f, 0.2f, 0.1f) {
+//			@Override
+//			public void onMouseDown() {
+//				physicsBoard = new PhysicsBoard(boardColumn, boardRow);
+//			}
+//		};
 		
 		back = new RectButton("back", "backSelected", x, 0.85f, 0.1f, 0.1f) {
 			@Override
@@ -208,9 +328,18 @@ public class AngryGame extends Game{
 		};
 		
 		this.addChild(menu);
-		this.addChild(reset);
+//		this.addChild(reset);
 		this.addChild(back);
 	}
+	
+	
+	private BoardAlert boardAlert;
+	
+	private boolean gameOver;
+	
+	private int victoryCondition;
+	private int boardColumn;
+	private int boardRow;
 	
 	private CoinCannon coinCannon;
 	
@@ -220,13 +349,11 @@ public class AngryGame extends Game{
 	private boolean coinLaunched;
 	
 	private RectButton menu;
-	private RectButton reset;
+//	private RectButton reset;
 	private RectButton back;
 	
 	private PhysicsBoard physicsBoard;
 	
 	private CoinProjectile coinProjectile;
-	
-	private BoardState boardState;
 
 }

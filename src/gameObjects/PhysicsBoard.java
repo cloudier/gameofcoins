@@ -78,6 +78,20 @@ public class PhysicsBoard extends GameObject {
 		}
 	}
 	
+	public boolean isBoardFull() {
+		
+		for(int i = 0; i < tilesX; i++)
+		{
+			if(getTopEmptyRow(i) == -1) 
+			{
+				return false;
+			}
+		}
+		
+		return true;
+		
+	}
+	
 	public int getTopEmptyRow(int column)
 	{
 		if(column < 0 || column >= tilesX) System.err.println("Invalid column");
