@@ -76,7 +76,7 @@ public class PlayersMenu extends UIObject {
 	/**
 	 * Activate the board
 	 */
-	public void activateBoard() {
+	public void activateBoard() {		
 		HashMap<Integer, Player> players = new HashMap<Integer, Player>();
 		if (playerTypes == 0) {
 			players.put (1, new Player("Player 1", 1, Color.RED, PlayerType.HUMAN));
@@ -109,6 +109,19 @@ public class PlayersMenu extends UIObject {
 		//Draw Background
 		Image mainTitle = IMAGE_STORE.GetScaledImage("mainTitle", JPANEL.getWidth(), JPANEL.getHeight());
 		g2d.drawImage(mainTitle, 0, 0, null);
+		
+		if (playerTypes == 0) {
+			setActiveVisible(false, 1);
+			setActiveVisible(false, 2);
+		}
+		else if (playerTypes == 1){
+			setActiveVisible(true, 1);
+			setActiveVisible(false, 2);
+		}
+		else{
+			setActiveVisible(true, 1);
+			setActiveVisible(true, 2);
+		}
 	}
 
 	/**

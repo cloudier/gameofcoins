@@ -212,6 +212,17 @@ public class BoardState {
 	}
 	
 	/**
+	 * Returns the other player
+	 * @return player object representing the other player
+	 */
+	public Player getOtherPlayer() {
+		if (currentPlayer == numPlayers)
+			return this.players.get(1);
+		else
+			return this.players.get(currentPlayer);
+	}
+	
+	/**
 	 * Returns the id representing the current player
 	 * @return current player's id as an int
 	 */
