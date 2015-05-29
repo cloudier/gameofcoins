@@ -1,8 +1,10 @@
 package gameObjects;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 
 import gameEngine.UIObject;
 import gameEngine.Vec2;
@@ -11,6 +13,7 @@ public class Coin extends UIObject {
 
 	private Color color;
 	private float circleRadius;
+	private boolean winning;
 
 	/**
 	 * Create a coin and initialise its radius and position
@@ -18,6 +21,7 @@ public class Coin extends UIObject {
 	public Coin() {
 		circleRadius = .06f;
 		position = new Vec2();
+		setWinning(false);
 	}
 	
 	/**
@@ -94,6 +98,17 @@ public class Coin extends UIObject {
 		else {
 			g2d.setColor(color);
 			g2d.fillOval(pixelX, pixelY, pixelWidth, pixelHeight);
-		}	
+		}
+		
+		if (winning) {
+			Stroke s = new BasicStroke(10f);
+			g2d.setStroke(s);
+			g2d.setColor(Color.WHITE);
+			g2d.drawOval(pixelX, pixelY, pixelWidth, pixelHeight);
+		}
+	}
+
+	public void setWinning(boolean winning) {
+		this.winning = winning;
 	}
 }

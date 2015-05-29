@@ -594,7 +594,7 @@ public class BoardState {
 			for (int r = 0; r < this.boardRow; r++) {
 				if(getCoin(r, c+r) == playerID){
 					sum++;
-					this.winningColumn.add(c);
+					this.winningColumn.add(c + r);
 					this.winningRow.add(r);
 					
 					if(sum == victoryCondition) {
@@ -618,7 +618,7 @@ public class BoardState {
 			for (int r = 0; r < this.boardRow; r++) {
 				if(getCoin(r, c-r) == playerID){
 					sum++;
-					this.winningColumn.add(c);
+					this.winningColumn.add(c - r);
 					this.winningRow.add(r);
 					
 					if(sum == victoryCondition) {

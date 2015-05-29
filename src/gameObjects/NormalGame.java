@@ -6,8 +6,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 public class NormalGame extends Game{
@@ -376,6 +377,14 @@ public class NormalGame extends Game{
 				!animated &&
 				!gameOver) { // current player is an ai and there is no animated coin
 			animateAI();
+		}
+		
+		if (gameOver) {
+			ArrayList<Integer> rows = boardState.getWinningRow();
+			ArrayList<Integer> cols = boardState.getWinningColumn();
+			for (int i = 0; i < 4; i++) {
+				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(true);
+			}			
 		}
 	}
 	
