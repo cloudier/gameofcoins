@@ -87,16 +87,24 @@ public class WindowManager {
 		boardModel.initialiseMode(boardRows, boardColumns, victoryCondition, mode);
 		if (mode.equals("Normal")) {
 			this.board = new NormalGame(boardModel);
+			
+			mainGame.AddGameObject(board);
+			board.setActiveVisible(false);			
+			
+			modeMenu.setActiveVisible(false);
+			playersMenu.setActiveVisible(true);
+			state = GameState.nextState(state);
+			
 		} else if (mode.equals("Angry")) {
 			this.board = new AngryGame(boardModel);
+			
+			mainGame.AddGameObject(board);
+			board.setActiveVisible(false);			
+			
+			modeMenu.setActiveVisible(false);
+			state = GameState.nextState(state);
+			activatePhysicsBoard();
 		}
-		
-		mainGame.AddGameObject(board);
-		board.setActiveVisible(false);			
-		
-		modeMenu.setActiveVisible(false);
-		playersMenu.setActiveVisible(true);
-		state = GameState.nextState(state);
 	}
 
 	/**
@@ -121,6 +129,24 @@ public class WindowManager {
 			board.initialiseColumnsRows();
 		}
 		boardModel.initialisePlayers(numPlayers, players);
+		
+		mainGame.AddGameObject(board);
+		playersMenu.setActiveVisible(false);
+		board.setActiveVisible(true);
+		state = GameState.nextState(state);
+	}
+	
+	public void activatePhysicsBoard()
+	{
+		boardModel.initialiseMode(6, 7,	boardModel.getVictoryCondition(), "Angry");
+		if (!board.visible && !board.active) {
+			this.board = new AngryGame(boardModel);
+			board.initialiseColumnsRows();
+		}
+		
+		//Player p1 = new Player("Human1", boardValue, coinColor, playerType);
+		
+		//boardModel.initialisePlayers(2, players);
 		
 		mainGame.AddGameObject(board);
 		playersMenu.setActiveVisible(false);
@@ -152,9 +178,13 @@ public class WindowManager {
 		} else if (state == GameState.PLAYERS) {
 			playersMenu.setActiveVisible(false);
 			modeMenu.setActiveVisible(true);
-		} else if (state == GameState.BOARD) {
+		} else if (state == GameState.BOARD && boardModel.getMode() == "Normal") {
 			board.setActiveVisible(false);
 			playersMenu.setActiveVisible(true);
+		} else if (state == GameState.BOARD && boardModel.getMode() == "Angry") {
+			board.setActiveVisible(false);
+			modeMenu.setActiveVisible(true);
+			state = GameState.prevState(state);
 		}
 		state = GameState.prevState(state);
 	}

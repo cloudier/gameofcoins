@@ -1,7 +1,6 @@
 package gameObjects;
 import gameEngine.GameObject;
 import gameEngine.RectButton;
-import gameEngine.UIObject;
 import gameEngine.Vec2;
 
 import java.awt.Graphics2D;
@@ -34,15 +33,8 @@ public class ModeMenu extends GameObject {
 		
 		this.mode = "Normal";
 		
-		//this.victoryCondition = 4;
-		// select victory condition: 4 <= n <= 10
-//		UIObject modeMenuVictory = new ModeMenuVictory();
-//		addChild(modeMenuVictory);
-		
 		this.boardWidth = 7;
 		this.boardHeight = 6;
-		// select width of board: 4 <= n <= 20
-		// select height of board: 4 <= n <= 20
 
 		createButtons();
 		
@@ -162,6 +154,11 @@ public class ModeMenu extends GameObject {
 				btn14by12.setActiveVisible(true);
 				btn21by18.setActiveVisible(true);
 				
+				four.setActiveVisible(true);
+				five.setActiveVisible(true);
+				six.setActiveVisible(true);
+				seven.setActiveVisible(true);
+				
 				setMode("Normal");
 			}
 		};
@@ -175,6 +172,11 @@ public class ModeMenu extends GameObject {
 				btn7by6.setActiveVisible(false);
 				btn14by12.setActiveVisible(false);
 				btn21by18.setActiveVisible(false);
+				
+				four.setActiveVisible(false);
+				five.setActiveVisible(false);
+				six.setActiveVisible(false);
+				seven.setActiveVisible(false);
 				
 				setMode("Angry");
 			}

@@ -133,5 +133,5 @@ public class StaticWall extends GameObject {
 		g2d.drawLine(pixelX1, pixelY1, pixelX2, pixelY2);
 	}
 	
-	private Vec2 position2; //Position of other end point
+	public Vec2 position2; //Position of other end point
 }

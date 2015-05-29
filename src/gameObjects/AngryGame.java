@@ -11,6 +11,8 @@ import java.awt.Point;
 
 public class AngryGame extends Game{
 
+	public static final int DROPDELAY = 300;
+	
 	/**
 	 * Construct a AngryGame object
 	 * @param boardState The state of the board
@@ -31,6 +33,10 @@ public class AngryGame extends Game{
 		
 		createButtons();
 		
+		coinCannon = new CoinCannon();
+		coinCannon.position = new Vec2(0.1f, 0.7f);
+		this.addChild(coinCannon);
+		
 		player1Turn = true;
 	}
 	
@@ -44,11 +50,8 @@ public class AngryGame extends Game{
 		if(!coinLaunched)
 		{
 			//Launch a coin
-
-			float xPosition = getScaledMousePosition().x;
-			launchCoin(xPosition);
-			
-			player1Turn = !player1Turn;
+			Vec2 launchDir = getScaledMousePosition().minus(coinCannon.getWorldPosition());
+			launchCoin(launchDir);
 			
 		}
 	}
@@ -59,38 +62,61 @@ public class AngryGame extends Game{
 	@Override
 	protected void onUpdate() { 
 		
+		coinProjectile.player1 = player1Turn;
+		
 		if(coinLaunched)
 		{
-			//If coin has been launched for more than 15sec, do next turn
+			ticksSinceLastDrop++;
+			
+			coinProjectile.setActive(true);
 			
 			Point tile = physicsBoard.getTile(coinProjectile.getWorldPosition());
 			
-			if(tile != null) {
-				//Coin landed in a slot
+			if(tile != null && physicsBoard.getTopEmptyRow(tile.x) == tile.y) {
 				
-				System.out.println("Coin landed m8");
+				physicsBoard.putCoin(tile.x, player1Turn);
+				boardState.putCoin(tile.x);
+				
+				if(boardState.isGameOver())
+				{
+					
+				}
+				
+				boardState.output();
 				
 				doNextTurn();
 			}
 			else if(outOfBounds(coinProjectile))
 			{
-				System.out.println("U missed");
-				
 				doNextTurn();
 			}
-
-
+			else if(ticksSinceLastDrop > DROPDELAY)
+			{
+				doNextTurn();
+			}
+		}
+		else 
+		{
+			coinProjectile.setWorldPosition(coinCannon.getCoinHolderWorldPosition());
+			coinProjectile.setActive(false);
+//			Vec2 mousePos = getScaledMousePosition();
+//			if(mousePos != null)
+//			{
+//				coinProjectile.setActive(false);
+//				coinProjectile.setWorldPosition(new Vec2(mousePos.x, 0.1f));
+//			}
 		}
 	}
 	
 	private void doNextTurn()
 	{
+		player1Turn = !player1Turn;
 		coinLaunched = false;
 		
 		if(humanVsAI && !player1Turn)
 		{
 			//Do ai launch
-			launchCoin((float)Math.random());
+			dropCoin((float)Math.random());
 		}
 	}
 	
@@ -99,7 +125,7 @@ public class AngryGame extends Game{
 		Vec2 cpPos = cp.getWorldPosition();
 		float cpRad = cp.circleRadius;
 		
-		if(cpPos.x + cpRad < 0 || cpPos.y + cpRad < 0 || 
+		if(cpPos.x + cpRad < 0 || 
 				cpPos.x - cpRad > 1f || cpPos.y - cpRad > 1f)
 		{
 			return true;
@@ -110,8 +136,21 @@ public class AngryGame extends Game{
 		}
 	}
 	
-	private void launchCoin(float xPosition)
+	private void launchCoin(Vec2 direction)
 	{
+		ticksSinceLastDrop = 0;
+		
+		coinLaunched = true;
+		coinProjectile.setActive(true);
+		
+		coinProjectile.velocity = direction.normalised().scale(0.48f);
+		//coinProjectile.setWorldPosition(position);
+	}
+	
+	private void dropCoin(float xPosition)
+	{
+		ticksSinceLastDrop = 0;
+		
 		coinLaunched = true;
 		coinProjectile.setActiveVisible(true);
 		coinProjectile.velocity = new Vec2();
@@ -127,6 +166,9 @@ public class AngryGame extends Game{
 	
 	@Override
 	public void initialiseColumnsRows() {
+		
+		coinLaunched = false;
+		
 		this.removeChild(physicsBoard);
 		physicsBoard = new PhysicsBoard(boardState.getBoardColumn(), boardState.getBoardRow());
 		this.addChild(physicsBoard);
@@ -142,23 +184,23 @@ public class AngryGame extends Game{
 	 * Generates reset, main menu and back buttons in the board window.
 	 */
 	private void createButtons(){
-		float x = 0.14f;
+		float x = 0.1f;
 		
-		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
+		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.85f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.activateStart();
 			}
 		};
 		
-		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
+		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.85f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.activateReset();
 			}
 		};
 		
-		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
+		back = new RectButton("back", "backSelected", x, 0.85f, 0.1f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.back();
@@ -170,10 +212,12 @@ public class AngryGame extends Game{
 		this.addChild(back);
 	}
 	
+	private CoinCannon coinCannon;
+	
+	private int ticksSinceLastDrop;
 	private boolean player1Turn;
 	private boolean humanVsAI;
 	private boolean coinLaunched;
-	
 	
 	private RectButton menu;
 	private RectButton reset;

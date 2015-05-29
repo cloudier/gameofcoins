@@ -1,9 +1,11 @@
 package gameObjects;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 
+import gameEngine.BoardState;
 import gameEngine.GameObject;
 import gameEngine.Vec2;
 
@@ -18,8 +20,32 @@ public class PhysicsBoard extends GameObject {
 		
 		totalBoardSize = new Vec2(boardHeight*tilesX/tilesY, boardHeight);
 		
-		position = new Vec2((1f-totalBoardSize.x)/2, 1f - totalBoardSize.y - 0.15f);
+		position = new Vec2((1f-totalBoardSize.x)-0.1f, 1f - totalBoardSize.y - 0.2f);
 		velocity = new Vec2(0f, 0f);
+		
+		coins = new Coin[tilesX][tilesY];
+		
+		float coinRadius =  totalBoardSize.x / tilesX / 2 - 0.01f;
+		
+		Vec2 cellSize = new Vec2(getTileWidth(), getTileHeight());
+		
+		Vec2 coinOffset = cellSize.scale(0.5f);
+
+		for (int r = 0; r < tilesY; r++) {
+			for (int c = 0; c < tilesX; c++) {
+				Vec2 coinPos = new Vec2(cellSize.x * c, cellSize.y * r);
+				coinPos = coinPos.plus(coinOffset);
+
+				coins[c][r] = new Coin();
+				coins[c][r].position = coinPos;
+				coins[c][r].setColor(Color.WHITE);
+				coins[c][r].setCircleRadius(coinRadius);
+
+				coins[c][r].setActiveVisible(true);
+				
+				this.addChild(coins[c][r]);
+			}
+		}
 		
 		AddPhysicsBoard();
 	}
@@ -29,10 +55,51 @@ public class PhysicsBoard extends GameObject {
 	public float getTileWidth() { return totalBoardSize.x/tilesX; }
 	public float getTileHeight() { return totalBoardSize.y/tilesY; }
 	
-	public void putCoin(int column)
+	public void putCoin(int column, boolean player)
 	{
-		//Implement this
-		//If a column is full, raise the floor to the top
+		
+		System.out.println("Putting a coin");
+		
+		int topRow = getTopEmptyRow(column);
+		
+		if(topRow == -1) {
+			System.err.println("Full column");
+			return;
+		} else {
+			if(player)
+				coins[column][topRow].setColor(Color.RED);
+			else 
+				coins[column][topRow].setColor(Color.YELLOW);
+		}
+		
+		if(getTopEmptyRow(column) == -1) {
+			columnFloors[column].position = columnFloors[column].position.plus(new Vec2(0f, -totalBoardSize.y));
+			columnFloors[column].position2 = columnFloors[column].position2.plus(new Vec2(0f, -totalBoardSize.y));
+		}
+	}
+	
+	public int getTopEmptyRow(int column)
+	{
+		if(column < 0 || column >= tilesX) System.err.println("Invalid column");
+		
+		for (int row = tilesY-1; row >= 0; row--) {
+			if (coins[column][row].getColor().equals(Color.WHITE)) {
+				return row;
+			}
+		}
+		return -1;
+	}
+	
+	public int getCoin(int row, int column)
+	{
+		if(coins[column][row].getColor().equals(Color.WHITE)) return 0;
+		else if(coins[column][row].getColor().equals(Color.RED)) return 1;
+		else if(coins[column][row].getColor().equals(Color.YELLOW)) return 2;
+		else 
+		{
+			System.err.println("Invalid Coin");
+			return -1;
+		}
 	}
 	
 	/**
@@ -81,8 +148,7 @@ public class PhysicsBoard extends GameObject {
 				
 				if((x + y) % 2 == 0) {
 					g2d.drawImage(blueTile, pixelPos.x, pixelPos.y, null);
-				} 
-				else {
+				} else {
 					g2d.drawImage(yellowTile, pixelPos.x, pixelPos.y, null);
 				}
 			}
@@ -102,8 +168,8 @@ public class PhysicsBoard extends GameObject {
 		
 		for(int i = 0; i < tilesX+1; i++){
 			Vec2 offset = new Vec2(i*tileWidth, 0f);
-//			pegs[i] = new StaticPeg(startPosTop.plus(offset));
-//			this.addChild(pegs[i]);
+			pegs[i] = new StaticPeg(startPosTop.plus(offset));
+			this.addChild(pegs[i]);
 			
 			columns[i] = new StaticWall(offset.plus(startPosTop), offset.plus(startPosBottom));
 			this.addChild(columns[i]);
@@ -118,6 +184,8 @@ public class PhysicsBoard extends GameObject {
 		}
 		
 	}
+	
+	private BoardState boardModel;
 	
 	private StaticWall columnFloors[];
 	private StaticWall columns[];

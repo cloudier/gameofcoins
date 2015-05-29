@@ -49,13 +49,19 @@ public class CoinProjectile extends GameObject {
 		int pixelWidth = (int) (circleRadius * JPANEL.getWidth() * 2f);
 		int pixelHeight = (int) (circleRadius * JPANEL.getHeight() * 2f);
 		
-		Image coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
+		Image coinImage;
+		
+		if(player1)	
+			coinImage = IMAGE_STORE.GetScaledImage("coin_Red", pixelWidth, pixelHeight);
+		else
+			coinImage = IMAGE_STORE.GetScaledImage("coin_Yellow", pixelWidth, pixelHeight);
 		
 		g2d.drawImage(coinImage, pixelX, pixelY, null);
 	}
 	
+	public boolean player1; 
 	public float gravity = 0.010f;
-	public float restitution = 0.7f;
+	public float restitution = 0.9f;
 	public float friction = 0.9f;
 	public Vec2 velocity;
 	public float circleRadius;

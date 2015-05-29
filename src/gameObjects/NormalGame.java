@@ -374,23 +374,23 @@ public class NormalGame extends Game{
 	 * Generates reset, main menu and back buttons in the board window.
 	 */
 	private void createButtons(){
-		float x = 0.14f;
+		float x = 0.1f;
 		
-		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
+		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.85f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.activateStart();
 			}
 		};
 		
-		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
+		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.85f, 0.2f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.activateReset();
 			}
 		};
 		
-		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
+		back = new RectButton("back", "backSelected", x, 0.85f, 0.1f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				GAME_MANAGER.back();
