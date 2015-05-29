@@ -159,6 +159,9 @@ public class WindowManager {
 	 * is pressed in the board screen.
 	 */
 	public void activateStart() { // go back to start menu
+		boardModel.reset();
+		board.reset();
+		
 		board.setActiveVisible(false);
 		mainMenu.setActiveVisible(true);
 		state = GameState.nextState(state);			
@@ -179,9 +182,15 @@ public class WindowManager {
 			playersMenu.setActiveVisible(false);
 			modeMenu.setActiveVisible(true);
 		} else if (state == GameState.BOARD && boardModel.getMode() == "Normal") {
+			boardModel.reset();
+			board.reset();
+			
 			board.setActiveVisible(false);
 			playersMenu.setActiveVisible(true);
 		} else if (state == GameState.BOARD && boardModel.getMode() == "Angry") {
+			boardModel.reset();
+			board.reset();
+			
 			board.setActiveVisible(false);
 			modeMenu.setActiveVisible(true);
 			state = GameState.prevState(state);
