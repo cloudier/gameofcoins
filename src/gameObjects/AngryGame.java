@@ -2,11 +2,10 @@ package gameObjects;
 
 import gameEngine.BoardState;
 import gameEngine.Game;
-import gameEngine.UIObject;
+import gameEngine.RectButton;
 import gameEngine.Vec2;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 
 
@@ -18,103 +17,172 @@ public class AngryGame extends Game{
 	 */
 	public AngryGame(BoardState boardState) {
 		this.boardState = boardState;
-		totalBoardSize = new Vec2(0.9f, 0.8f);
+		
+		coinProjectile = new CoinProjectile();
+		this.addChild(coinProjectile);
+		coinProjectile.setActiveVisible(false);
+		
+		physicsBoard = new PhysicsBoard(boardState.getBoardColumn(), boardState.getBoardRow());
+		this.addChild(physicsBoard);
+		
+		coinProjectile.setRadius(physicsBoard.getTileWidth()/2.5f);
 		
 		initialiseColumnsRows();
 		
-		Vec2 totalSize = GetTotalSize();
-		position = new Vec2(1f - totalSize.x, 1f - totalSize.y);
-		velocity = new Vec2(0f, 0f);
+		createButtons();
+		
+		player1Turn = true;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public Vec2 GetTotalSize() {
-		return new Vec2(tilesX * tileWidth, tilesY * tileHeight);
+
+	@Override
+	public boolean mouseSelected() { return true; }
+
+	@Override
+	public void onMouseDown() {
+		
+		if(!coinLaunched)
+		{
+			//Launch a coin
+
+			float xPosition = getScaledMousePosition().x;
+			launchCoin(xPosition);
+			
+			player1Turn = !player1Turn;
+			
+		}
 	}
-
-	@Override
-	public boolean mouseSelected() { return false; }
-
-	@Override
-	public void onMouseDown() { }
 
 	@Override
 	public void onMouseUp() { }
 
 	@Override
 	protected void onUpdate() { 
-		position = position.plus(velocity);
-		if(position.x + GetTotalSize().x > 1f || position.x < 0f) {
-			velocity = velocity.flip();
+		
+		if(coinLaunched)
+		{
+			//If coin has been launched for more than 15sec, do next turn
+			
+			Point tile = physicsBoard.getTile(coinProjectile.getWorldPosition());
+			
+			if(tile != null) {
+				//Coin landed in a slot
+				
+				System.out.println("Coin landed m8");
+				
+				doNextTurn();
+			}
+			else if(outOfBounds(coinProjectile))
+			{
+				System.out.println("U missed");
+				
+				doNextTurn();
+			}
+
+
 		}
+	}
+	
+	private void doNextTurn()
+	{
+		coinLaunched = false;
+		
+		if(humanVsAI && !player1Turn)
+		{
+			//Do ai launch
+			launchCoin((float)Math.random());
+		}
+	}
+	
+	private boolean outOfBounds(CoinProjectile cp)
+	{
+		Vec2 cpPos = cp.getWorldPosition();
+		float cpRad = cp.circleRadius;
+		
+		if(cpPos.x + cpRad < 0 || cpPos.y + cpRad < 0 || 
+				cpPos.x - cpRad > 1f || cpPos.y - cpRad > 1f)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	private void launchCoin(float xPosition)
+	{
+		coinLaunched = true;
+		coinProjectile.setActiveVisible(true);
+		coinProjectile.velocity = new Vec2();
+		
+		Vec2 position = new Vec2(xPosition, 0.1f);
+		coinProjectile.setWorldPosition(position);
 	}
 
 	@Override
 	protected void onRender(Graphics2D g2d) {
-		Vec2 worldPos = getWorldPosition();
 		
-		int pixelWidth = (int) (tileWidth * JPANEL.getWidth());
-		int pixelHeight = (int) (tileHeight * JPANEL.getHeight());
-
-		Image blueTile = IMAGE_STORE.GetScaledImage("tile_Blue", pixelWidth, pixelHeight);
-		Image yellowTile = IMAGE_STORE.GetScaledImage("tile_Yellow", pixelWidth, pixelHeight);
-		
-		for(int y = 0; y < tilesY; y++){
-			for(int x = 0; x < tilesX; x++){
-				Vec2 offset = new Vec2(x * tileWidth, y * tileHeight);
-				Point pixelPos = toPixelCoordinates(worldPos.plus(offset));
-				
-				if((x + y) % 2 == 0) {
-					g2d.drawImage(blueTile, pixelPos.x, pixelPos.y, null);
-				} 
-				else {
-					g2d.drawImage(yellowTile, pixelPos.x, pixelPos.y, null);
-				}
-			}
-		}
 	}
 	
 	@Override
-	public void initialiseColumnsRows() {	
-		tilesX = boardState.getBoardRow();
-		tilesY = boardState.getBoardColumn();
-		
-		tileWidth = totalBoardSize.x/tilesX;
-		tileHeight = totalBoardSize.y/tilesY;
-		
-		AddPhysicsBoard();
+	public void initialiseColumnsRows() {
+		this.removeChild(physicsBoard);
+		physicsBoard = new PhysicsBoard(boardState.getBoardColumn(), boardState.getBoardRow());
+		this.addChild(physicsBoard);
 	}
 
 	@Override
 	public void reset() {
 		
+		initialiseColumnsRows();
 	}
 	
-	private void AddPhysicsBoard(){
-		StaticWall columns[] = new StaticWall[tilesX+1];
-		StaticPeg pegs[] = new StaticPeg[tilesX+1];
+	/**
+	 * Generates reset, main menu and back buttons in the board window.
+	 */
+	private void createButtons(){
+		float x = 0.14f;
 		
-		Vec2 startPosTop = new Vec2();
-		Vec2 startPosBottom = new Vec2(0.0f, 1f);
+		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.activateStart();
+			}
+		};
 		
-		for(int i = 0; i < tilesX+1; i++){
-			Vec2 offset = new Vec2(i*tileWidth, 0f);
-			pegs[i] = new StaticPeg(startPosTop.plus(offset));
-			this.addChild(pegs[i]);
-			
-			columns[i] = new StaticWall(offset.plus(startPosTop), offset.plus(startPosBottom));
-			this.addChild(columns[i]);
-		}
+		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.activateReset();
+			}
+		};
+		
+		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.back();
+			}
+		};
+		
+		this.addChild(menu);
+		this.addChild(reset);
+		this.addChild(back);
 	}
+	
+	private boolean player1Turn;
+	private boolean humanVsAI;
+	private boolean coinLaunched;
+	
+	
+	private RectButton menu;
+	private RectButton reset;
+	private RectButton back;
+	
+	private PhysicsBoard physicsBoard;
+	
+	private CoinProjectile coinProjectile;
 	
 	private BoardState boardState;
-	
-	Vec2 totalBoardSize;
-	private Vec2 velocity;
-	
-	private float tileWidth, tileHeight;
-	private int tilesX, tilesY;
+
 }

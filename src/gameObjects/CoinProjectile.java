@@ -16,9 +16,13 @@ public class CoinProjectile extends GameObject {
 	 * Constructor to create a coin which will be thrown by player
 	 */
 	public CoinProjectile() {
-		velocity = new Vec2(0.30f, -0.1f);
-		position = new Vec2(.1f, .1f);
-		circleRadius = .05f;
+		velocity = new Vec2();
+		position = new Vec2();
+		circleRadius = 0.05f;
+	}
+	
+	public void setRadius(float circleRadius) {
+		this.circleRadius = circleRadius;
 	}
 
 	@Override

@@ -36,37 +36,6 @@ public class NormalGame extends Game{
 		animated = false;	
 		createButtons();
 	}
-	/**
-	 * Generates reset, main menu and back buttons in the board window.
-	 */
-	private void createButtons(){
-		float x = 0.14f;
-		
-		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
-			@Override
-			public void onMouseDown() {
-				GAME_MANAGER.activateStart();
-			}
-		};
-		
-		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
-			@Override
-			public void onMouseDown() {
-				GAME_MANAGER.activateReset();
-			}
-		};
-		
-		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
-			@Override
-			public void onMouseDown() {
-				GAME_MANAGER.back();
-			}
-		};
-		
-		this.addChild(menu);
-		this.addChild(reset);
-		this.addChild(back);
-	}
 	
 	/**
 	 * Creates an alert when the game ends up in a draw
@@ -205,7 +174,7 @@ public class NormalGame extends Game{
 		endPosition = new Vec2(cellSize.x * aiChoice,
 				cellSize.y * (rows - 1 - boardState.getTopRow(aiChoice)));
 		endPosition = endPosition.plus(coinOffset);
-
+		
 		AnimatedCoin animatedCoin = new AnimatedCoin(endPosition,
 				aiChoice, coins[rows - 1 - boardState.getTopRow(aiChoice)][aiChoice]);
 		animatedCoin.setCircleRadius(this.circleRadius);
@@ -305,4 +274,37 @@ public class NormalGame extends Game{
 			animateAI();
 		}
 	}
+	
+	/**
+	 * Generates reset, main menu and back buttons in the board window.
+	 */
+	private void createButtons(){
+		float x = 0.14f;
+		
+		menu = new RectButton("mainmenu", "mainmenuSelected", x + 0.25f, 0.915f, 0.3f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.activateStart();
+			}
+		};
+		
+		reset = new RectButton("restart", "restartSelected", x + 0.6f, 0.915f, 0.3f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.activateReset();
+			}
+		};
+		
+		back = new RectButton("back", "backSelected", x, 0.915f, 0.1f, 0.1f) {
+			@Override
+			public void onMouseDown() {
+				GAME_MANAGER.back();
+			}
+		};
+		
+		this.addChild(menu);
+		this.addChild(reset);
+		this.addChild(back);
+	}
+	
 }

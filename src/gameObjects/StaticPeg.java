@@ -12,13 +12,13 @@ public class StaticPeg extends GameObject {
 	 */
 	public StaticPeg() {
 		CoinProjectile.PegColliders.add(this);
-		circleRadius = 0.012f;
+		circleRadius = 0.003f;
 	}
 	
 	public StaticPeg(Vec2 Position) {
 		position = Position;
 		CoinProjectile.PegColliders.add(this);
-		circleRadius = 0.012f;
+		circleRadius = 0.003f;
 	}
 
 	@Override

@@ -45,15 +45,21 @@ public final class ImageStore {
 			AddButtonFiles("btn7by6", "ModeMenu");
 			AddButtonFiles("btn14by12", "ModeMenu");
 			AddButtonFiles("btn21by18", "ModeMenu");
+			
+			AddButtonFiles("four", "ModeMenu");
+			AddButtonFiles("five", "ModeMenu");
+			AddButtonFiles("six", "ModeMenu");
+			AddButtonFiles("seven", "ModeMenu");
+			
 
 			// Add PlayerMenu buttons
-			AddButtonFiles("ai", "PlayerMenu");
+			AddButtonFiles("aivsai", "PlayerMenu");
+			AddButtonFiles("humanvsai", "PlayerMenu");
+			AddButtonFiles("humanvshuman", "PlayerMenu");
 			AddButtonFiles("easy", "PlayerMenu");
 			AddButtonFiles("medium", "PlayerMenu");
 			AddButtonFiles("hard", "PlayerMenu");
-			AddButtonFiles("human", "PlayerMenu");
-			AddButtonFiles("join", "PlayerMenu");
-
+	
 			// Add Board images
 			AddButtonFiles("mainmenu", "Board");
 			AddButtonFiles("restart", "Board");
@@ -106,6 +112,7 @@ public final class ImageStore {
 	 * Adds a file to the store located at the given fileName
 	 * @param fileName
 	 */
+	@SuppressWarnings("unused")
 	private void AddFile(String fileName) {
 		AddFile(fileName, "");
 	}
@@ -214,3 +221,5 @@ public final class ImageStore {
 	private HashMap<ScaledImageRequest, Image> scaledImages;
 
 }
+
+

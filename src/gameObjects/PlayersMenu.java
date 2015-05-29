@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,6 +50,9 @@ public class PlayersMenu extends UIObject {
 		this.ai2 = 0;
 		
 		createButtons();
+		
+		humanai.onMouseDown();
+		ai1Medium.onMouseDown();
 		
 		try {
 			UIObject.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
@@ -101,17 +105,10 @@ public class PlayersMenu extends UIObject {
 	
 	@Override
 	protected void onRender(Graphics2D g2d) {
-		Vec2 worldPos = getWorldPosition();
-		int pixelX = (int) (worldPos.x * JPANEL.getWidth());
-		int pixelY = (int) (worldPos.y * JPANEL.getHeight());
-
-		g2d.setColor(Color.BLACK);
-		// replace this with an image
-		Font headerFont = UIObject.font.deriveFont((float) JPANEL.getWidth()/10);
-		g2d.setFont(headerFont);
-		FontMetrics fm = g2d.getFontMetrics();
-        int x = ((fm.stringWidth("Player Settings")) / 2);
-		g2d.drawString("Player Settings", pixelX - x, pixelY);
+		
+		//Draw Background
+		Image mainTitle = IMAGE_STORE.GetScaledImage("mainTitle", JPANEL.getWidth(), JPANEL.getHeight());
+		g2d.drawImage(mainTitle, 0, 0, null);
 	}
 
 	/**
@@ -133,7 +130,7 @@ public class PlayersMenu extends UIObject {
 		};
 		
 		// need to change assets and dimensions
-		humanhuman = new RectButton("back", "backSelected", -0.3f, 0.15f, 0.1f, 0.1f) {
+		humanhuman = new RectButton("humanvshuman", "humanvshumanSelected", -0.4f, 0.2f, 0.3f, 0.15f) {
 			@Override
 			public void onMouseDown() {
 				setPlayerTypes(0);
@@ -145,7 +142,7 @@ public class PlayersMenu extends UIObject {
 			}
 		}; 
 		
-		humanai = new RectButton("back", "backSelected", -0.3f, 0.3f, 0.1f, 0.1f) {
+		humanai = new RectButton("humanvsai", "humanvsaiSelected", -0.4f, 0.35f, 0.3f, 0.15f) {
 			@Override
 			public void onMouseDown() {
 				setPlayerTypes(1);
@@ -157,7 +154,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		aiai = new RectButton("back", "backSelected", -0.3f, 0.45f, 0.1f, 0.1f) {
+		aiai = new RectButton("aivsai", "aivsaiSelected", -0.4f, 0.5f, 0.3f, 0.15f) {
 			@Override
 			public void onMouseDown() {
 				setPlayerTypes(2);
@@ -169,7 +166,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai1Easy = new RectButton("back", "backSelected", 0f, 0.15f, 0.1f, 0.1f) {
+		ai1Easy = new RectButton("easy", "easySelected", 0f, 0.3f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(1, 0);
@@ -179,7 +176,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai1Medium = new RectButton("back", "backSelected", 0.1f, 0.15f, 0.1f, 0.1f) {
+		ai1Medium = new RectButton("medium", "mediumSelected", 0.15f, 0.3f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(1, 1);
@@ -189,7 +186,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai1Hard = new RectButton("back", "backSelected", 0.2f, 0.15f, 0.1f, 0.1f) {
+		ai1Hard = new RectButton("hard", "hardSelected", 0.3f, 0.3f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(1, 2);
@@ -199,7 +196,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai2Easy = new RectButton("back", "backSelected", 0f, 0.3f, 0.1f, 0.1f) {
+		ai2Easy = new RectButton("easy", "easySelected", 0f, 0.5f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(2, 0);
@@ -209,7 +206,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai2Medium = new RectButton("back", "backSelected", 0.1f, 0.3f, 0.1f, 0.1f) {
+		ai2Medium = new RectButton("medium", "mediumSelected", 0.15f, 0.5f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(2, 1);
@@ -219,7 +216,7 @@ public class PlayersMenu extends UIObject {
 			}
 		};
 		
-		ai2Hard = new RectButton("back", "backSelected", 0.2f, 0.3f, 0.1f, 0.1f) {
+		ai2Hard = new RectButton("hard", "hardSelected", 0.3f, 0.5f, 0.15f, 0.1f) {
 			@Override
 			public void onMouseDown() {
 				setAIDifficulty(2, 2);
