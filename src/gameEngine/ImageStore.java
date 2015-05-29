@@ -63,7 +63,7 @@ public final class ImageStore {
 			// Add Board images
 			AddButtonFiles("mainmenu", "Board");
 			AddButtonFiles("restart", "Board");
-			AddFile("undo", "Board");
+			//AddFile("undo", "Board");
 
 		} catch (IOException e) {
 			e.printStackTrace();
