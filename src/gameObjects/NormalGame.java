@@ -179,6 +179,19 @@ public class NormalGame extends Game{
 		gameOver = false;
 		isCalculating = false;
 		
+		//clear out everything
+		ArrayList<Integer> rows = boardState.getWinningRow();
+		ArrayList<Integer> cols = boardState.getWinningColumn();
+		
+		if (rows.size() > 0 && cols.size() > 0){
+			for (int i = 0; i < 4; i++) {
+				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(false);
+			}	
+			
+			boardState.getWinningRow().clear();
+			boardState.getWinningColumn().clear();
+		}
+		
 		this.removeChild(draw);
 		this.removeChild(victory);
 		

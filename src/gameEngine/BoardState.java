@@ -74,8 +74,6 @@ public class BoardState {
 		this.gameOver = false;
 		
 		this.boardGame = new int[this.boardRow][this.boardColumn];
-		this.winningColumn.clear();
-		this.winningRow.clear();
 	}
 	
 	/**
