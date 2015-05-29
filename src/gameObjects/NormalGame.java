@@ -165,6 +165,9 @@ public class NormalGame extends Game{
 		gameOver = false;
 		isCalculating = false;
 		
+		this.removeChild(draw);
+		this.removeChild(victory);
+		
 		if (victory != null) {
 			victory.setActiveVisible(false);
 		}
@@ -227,18 +230,21 @@ public class NormalGame extends Game{
 		
 		if(boardState.getCurrentPlayer().getPlayerType().equals(PlayerType.AI) &&
 				boardState.getOtherPlayer().getPlayerType().equals(PlayerType.HUMAN)){
-			isCalculating();
 			
-			int delay = 2000;
-			Timer timer = new Timer( delay, new ActionListener(){
-			  @Override
-			  public void actionPerformed( ActionEvent e ){
-				  animateAI();
-			  }
-			} );
-			
-			timer.setRepeats(false);
-			timer.start();
+			if (!isCalculating){
+				isCalculating();
+				
+				int delay = 2000;
+				Timer timer = new Timer( delay, new ActionListener(){
+				  @Override
+				  public void actionPerformed( ActionEvent e ){
+					  animateAI();
+				  }
+				} );
+				
+				timer.setRepeats(false);
+				timer.start();
+			}
 		}
 	}
 
