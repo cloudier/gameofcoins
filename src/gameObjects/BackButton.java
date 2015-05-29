@@ -11,7 +11,7 @@ public class BackButton extends Button{
 	 * @param position The position of type Vec2 of the Back button
 	 */
 	public BackButton(float width, float height, Vec2 position) {
-		super(width, height, position, "‹");
+		super(width, height, position, "<");
 	}
 
 	/**
