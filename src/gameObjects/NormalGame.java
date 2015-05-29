@@ -184,7 +184,7 @@ public class NormalGame extends Game{
 		ArrayList<Integer> cols = boardState.getWinningColumn();
 		
 		if (rows.size() > 0 && cols.size() > 0){
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < boardState.getVictoryCondition(); i++) {
 				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(false);
 			}	
 			
@@ -395,7 +395,7 @@ public class NormalGame extends Game{
 		if (gameOver) {
 			ArrayList<Integer> rows = boardState.getWinningRow();
 			ArrayList<Integer> cols = boardState.getWinningColumn();
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < boardState.getVictoryCondition(); i++) {
 				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(true);
 			}			
 		}
