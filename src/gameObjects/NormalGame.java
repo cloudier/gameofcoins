@@ -6,8 +6,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 public class NormalGame extends Game{
@@ -33,12 +34,23 @@ public class NormalGame extends Game{
 
 	private UIObject victory;
 	private UIObject draw;
+	private Timer timer;
 	
 	public NormalGame(BoardState boardModel) {
 		this.boardState = boardModel;
 		position = new Vec2(0.01f, 0.01f);
 		animated = false;	
 		createButtons();
+		
+		int delay = 2000;
+		timer = new Timer( delay, new ActionListener(){
+		  @Override
+		  public void actionPerformed( ActionEvent e ){
+			  animateAI();
+		  }
+		} );
+		
+		timer.setRepeats(false);
 	}
 	
 	/**
@@ -156,6 +168,8 @@ public class NormalGame extends Game{
 	 * Resets the Game (when the reset button is pressed)
 	 */
 	public void reset() {
+		timer.stop();
+
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				coins[r][c].setColor(Color.WHITE);
@@ -164,6 +178,22 @@ public class NormalGame extends Game{
 
 		gameOver = false;
 		isCalculating = false;
+		
+		//clear out everything
+		ArrayList<Integer> rows = boardState.getWinningRow();
+		ArrayList<Integer> cols = boardState.getWinningColumn();
+		
+		if (rows.size() > 0 && cols.size() > 0){
+			for (int i = 0; i < boardState.getVictoryCondition(); i++) {
+				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(false);
+			}	
+			
+			boardState.getWinningRow().clear();
+			boardState.getWinningColumn().clear();
+		}
+		
+		this.removeChild(draw);
+		this.removeChild(victory);
 		
 		if (victory != null) {
 			victory.setActiveVisible(false);
@@ -227,18 +257,11 @@ public class NormalGame extends Game{
 		
 		if(boardState.getCurrentPlayer().getPlayerType().equals(PlayerType.AI) &&
 				boardState.getOtherPlayer().getPlayerType().equals(PlayerType.HUMAN)){
-			isCalculating();
 			
-			int delay = 2000;
-			Timer timer = new Timer( delay, new ActionListener(){
-			  @Override
-			  public void actionPerformed( ActionEvent e ){
-				  animateAI();
-			  }
-			} );
-			
-			timer.setRepeats(false);
-			timer.start();
+			if (!isCalculating){
+				isCalculating();
+				timer.start();
+			}
 		}
 	}
 
@@ -367,6 +390,14 @@ public class NormalGame extends Game{
 				!animated &&
 				!gameOver) { // current player is an ai and there is no animated coin
 			animateAI();
+		}
+		
+		if (gameOver) {
+			ArrayList<Integer> rows = boardState.getWinningRow();
+			ArrayList<Integer> cols = boardState.getWinningColumn();
+			for (int i = 0; i < boardState.getVictoryCondition(); i++) {
+				coins[this.rows - rows.get(i) - 1][cols.get(i)].setWinning(true);
+			}			
 		}
 	}
 	
