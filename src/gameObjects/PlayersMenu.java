@@ -3,14 +3,8 @@ package gameObjects;
 import gameEngine.*;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 public class PlayersMenu extends UIObject {
@@ -53,16 +47,6 @@ public class PlayersMenu extends UIObject {
 		
 		humanai.onMouseDown();
 		ai1Medium.onMouseDown();
-		
-		try {
-			UIObject.font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("assets/fonts/Raleway-Regular.ttf"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
